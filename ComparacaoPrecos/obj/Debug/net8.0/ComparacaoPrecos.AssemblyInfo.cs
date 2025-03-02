@@ -10,10 +10,12 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-ComparacaoPrecos-0d67b2d7-ea8c-4337-99bf-e72ea908e926")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ComparacaoPrecos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f514bb1646057c24d0d7dbeebfb0d2c362e5d03")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf57ad99ec7789969572017491ea4d02b7d0d9c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("ComparacaoPrecos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ComparacaoPrecos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
