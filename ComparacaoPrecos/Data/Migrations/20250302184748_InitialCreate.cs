@@ -427,7 +427,7 @@ namespace ComparacaoPrecos.Data.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "PhoneNumberConfirmed",
                 table: "AspNetUsers",
-                type: "INTEGER",
+                type: "boolean",
                 nullable: false,
                 oldClrType: typeof(bool),
                 oldType: "boolean");
@@ -484,7 +484,7 @@ namespace ComparacaoPrecos.Data.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "LockoutEnabled",
                 table: "AspNetUsers",
-                type: "INTEGER",
+                type: "boolean",
                 nullable: false,
                 oldClrType: typeof(bool),
                 oldType: "boolean");
@@ -492,7 +492,7 @@ namespace ComparacaoPrecos.Data.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "EmailConfirmed",
                 table: "AspNetUsers",
-                type: "INTEGER",
+                type: "boolean",
                 nullable: false,
                 oldClrType: typeof(bool),
                 oldType: "boolean");
