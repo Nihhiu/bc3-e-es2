@@ -118,6 +118,12 @@ namespace ComparacaoPrecos.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.Property<string>("Tipo")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("text")
+                        .HasDefaultValue("User");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
