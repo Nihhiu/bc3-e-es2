@@ -10,10 +10,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+{
+    options.Password.RequireDigit = false; 
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
+})
+    .AddRoles<IdentityRole>() 
     .AddEntityFrameworkStores<ApplicationDbContext>();
-
-builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -60,7 +66,7 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
     var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    string adminEmail = "admin@email.com";
+    string adminEmail = "admin@gmail.com";
     string adminPassword = "Admin@123";
 
     // Criar a role de Administrador, se não existir
@@ -109,6 +115,6 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
     }
     else
     {
-        Console.WriteLine("ℹAdministrador já existe.");
+        Console.WriteLine("Administrador já existe.");
     }
 }
