@@ -3,6 +3,7 @@ using System;
 using ComparacaoPrecos.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ComparacaoPrecos.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250319153458_AddTipoToAspNetUsers")]
+    partial class AddTipoToAspNetUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,46 +91,6 @@ namespace ComparacaoPrecos.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Categoria", b =>
-                {
-                    b.Property<string>("CategoriaID")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("CategoriaID");
-
-                    b.ToTable("Categoria");
-                });
-
-            modelBuilder.Entity("Loja", b =>
-                {
-                    b.Property<int>("LojaID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LojaID"));
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Localizacao")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("LojaID");
-
-                    b.ToTable("Loja");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -266,70 +229,6 @@ namespace ComparacaoPrecos.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Produto", b =>
-                {
-                    b.Property<int>("ProdutoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProdutoID"));
-
-                    b.Property<string>("CategoriaID")
-                        .IsRequired()
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("ProdutoID");
-
-                    b.HasIndex("CategoriaID");
-
-                    b.ToTable("Produto");
-                });
-
-            modelBuilder.Entity("Produto_Loja", b =>
-                {
-                    b.Property<int>("ProdutoID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("LojaID")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("data")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<TimeSpan>("hora")
-                        .HasColumnType("interval");
-
-                    b.Property<double>("preco")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("ProdutoID", "LojaID");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("LojaID");
-
-                    b.ToTable("Produto_Loja");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -379,44 +278,6 @@ namespace ComparacaoPrecos.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Produto", b =>
-                {
-                    b.HasOne("Categoria", "Categoria")
-                        .WithMany()
-                        .HasForeignKey("CategoriaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Categoria");
-                });
-
-            modelBuilder.Entity("Produto_Loja", b =>
-                {
-                    b.HasOne("ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Loja", "Loja")
-                        .WithMany()
-                        .HasForeignKey("LojaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Produto", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ProdutoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Loja");
-
-                    b.Navigation("Produto");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +10,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        await SeedAdminAsync(services);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erro ao criar administrador: {ex.Message}");
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -39,3 +54,61 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 app.Run();
+
+async Task SeedAdminAsync(IServiceProvider serviceProvider)
+{
+    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string adminEmail = "admin@email.com";
+    string adminPassword = "Admin@123";
+
+    // Criar a role de Administrador, se não existir
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        var roleResult = await roleManager.CreateAsync(new IdentityRole("Admin"));
+        if (roleResult.Succeeded)
+        {
+            Console.WriteLine("Role 'Admin' criada com sucesso!");
+        }
+        else
+        {
+            Console.WriteLine("Erro ao criar role 'Admin': " + string.Join(", ", roleResult.Errors));
+            return;
+        }
+    }
+
+
+    // Verificar se o usuário admin já existe
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        adminUser = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true,
+            Tipo = "Admin"
+        };
+
+        var result = await userManager.CreateAsync(adminUser, adminPassword);
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+            Console.WriteLine("Administrador criado com sucesso!");
+        }
+        else
+        {
+            Console.WriteLine("Erro ao criar administrador: " + string.Join(", ", result.Errors));
+        }
+    }
+    else
+    {
+        Console.WriteLine("ℹAdministrador já existe.");
+    }
+}
