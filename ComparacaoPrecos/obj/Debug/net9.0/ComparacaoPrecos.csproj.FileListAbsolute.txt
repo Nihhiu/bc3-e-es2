@@ -575,3 +575,17 @@ C:\Users\Utilizador\Desktop\ES2\bc3-e-es2\ComparacaoPrecos\obj\Debug\net9.0\refi
 C:\Users\Utilizador\Desktop\ES2\bc3-e-es2\ComparacaoPrecos\obj\Debug\net9.0\ComparacaoPrecos.pdb
 C:\Users\Utilizador\Desktop\ES2\bc3-e-es2\ComparacaoPrecos\obj\Debug\net9.0\ComparacaoPrecos.genruntimeconfig.cache
 C:\Users\Utilizador\Desktop\ES2\bc3-e-es2\ComparacaoPrecos\obj\Debug\net9.0\ref\ComparacaoPrecos.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\System.Text.Json.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Microsoft.OpenApi.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Documentos\uni\ES2\bc3-e-es2\ComparacaoPrecos\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
