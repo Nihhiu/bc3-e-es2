@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using ComparacaoPrecos.Data.DB;
+using ComparacaoPrecos.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ComparacaoPrecos.Repository.Produto;
+namespace ComparacaoPrecos.Repository.ProdutoRepository;
 
 public class ProdutoRepository {
     private readonly ApplicationDbContext _context;
@@ -13,24 +15,25 @@ public class ProdutoRepository {
 
     // Criar um novo produto
     public async Task<Produto> AddProduto(Produto produto) {
-        _context.Produtos.Add(produto);
+        _context.Produto.Add(produto);
         await _context.SaveChangesAsync();
         return produto;
     }
 
     // Buscar todos os produtos que não estão deletados
     public async Task<List<Produto>> GetAllProdutos() {
-        return await _context.Produtos.Include(p => p.Categoria).Where(p => !p.Deleted).ToListAsync();
+        return await _context.Produto.Include(p => p.Categoria).Where(p => !p.Deleted).ToListAsync();
     }
 
     // Buscar produto por ID que não está deletado
     public async Task<Produto> GetProdutoById(int id) {
-        return await _context.Produtos.Include(p => p.Categoria).FirstOrDefaultAsync(p => p.ProdutoID == id && !p.Deleted);
+        var produto = await _context.Produto.Include(p => p.Categoria).FirstOrDefaultAsync(p => p.ProdutoID == id && !p.Deleted) ?? throw new KeyNotFoundException($"Produto with ID {id} not found or is deleted.");
+        return produto;
     }
 
     // Atualizar produto
     public async Task<Produto> UpdateProduto(Produto produto) {
-        _context.Produtos.Update(produto);
+        _context.Produto.Update(produto);
         await _context.SaveChangesAsync();
         return produto;
     }
@@ -41,7 +44,7 @@ public class ProdutoRepository {
         if (produto == null) return false;
         
         produto.Deleted = true;
-        _context.Produtos.Update(produto);
+        _context.Produto.Update(produto);
         await _context.SaveChangesAsync();
         return true;
     }
