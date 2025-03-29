@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
+namespace ComparacaoPrecos.Data.DB;
 public class ApplicationUser : IdentityUser
 {
     public string Tipo { get; set; } = "User";

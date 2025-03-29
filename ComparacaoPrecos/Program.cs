@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
+using ComparacaoPrecos.Data.DB;
 using Microsoft.AspNetCore.Identity;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
