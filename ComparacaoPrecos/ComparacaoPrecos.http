@@ -1,4 +1,0 @@
-@CP_HostAddress = http://localhost:5056
-
-### Listar Produtos
-GET {{CP_HostAddress}}/produto

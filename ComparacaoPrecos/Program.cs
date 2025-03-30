@@ -1,13 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
-using ComparacaoPrecos.Data.DB;
-using ComparacaoPrecos.Repository.ProdutoRepository;
+using ComparacaoPrecos.Service;
+using ComparacaoPrecos.Repository;
 using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ProdutoRepository>();
+builder.Services.AddScoped<ProdutoService>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,0 +1,11 @@
+@model Produto
+
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<h2>@Model.Nome</h2>
+
+<p><strong>ID:</strong> @Model.ProdutoID</p>
+<p><strong>Nome:</strong> @Model.Nome</p>
+<p><strong>Categoria:</strong> @Model.CategoriaID</p>
