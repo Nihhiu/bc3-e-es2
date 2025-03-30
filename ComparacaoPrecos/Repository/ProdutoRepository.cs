@@ -21,12 +21,12 @@ public class ProdutoRepository {
 
     // Buscar todos os produtos que não estão deletados
     public async Task<List<Produto>> GetAllProdutos() {
-        return await _context.Produto.Include(p => p.Categoria).Where(p => !p.Deleted).ToListAsync();
+        return await _context.Produto.Where(p => !p.Deleted).ToListAsync();
     }
 
     // Buscar produto por ID que não está deletado
     public async Task<Produto> GetProdutoById(int id) {
-        var produto = await _context.Produto.Include(p => p.Categoria).FirstOrDefaultAsync(p => p.ProdutoID == id && !p.Deleted) ?? throw new KeyNotFoundException($"Produto with ID {id} not found or is deleted.");
+        var produto = await _context.Produto.FirstOrDefaultAsync(p => p.ProdutoID == id && !p.Deleted) ?? throw new KeyNotFoundException($"Produto with ID {id} not found or is deleted.");
         return produto;
     }
 

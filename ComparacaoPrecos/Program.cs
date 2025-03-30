@@ -8,7 +8,12 @@ using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ProdutoRepository>();
+builder.Services.AddScoped<CategoriaRepository>();
+builder.Services.AddScoped<ProdutoLojaRepository>();
+
 builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<CategoriaService>();
+builder.Services.AddScoped<ProdutoLojaService>();
 
 
 builder.Services.AddEndpointsApiExplorer();

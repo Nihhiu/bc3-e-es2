@@ -1,0 +1,26 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ComparacaoPrecos.Models.ProdutoViewModel
+
+@{
+    ViewData["Title"] = "Criar Produto";
+}
+
+<h2>Criar Produto</h2>
+
+<form asp-action="criar" asp-controller="Produto" method="post">
+    <div class="form-group">
+        <label asp-for="Nome"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CategoriaID">Categoria</label>
+        <select asp-for="CategoriaID" asp-items="Model.Categorias" class="form-control">
+            <option value="">Selecione uma categoria</option>
+        </select>
+        <span asp-validation-for="CategoriaID" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
