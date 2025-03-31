@@ -6,20 +6,14 @@
 }
 
 <h1>Lista de Produtos</h1>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var produto in Model)
-        {
-            <tr>
-                <td>@produto.ProdutoID</td>
-                <td>@produto.Nome</td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    @foreach (var produto in Model)
+    {
+        <a href="/produto/@produto.ProdutoID" style="text-decoration: none; color: inherit;">
+            <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; cursor: pointer; width: 200px; text-align: center; background-color: #f9f9f9;">
+                <strong>@produto.Nome</strong>
+            </div>
+        </a>
+    }
+</div>
