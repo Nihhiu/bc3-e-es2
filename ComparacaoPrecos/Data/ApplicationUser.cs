@@ -59,7 +59,8 @@ public class Produto_Loja
     [ForeignKey("LojaID")]
     public Loja Loja { get; set; }
 
-    public DateTime data { get; set; } = DateTime.Now.Date;
+    public DateOnly data { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
     public TimeSpan hora { get; set; } = DateTime.Now.TimeOfDay;
 
     [Required]
