@@ -66,7 +66,7 @@ public class Produto_Loja
     public double preco { get; set; }
 
     [Required]
-    public string UserId { get; set; }
+    public string Id { get; set; }
 
     [ForeignKey("Id")]
     public ApplicationUser ApplicationUser { get; set; }
