@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ComparacaoPrecos.Repository;
 

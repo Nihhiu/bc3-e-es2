@@ -19,6 +19,12 @@ public class ProdutoLojaRepository{
 
     // Buscar todos os produtos que não estão deletados
     public async Task<List<Produto_Loja>> GetAllProdutosLojas() {
-        return await _context.Produto_Loja.Include(p => p.Produto).Include(p => p.Loja).Where(p => !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync();
+        return await _context.Produto_Loja.Where(p => !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync();
+    }
+
+    // Buscar produto por ProdutoID que não está deletado
+    public async Task<List<Produto_Loja>> GetProdutoLojaByProduto(int id) {
+        return await _context.Produto_Loja.Include(p => p.Loja).Where(p => p.ProdutoID == id && !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync() 
+               ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
     }
 }

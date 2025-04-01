@@ -16,4 +16,10 @@ public class ProdutoLojaService {
     {
         return await _produtoLojaRepository.GetAllProdutosLojas();
     }
+
+    // Buscar produto por id que não estão deletados
+    public async Task<IEnumerable<Produto_Loja>> GetProdutoLojaByProduto(int id)
+    {
+        return await _produtoLojaRepository.GetProdutoLojaByProduto(id);
+    }
 }

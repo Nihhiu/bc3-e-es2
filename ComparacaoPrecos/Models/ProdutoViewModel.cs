@@ -16,4 +16,19 @@ public class ProdutoViewModel
     public List<SelectListItem> Categorias { get; set; } = new List<SelectListItem>();
 
     public bool Deleted { get; set; } = false;
+
+    public List<ProdutoLojaViewModel> InfoPorLoja { get; set; } = new List<ProdutoLojaViewModel>();
+    
+}
+
+public class ProdutoLojaViewModel
+{
+    [Required]
+    public string NomeLoja { get; set; }
+    
+    [Required]
+    public double Preco { get; set; }
+
+    [Required]
+    public string Localizacao { get; set; }
 }

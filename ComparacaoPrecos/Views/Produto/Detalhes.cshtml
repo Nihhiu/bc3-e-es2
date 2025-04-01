@@ -1,4 +1,5 @@
-@model Produto
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ComparacaoPrecos.Models.ProdutoViewModel
 
 @{
     ViewData["Title"] = "Detalhes do Produto";
@@ -7,6 +8,14 @@
 
 <h2>@Model.Nome</h2>
 
-<p><strong>ID:</strong> @Model.ProdutoID</p>
-<p><strong>Nome:</strong> @Model.Nome</p>
 <p><strong>Categoria:</strong> @Model.CategoriaID</p>
+
+<h3>Lojas disponíveis:</h3>
+<ul>
+    @foreach (var loja in Model.InfoPorLoja)
+    {
+        <li>
+            <strong>@loja.NomeLoja</strong> - Preço: @loja.Preco - Localização: @loja.Localizacao
+        </li>
+    }
+</ul>

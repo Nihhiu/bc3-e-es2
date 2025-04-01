@@ -9,10 +9,14 @@ namespace ComparacaoPrecos.Controller;
 public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
     private readonly ProdutoService _produtoService;
     private readonly CategoriaService _categoriaService;
+    private readonly ProdutoLojaService _produtoLojaService;
+    private readonly LojaService _lojaService;
 
-    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService) {
+    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService, ProdutoLojaService produtoLojaService, LojaService lojaService) {
         _produtoService = produtoService;
         _categoriaService = categoriaService;
+        _produtoLojaService = produtoLojaService;
+        _lojaService = lojaService;
     }
 
     // GET: /produto
@@ -30,7 +34,25 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
         var produto = await _produtoService.GetProdutoById(id);
         if (produto == null) return NotFound();
 
-        return View(produto);
+        var produtoLoja = await _produtoLojaService.GetProdutoLojaByProduto(id);
+
+        var produtoViewModel = new ProdutoViewModel
+        {
+            Nome = produto.Nome,
+            CategoriaID = produto.CategoriaID,
+            Deleted = produto.Deleted,
+            Categorias = (await _categoriaService.GetAllCategorias())
+                .Select(c => new SelectListItem { Value = c.CategoriaID, Text = c.CategoriaID })
+                .ToList(),
+            InfoPorLoja = produtoLoja != null ? produtoLoja.Select(pl => new ProdutoLojaViewModel
+                {
+                    NomeLoja = pl.Loja.Nome,
+                    Preco = pl.preco,
+                    Localizacao = pl.Loja.Localizacao
+                }).ToList() : new List<ProdutoLojaViewModel>()
+        };
+
+        return View(produtoViewModel);
     }
 
     // GET: /produto/criar (Exibir formulário)
