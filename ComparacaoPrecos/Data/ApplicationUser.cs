@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 public class ApplicationUser : IdentityUser
 {
-    public string Tipo { get; set; } = "User";
+    //public string Tipo { get; set; } = "User";
 }
 
 public class Loja

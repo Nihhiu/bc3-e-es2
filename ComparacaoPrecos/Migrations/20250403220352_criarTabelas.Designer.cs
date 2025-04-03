@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ComparacaoPrecos.Data.Migrations
+namespace ComparacaoPrecos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250401174849_UpdateUserId")]
-    partial class UpdateUserId
+    [Migration("20250403220352_criarTabelas")]
+    partial class criarTabelas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,10 +68,6 @@ namespace ComparacaoPrecos.Data.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
