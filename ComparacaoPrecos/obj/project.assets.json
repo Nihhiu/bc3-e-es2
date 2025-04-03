@@ -4048,19 +4048,19 @@
     ]
   },
   "packageFolders": {
-    "/home/jomicf/.nuget/packages/": {}
+    "C:\\Users\\Nihhiu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/jomicf/github/bc3-e-es2/ComparacaoPrecos/ComparacaoPrecos.csproj",
+      "projectUniqueName": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
       "projectName": "ComparacaoPrecos",
-      "projectPath": "/home/jomicf/github/bc3-e-es2/ComparacaoPrecos/ComparacaoPrecos.csproj",
-      "packagesPath": "/home/jomicf/.nuget/packages/",
-      "outputPath": "/home/jomicf/github/bc3-e-es2/ComparacaoPrecos/obj/",
+      "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
+      "packagesPath": "C:\\Users\\Nihhiu\\.nuget\\packages\\",
+      "outputPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/jomicf/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Nihhiu\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -4148,7 +4148,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

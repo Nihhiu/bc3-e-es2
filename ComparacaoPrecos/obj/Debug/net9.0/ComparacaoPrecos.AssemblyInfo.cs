@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ComparacaoPrecos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6e3a431ec20fa11a151bdfd8cbe3e0c522570bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36bc31b454fc52d82abf295b99c21f4dd6c5fcd7")]
 [assembly: System.Reflection.AssemblyProductAttribute("ComparacaoPrecos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ComparacaoPrecos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

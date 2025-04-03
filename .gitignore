@@ -1,2 +1,3 @@
-.\ComparacaoPrecos\bin\
-.\ComparacaoPrecos\obj\
+.\ComparacaoPrecos\bin
+.\ComparacaoPrecos\obj
+.\ComparacaoPrecos\appsettings.json
