@@ -6,15 +6,21 @@
     Layout = "_Layout";
 }
 
-<h1>Lista de Produtos</h1>
+<div class="container my-5">
+    <h1 class="text-center mb-4 text-primary">Lista de Produtos</h1>
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-    @foreach (var produto in Model)
-    {
-        <a href="/produto/@produto.ProdutoID" style="text-decoration: none; color: inherit;">
-            <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; cursor: pointer; width: 200px; text-align: center; background-color: #f9f9f9;">
-                <strong>@produto.Nome</strong>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        @foreach (var produto in Model)
+        {
+            <div class="col">
+                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.ProdutoID" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@produto.Nome</h5>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </a>
-    }
+        }
+    </div>
 </div>
