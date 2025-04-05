@@ -55,32 +55,32 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             {
                 LojaID = 1,
                 Nome = "Pingo Doce",
-                Latitude = 41.7030419,
-                Longitude = -8.8216179,
+                Latitude = 41.7070278,
+                Longitude = -8.8251667,
                 Deleted = false
             },
             new Loja
             {
                 LojaID = 2,
                 Nome = "Lidl",
-                Latitude = 41.7036984,
-                Longitude = -8.824256,
+                Latitude = 41.7070278,
+                Longitude = -8.8251667,
                 Deleted = false
             },
             new Loja
             {
                 LojaID = 3,
                 Nome = "Continente",
-                Latitude = 41.7004442,
-                Longitude = -8.8391287,
+                Latitude = 41.7042689,
+                Longitude = -8.8147794,
                 Deleted = false
             },
             new Loja
             {
                 LojaID = 4,
                 Nome = "Mercadona",
-                Latitude = 41.7070321,
-                Longitude = -8.844206,
+                Latitude = 41.7070326,
+                Longitude = -8.8251517,
                 Deleted = false
             }
         );

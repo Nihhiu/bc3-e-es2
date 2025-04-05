@@ -253,32 +253,32 @@ namespace ComparacaoPrecos.Migrations
                         {
                             LojaID = 1,
                             Deleted = false,
-                            Latitude = 41.703041900000002,
-                            Longitude = -8.8216178999999997,
+                            Latitude = 41.707027799999999,
+                            Longitude = -8.8251667000000005,
                             Nome = "Pingo Doce"
                         },
                         new
                         {
                             LojaID = 2,
                             Deleted = false,
-                            Latitude = 41.7036984,
-                            Longitude = -8.8242560000000001,
+                            Latitude = 41.707027799999999,
+                            Longitude = -8.8251667000000005,
                             Nome = "Lidl"
                         },
                         new
                         {
                             LojaID = 3,
                             Deleted = false,
-                            Latitude = 41.7004442,
-                            Longitude = -8.8391286999999998,
+                            Latitude = 41.704268900000002,
+                            Longitude = -8.8147794000000008,
                             Nome = "Continente"
                         },
                         new
                         {
                             LojaID = 4,
                             Deleted = false,
-                            Latitude = 41.707032099999999,
-                            Longitude = -8.8442059999999998,
+                            Latitude = 41.707032599999998,
+                            Longitude = -8.8251516999999993,
                             Nome = "Mercadona"
                         });
                 });
