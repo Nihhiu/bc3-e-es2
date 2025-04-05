@@ -14,10 +14,12 @@ public class Loja
     [Required]
     [MaxLength(100)]
     public string Nome { get; set; }
-    
+
     [Required]
-    [MaxLength(100)]
-    public string Localizacao { get; set; }
+    public double Latitude { get; set; } // coordenadas Google Maps
+
+    [Required]
+    public double Longitude { get; set; }
     
     public bool Deleted { get; set; } = false;
 }
@@ -59,12 +61,13 @@ public class Produto_Loja
     [ForeignKey("LojaID")]
     public Loja Loja { get; set; }
 
-    public DateOnly data { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-
-    public TimeSpan hora { get; set; } = DateTime.Now.TimeOfDay;
+    public DateTime DataHora { get; set; } = DateTime.Now;
 
     [Required]
     public double preco { get; set; }
+
+    [Required][Range(0, 5)]
+    public int credibilidade { get; set; } = 5; 
 
     [Required]
     public string Id { get; set; }
@@ -73,5 +76,4 @@ public class Produto_Loja
     public ApplicationUser ApplicationUser { get; set; }
     
     public bool Deleted { get; set; } = false;
-}  
-
+}

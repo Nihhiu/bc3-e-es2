@@ -47,8 +47,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
             InfoPorLoja = produtoLoja != null ? produtoLoja.Select(pl => new ProdutoLojaViewModel
                 {
                     NomeLoja = pl.Loja.Nome,
-                    Preco = pl.preco,
-                    Localizacao = pl.Loja.Localizacao
+                    Preco = pl.preco
                 }).ToList() : new List<ProdutoLojaViewModel>()
         };
 
