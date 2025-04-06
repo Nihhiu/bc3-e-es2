@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ComparacaoPrecos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250405234834_AdicionarCategorias")]
+    [Migration("20250406094858_AdicionarCategorias")]
     partial class AdicionarCategorias
     {
         /// <inheritdoc />
