@@ -3,7 +3,7 @@ using ComparacaoPrecos.Data;
 
 namespace ComparacaoPrecos.Repository;
 
-public class ProdutoRepository {
+public class ProdutoRepository : IProdutoRepository {
     private readonly ApplicationDbContext _context;
 
     public ProdutoRepository(ApplicationDbContext context) {

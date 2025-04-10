@@ -7,9 +7,9 @@ namespace ComparacaoPrecos.Controller;
 
 [Route("produto")]
 public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
-    private readonly ProdutoService _produtoService;
+    private readonly IProdutoService _produtoService;
 
-    public ProdutoController(ProdutoService produtoService) {
+    public ProdutoController(IProdutoService produtoService) {
         _produtoService = produtoService;
     }
 

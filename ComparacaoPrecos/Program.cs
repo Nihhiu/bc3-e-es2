@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ProdutoRepository>();
-builder.Services.AddScoped<CategoriaRepository>();
-builder.Services.AddScoped<ProdutoLojaRepository>();
-builder.Services.AddScoped<LojaRepository>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IProdutoLojaRepository, ProdutoLojaRepository>();
+builder.Services.AddScoped<ILojaRepository, LojaRepository>();
 
-builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
 builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddScoped<ProdutoLojaService>();
 builder.Services.AddScoped<LojaService>();

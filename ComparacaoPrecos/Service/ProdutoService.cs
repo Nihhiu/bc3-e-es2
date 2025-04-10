@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComparacaoPrecos.Service;
 
-public class ProdutoService {
+public class ProdutoService : IProdutoService {
 
-    private readonly ProdutoRepository _produtoRepository;
-    private readonly CategoriaRepository _categoriaRepository;
-    private readonly ProdutoLojaRepository _produtoLojaRepository;
-    private readonly LojaRepository _lojaRepository;
+    private readonly IProdutoRepository _produtoRepository;
+    private readonly ICategoriaRepository _categoriaRepository;
+    private readonly IProdutoLojaRepository _produtoLojaRepository;
+    private readonly ILojaRepository _lojaRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository, 
-                          CategoriaRepository categoriaRepository, 
-                          ProdutoLojaRepository produtoLojaRepository, 
-                          LojaRepository lojaRepository) {
+    public ProdutoService(IProdutoRepository produtoRepository, 
+                          ICategoriaRepository categoriaRepository, 
+                          IProdutoLojaRepository produtoLojaRepository, 
+                          ILojaRepository lojaRepository) {
         _produtoRepository = produtoRepository;
         _categoriaRepository = categoriaRepository;
         _produtoLojaRepository = produtoLojaRepository;

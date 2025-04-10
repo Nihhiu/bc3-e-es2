@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ComparacaoPrecos.Repository;
 
-public class ProdutoLojaRepository{
+public class ProdutoLojaRepository : IProdutoLojaRepository{
     private readonly ApplicationDbContext _context;
 
     public ProdutoLojaRepository(ApplicationDbContext context) {
