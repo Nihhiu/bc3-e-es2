@@ -7,35 +7,33 @@ namespace ComparacaoPrecos.Controller;
 
 [Route("produto")]
 public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
-    private readonly IProdutoService _produtoService;
+    private readonly IProdutoFacade _produtoFacade;
 
-    public ProdutoController(IProdutoService produtoService) {
-        _produtoService = produtoService;
+    public ProdutoController(IProdutoFacade produtoFacade)
+    {
+        _produtoFacade = produtoFacade;
     }
 
-    // GET: /produto
     [HttpGet("")]
     public async Task<IActionResult> Index()
     {
-        var produtos = await _produtoService.GetAllProdutos();
+        var produtos = await _produtoFacade.ObterLista();
         return View(produtos);
     }
 
-    // GET: /produto/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> Detalhes(int id)
     {
-        var viewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
+        var viewModel = await _produtoFacade.ObterDetalhes(id);
         if (viewModel == null) return NotFound();
 
         return View(viewModel);
     }
 
-
     [HttpGet("criar")]
     public async Task<IActionResult> Create()
     {
-        var viewModel = await _produtoService.GetProdutoCreateViewModel();
+        var viewModel = await _produtoFacade.CriacaoViewModel();
         return View(viewModel);
     }
 
@@ -44,12 +42,11 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
     {
         if (!ModelState.IsValid)
         {
-            model = await _produtoService.RecarregarCategorias(model);
+            model = await _produtoFacade.RecarregarCategorias(model);
             return View(model);
         }
 
-        await _produtoService.CriarProdutoAsync(model);
+        await _produtoFacade.CriarProduto(model);
         return RedirectToAction("Index");
     }
-
 }

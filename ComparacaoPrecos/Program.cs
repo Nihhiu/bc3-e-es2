@@ -13,6 +13,7 @@ builder.Services.AddScoped<IProdutoLojaRepository, ProdutoLojaRepository>();
 builder.Services.AddScoped<ILojaRepository, LojaRepository>();
 
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<IProdutoFacade, ProdutoFacade>();
 builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddScoped<ProdutoLojaService>();
 builder.Services.AddScoped<LojaService>();
