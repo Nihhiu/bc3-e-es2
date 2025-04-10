@@ -1,14 +1,26 @@
 using ComparacaoPrecos.Data;
 using ComparacaoPrecos.Repository;
+using ComparacaoPrecos.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComparacaoPrecos.Service;
 
 public class ProdutoService {
 
     private readonly ProdutoRepository _produtoRepository;
+    private readonly CategoriaRepository _categoriaRepository;
+    private readonly ProdutoLojaRepository _produtoLojaRepository;
+    private readonly LojaRepository _lojaRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, 
+                          CategoriaRepository categoriaRepository, 
+                          ProdutoLojaRepository produtoLojaRepository, 
+                          LojaRepository lojaRepository) {
         _produtoRepository = produtoRepository;
+        _categoriaRepository = categoriaRepository;
+        _produtoLojaRepository = produtoLojaRepository;
+        _lojaRepository = lojaRepository;
     }
 
     // Buscar todos os produtos que não estão deletados
@@ -18,27 +30,71 @@ public class ProdutoService {
     }
 
     // Buscar produto por id que não estão deletados
-    public async Task<Produto> GetProdutoById(int id)
+    public async Task<ProdutoViewModel?> GetProdutoDetalhesViewModel(int id)
     {
-        return await _produtoRepository.GetProdutoById(id);
+        var produto = await _produtoRepository.GetProdutoById(id);
+        if (produto == null) return null;
+
+        var produtoLoja = await _produtoLojaRepository.GetProdutoLojaByProduto(id);
+        var categorias = await _categoriaRepository.GetAllCategorias();
+
+        return new ProdutoViewModel
+        {
+            Nome = produto.Nome,
+            CategoriaID = produto.CategoriaID,
+            Deleted = produto.Deleted,
+            Categorias = categorias
+                .Select(c => new SelectListItem { Value = c.CategoriaID, Text = c.CategoriaID })
+                .ToList(),
+            InfoPorLoja = produtoLoja?.Select(pl => new ProdutoLojaViewModel
+            {
+                NomeLoja = pl.Loja.Nome,
+                Preco = pl.preco
+            }).ToList() ?? new List<ProdutoLojaViewModel>()
+        };
     }
 
-    // Criar um novo produto
-    public async Task<Produto> AddProduto(Produto produto)
+
+    // Listar o formulário de criação de produto
+    public async Task<ProdutoViewModel> GetProdutoCreateViewModel()
     {
-        return await _produtoRepository.AddProduto(produto);
+        var categorias = await _categoriaRepository.GetAllCategorias();
+
+        return new ProdutoViewModel
+        {
+            Categorias = categorias
+                .Select(c => new SelectListItem
+                {
+                    Value = c.CategoriaID,
+                    Text = c.CategoriaID
+                }).ToList()
+        };
     }
 
-    // Atualizar produto
-    public async Task<Produto> UpdateProduto(Produto produto)
+    // Recarregar categorias no formulário de criação de produto
+    public async Task<ProdutoViewModel> RecarregarCategorias(ProdutoViewModel model)
     {
-        return await _produtoRepository.UpdateProduto(produto);
+        var categorias = await _categoriaRepository.GetAllCategorias();
+        model.Categorias = categorias
+            .Select(c => new SelectListItem
+            {
+                Value = c.CategoriaID,
+                Text = c.CategoriaID
+            }).ToList();
+
+        return model;
     }
 
-    // Deletar produto (marcar como deletado)
-    public async Task<bool> DeleteProduto(int id)
+    // Criar produto
+    public async Task CriarProdutoAsync(ProdutoViewModel model)
     {
-        return await _produtoRepository.DeleteProduto(id);
+        var produto = new Produto
+        {
+            Nome = model.Nome,
+            CategoriaID = model.CategoriaID
+        };
+
+        await _produtoRepository.AddProduto(produto);
     }
     
 }
