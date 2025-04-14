@@ -11,6 +11,7 @@ builder.Services.AddScoped<ProdutoRepository>();
 builder.Services.AddScoped<CategoriaRepository>();
 builder.Services.AddScoped<ProdutoLojaRepository>();
 builder.Services.AddScoped<LojaRepository>();
+builder.Services.AddScoped<IProdutoStrategy, DefaultProdutoStrategy>();
 
 builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<CategoriaService>();

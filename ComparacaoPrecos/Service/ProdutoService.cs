@@ -8,6 +8,7 @@ namespace ComparacaoPrecos.Service;
 
 public class ProdutoService {
 
+    private readonly IProdutoStrategy _produtoStrategy;
     private readonly ProdutoRepository _produtoRepository;
     private readonly CategoriaRepository _categoriaRepository;
     private readonly ProdutoLojaRepository _produtoLojaRepository;
@@ -16,11 +17,13 @@ public class ProdutoService {
     public ProdutoService(ProdutoRepository produtoRepository, 
                           CategoriaRepository categoriaRepository, 
                           ProdutoLojaRepository produtoLojaRepository, 
-                          LojaRepository lojaRepository) {
+                          LojaRepository lojaRepository,
+                          IProdutoStrategy produtoStrategy) {
         _produtoRepository = produtoRepository;
         _categoriaRepository = categoriaRepository;
         _produtoLojaRepository = produtoLojaRepository;
         _lojaRepository = lojaRepository;
+        _produtoStrategy = produtoStrategy;
     }
 
     // Buscar todos os produtos que não estão deletados
