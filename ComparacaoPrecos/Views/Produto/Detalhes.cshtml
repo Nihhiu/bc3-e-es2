@@ -14,23 +14,6 @@
                 <strong>Categoria:</strong> @Model.CategoriaID
             </p>
 
-            <div class="mb-4"></div>
-                <span class="fw-semibold me-2">Ver com estratégia de loja:</span>
-
-                <a asp-controller="Produto" asp-action="Detalhes" 
-                   asp-route-id="@Model.Id" asp-route-lojaNome="Default" 
-                   class="btn btn-outline-secondary btn-sm me-2">
-                    Loja Default
-                </a>
-
-                <a asp-controller="Produto" asp-action="Detalhes" 
-                   asp-route-id="@Model.Id" asp-route-lojaNome="LojacomDesconto" 
-                   class="btn btn-outline-success btn-sm">
-                    Loja com Desconto
-                </a>
-            </div>
-
-
             <h4 class="mb-3">Lojas disponíveis</h4>
 
             @foreach (var loja in Model.InfoPorLoja)

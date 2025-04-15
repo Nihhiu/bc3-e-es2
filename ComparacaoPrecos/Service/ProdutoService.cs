@@ -100,11 +100,8 @@ public class ProdutoService {
         await _produtoRepository.AddProduto(produto);
     }
 
-    public async Task<ProdutoViewModel> ObterProduto(int produtoId, string lojaNome)
+    public async Task<ProdutoViewModel?> ObterProduto(int produtoId, string lojaNome)
     {
-        var produto = await _produtoRepository.GetProdutoById(produtoId);
-        if (produto == null) return null;
-
         var strategy = _strategyFactory.GetStrategyByLoja(lojaNome);
         return await strategy.Build(produtoId);
     }

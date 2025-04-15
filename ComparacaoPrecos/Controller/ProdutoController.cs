@@ -52,12 +52,12 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
         return RedirectToAction("Index");
     }
 
-    [HttpGet("produto/{id}/loja/{lojaNome}")]
+    [HttpGet("{id}/loja/{lojaNome}")]
     public async Task<IActionResult> Detalhes(int id, string lojaNome)
     {
-        var viewModel = await _produtoService.ObterProduto(id, lojaNome);
-        if (viewModel == null) return NotFound();
+    var viewModel = await _produtoService.ObterProduto(id, lojaNome);
+    if (viewModel == null) return NotFound();
 
-        return View("Detalhes", viewModel); 
+    return View("Detalhes", viewModel); 
     }
 }
