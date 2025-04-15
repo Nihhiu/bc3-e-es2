@@ -51,13 +51,4 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
         await _produtoService.CriarProdutoAsync(model);
         return RedirectToAction("Index");
     }
-
-    [HttpGet("{id}/loja/{lojaNome}")]
-    public async Task<IActionResult> Detalhes(int id, string lojaNome)
-    {
-    var viewModel = await _produtoService.ObterProduto(id, lojaNome);
-    if (viewModel == null) return NotFound();
-
-    return View("Detalhes", viewModel); 
-    }
 }
