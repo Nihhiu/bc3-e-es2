@@ -6,6 +6,9 @@ namespace ComparacaoPrecos.Models;
 
 public class ProdutoViewModel
 {
+
+    public int Id { get; set; }
+
     [Required]
     [StringLength(100)]
     public string Nome { get; set; }

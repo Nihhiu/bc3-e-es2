@@ -8,7 +8,7 @@ namespace ComparacaoPrecos.Service;
 
 public class ProdutoService {
 
-    private readonly IProdutoStrategy _produtoStrategy;
+    private readonly ProdutoStrategyFactory _strategyFactory;
     private readonly ProdutoRepository _produtoRepository;
     private readonly CategoriaRepository _categoriaRepository;
     private readonly ProdutoLojaRepository _produtoLojaRepository;
@@ -18,12 +18,12 @@ public class ProdutoService {
                           CategoriaRepository categoriaRepository, 
                           ProdutoLojaRepository produtoLojaRepository, 
                           LojaRepository lojaRepository,
-                          IProdutoStrategy produtoStrategy) {
+                          ProdutoStrategyFactory strategyFactory) {
         _produtoRepository = produtoRepository;
         _categoriaRepository = categoriaRepository;
         _produtoLojaRepository = produtoLojaRepository;
         _lojaRepository = lojaRepository;
-        _produtoStrategy = produtoStrategy;
+        _strategyFactory = strategyFactory;
     }
 
     // Buscar todos os produtos que não estão deletados
@@ -99,5 +99,10 @@ public class ProdutoService {
 
         await _produtoRepository.AddProduto(produto);
     }
-    
+
+    public async Task<ProdutoViewModel?> ObterProduto(int produtoId, string lojaNome)
+    {
+        var strategy = _strategyFactory.GetStrategyByLoja(lojaNome);
+        return await strategy.Build(produtoId);
+    }
 }
