@@ -28,22 +28,6 @@
                             <span asp-validation-for="CategoriaID" class="text-danger small"></span>
                         </div>
 
-                        <div class="mb-4">
-                            <span class="fw-semibold me-2">Ver com estratégia de loja:</span>
-
-                            <a asp-controller="Produto" asp-action="Detalhes" 
-                                asp-route-id="@Model.Id" asp-route-lojaNome="Default" 
-                                class="btn btn-outline-secondary btn-sm me-2">
-                                  Loja Default
-                            </a>
-
-                            <a asp-controller="Produto" asp-action="Detalhes" 
-                                asp-route-id="@Model.Id" asp-route-lojaNome="LojacomDesconto" 
-                                class="btn btn-outline-success btn-sm">
-                                  Loja com Desconto
-                            </a>
-                        </div>
-
                         <div class="d-grid">
                             <button type="submit" class="btn btn-success">Salvar Produto</button>
                         </div>

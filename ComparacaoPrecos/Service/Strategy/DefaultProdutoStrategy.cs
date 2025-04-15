@@ -27,6 +27,7 @@ public class DefaultProdutoStrategy : IProdutoStrategy
 
         return new ProdutoViewModel
         {
+            Id = produto.ProdutoID,
             Nome = produto.Nome,
             CategoriaID = produto.CategoriaID,
             Deleted = produto.Deleted,

@@ -9,9 +9,9 @@ public class ProdutoStrategyFactory
 
     public IProdutoStrategy GetStrategyByLoja(string lojaNome)
     {
-        return lojaNome.ToLower() switch
+        return lojaNome switch
         {
-            "lojacomdesconto" => _serviceProvider.GetRequiredService<LojaDescontoStrategy>(),
+            "LojacomDesconto" => _serviceProvider.GetRequiredService<LojaDescontoStrategy>(),
             _ => _serviceProvider.GetRequiredService<DefaultProdutoStrategy>()
         };
     }
