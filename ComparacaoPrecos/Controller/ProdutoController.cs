@@ -26,7 +26,8 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
     public async Task<IActionResult> Detalhes(int id)
     {
         var viewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
-        if (viewModel == null) return NotFound();
+        if (viewModel == null) 
+        return NotFound();
 
         return View(viewModel);
     }

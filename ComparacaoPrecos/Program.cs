@@ -3,8 +3,8 @@ using ComparacaoPrecos.Data;
 using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Repository;
 using Microsoft.AspNetCore.Identity;
-using ComparacaoPrecos.Strategy.Concrete;
-
+using ComparacaoPrecos.Strategies;
+using ComparacaoPrecos.Factories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,8 @@ builder.Services.AddScoped<CategoriaRepository>();
 builder.Services.AddScoped<ProdutoLojaRepository>();
 builder.Services.AddScoped<LojaRepository>();
 
-builder.Services.AddScoped<IProdutoLojaStrategy, LojaStrategy>();
+builder.Services.AddScoped<LojaAStrategy>();
+builder.Services.AddScoped<LojaBStrategy>();
 builder.Services.AddScoped<ProdutoStrategyFactory>();
 
 builder.Services.AddScoped<ProdutoService>();

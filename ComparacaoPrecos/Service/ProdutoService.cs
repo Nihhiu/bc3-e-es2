@@ -3,6 +3,7 @@ using ComparacaoPrecos.Repository;
 using ComparacaoPrecos.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ComparacaoPrecos.Factories;
 
 namespace ComparacaoPrecos.Service;
 
