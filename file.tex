@@ -1,0 +1,114 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={Princípio da Inversão de Dependência (DIP)},
+    pdfauthor={Seu Nome},
+}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+
+% Configuração para exibir código-fonte
+\definecolor{lightgray}{gray}{0.95}
+\lstset{
+    backgroundcolor=\color{lightgray},
+    basicstyle=\ttfamily\small,
+    frame=single,
+    breaklines=true,
+    captionpos=b,
+    language=C,
+    tabsize=4,
+    showstringspaces=false
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Princípio da Inversão de Dependência}
+\lhead{Engenharia de Software II}
+\rfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Defesa do Princípio da Inversão de Dependência (DIP)}}\\[0.5cm]
+    {\large João Miguel Caires Fernandes}\\
+    {\large \today}
+\end{center}
+
+\vspace{1cm}
+
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+% Aqui insira o seu texto teórico sobre o DIP.
+
+\vspace{0.5cm}
+
+\section*{Exemplo 1: Violação do DIP}
+\addcontentsline{toc}{section}{Exemplo 1: Violação do DIP}
+
+% Explicação introdutória sobre a violação do princípio.
+
+\begin{lstlisting}[language=C,caption={Serviço acoplado à implementação concreta}]
+public class ProdutoService
+{
+    private readonly ProdutoRepository _produtoRepo;
+
+    public ProdutoService()
+    {
+        _produtoRepo = new ProdutoRepository();
+    }
+}
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\section*{Exemplo 2: Aplicação do DIP com Interface}
+\addcontentsline{toc}{section}{Exemplo 2: Aplicação do DIP com Interface}
+
+% Explicação sobre desacoplamento com interface.
+
+\begin{lstlisting}[language=C,caption={Serviço desacoplado por meio de interface}]
+public class ProdutoService
+{
+    private readonly IProdutoRepository _produtoRepo;
+
+    public ProdutoService(IProdutoRepository produtoRepo)
+    {
+        _produtoRepo = produtoRepo;
+    }
+}
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\section*{Exemplo 3: Injeção de Dependência}
+\addcontentsline{toc}{section}{Exemplo 3: Injeção de Dependência}
+
+% Explicação sobre registo de dependências.
+
+\begin{lstlisting}[language=C,caption={Registo de dependências com injeção}]
+services.AddScoped<IProdutoRepository, ProdutoRepository>();
+services.AddScoped<ProdutoService>();
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\section*{Conclusão}
+\addcontentsline{toc}{section}{Conclusão}
+
+% Conclusão com os benefícios do DIP.
+
+\end{document}
