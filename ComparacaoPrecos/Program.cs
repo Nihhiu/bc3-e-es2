@@ -139,4 +139,4 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
         Console.WriteLine("Administrador já existe.");
     }
 }
-// 1st try
+// 2nd try
