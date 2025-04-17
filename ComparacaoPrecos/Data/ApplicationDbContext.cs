@@ -19,7 +19,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(modelBuilder);
 
-        // Sua configuração adicional, como chaves compostas:
         modelBuilder.Entity<Produto_Loja>()
             .HasKey(pl => new { pl.ProdutoID, pl.LojaID });
 

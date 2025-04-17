@@ -23,8 +23,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
 
-
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -57,7 +55,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -65,7 +62,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -91,7 +87,6 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
     string adminEmail = "admin@gmail.com";
     string adminPassword = "Admin@123";
 
-    // Criar a role de Administrador, se não existir
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
@@ -111,8 +106,6 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
         }
     }
 
-
-    // Verificar se o usuário admin já existe
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)
     {
@@ -139,4 +132,3 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
         Console.WriteLine("Administrador já existe.");
     }
 }
-// 2nd tryyyyyyy

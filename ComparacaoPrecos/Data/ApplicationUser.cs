@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 public class ApplicationUser : IdentityUser
 {
-    //public string Tipo { get; set; } = "User";
 }
 
 public class Loja
@@ -16,7 +15,7 @@ public class Loja
     public string Nome { get; set; }
 
     [Required]
-    public double Latitude { get; set; } // coordenadas Google Maps
+    public double Latitude { get; set; } 
 
     [Required]
     public double Longitude { get; set; }

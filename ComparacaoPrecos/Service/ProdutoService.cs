@@ -22,14 +22,11 @@ public class ProdutoService {
         _produtoLojaRepository = produtoLojaRepository;
         _lojaRepository = lojaRepository;
     }
-
-    // Buscar todos os produtos que não estão deletados
     public async Task<IEnumerable<Produto>> GetAllProdutos()
     {
         return await _produtoRepository.GetAllProdutos();
     }
 
-    // Buscar produto por id que não estão deletados
     public async Task<ProdutoViewModel?> GetProdutoDetalhesViewModel(int id)
     {
         var produto = await _produtoRepository.GetProdutoById(id);
@@ -53,9 +50,6 @@ public class ProdutoService {
             }).ToList() ?? new List<ProdutoLojaViewModel>()
         };
     }
-
-
-    // Listar o formulário de criação de produto
     public async Task<ProdutoViewModel> GetProdutoCreateViewModel()
     {
         var categorias = await _categoriaRepository.GetAllCategorias();
@@ -71,7 +65,6 @@ public class ProdutoService {
         };
     }
 
-    // Recarregar categorias no formulário de criação de produto
     public async Task<ProdutoViewModel> RecarregarCategorias(ProdutoViewModel model)
     {
         var categorias = await _categoriaRepository.GetAllCategorias();
@@ -85,7 +78,6 @@ public class ProdutoService {
         return model;
     }
 
-    // Criar produto
     public async Task CriarProdutoAsync(ProdutoViewModel model)
     {
         var produto = new Produto
