@@ -1,16 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
 using ComparacaoPrecos.Service;
+using ComparacaoPrecos.Repository.Interfaces;
 using ComparacaoPrecos.Repository;
 using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ProdutoRepository>();
-builder.Services.AddScoped<CategoriaRepository>();
-builder.Services.AddScoped<ProdutoLojaRepository>();
-builder.Services.AddScoped<LojaRepository>();
+// builder.Services.AddScoped<ProdutoRepository>();
+// builder.Services.AddScoped<CategoriaRepository>();
+// builder.Services.AddScoped<ProdutoLojaRepository>();
+// builder.Services.AddScoped<LojaRepository>();
+
+builder.Services.AddScoped<IProdutoReader, ProdutoRepository>();
+builder.Services.AddScoped<IProdutoWriter, ProdutoRepository>();
+builder.Services.AddScoped<ICategoriaReader, CategoriaRepository>();
+builder.Services.AddScoped<ICategoriaWriter, CategoriaRepository>();
+builder.Services.AddScoped<IProdutoLojaReader, ProdutoLojaRepository>();
+builder.Services.AddScoped<ILojaReader, LojaRepository>();
+builder.Services.AddScoped<ILojaWriter, LojaRepository>();
 
 builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<CategoriaService>();

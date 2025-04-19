@@ -1,35 +1,72 @@
-using ComparacaoPrecos.Repository;
+// using ComparacaoPrecos.Repository;
+
+// namespace ComparacaoPrecos.Service;
+
+// public class CategoriaService {
+//     private readonly CategoriaRepository _categoriaRepository;
+
+//     public CategoriaService(CategoriaRepository categoriaRepository) {
+//         _categoriaRepository = categoriaRepository;
+//     }
+
+//     // Buscar todas as categorias que não estão deletadas
+//     public async Task<IEnumerable<Categoria>> GetAllCategorias()
+//     {
+//         return await _categoriaRepository.GetAllCategorias();
+//     }
+
+//     // Criar uma nova categoria
+//     public async Task<Categoria> AddCategoria(Categoria categoria)
+//     {
+//         return await _categoriaRepository.AddCategoria(categoria);
+//     }
+
+//     // Atualizar categoria
+//     public async Task<Categoria> UpdateCategoria(Categoria categoria)
+//     {
+//         return await _categoriaRepository.UpdateCategoria(categoria);
+//     }
+
+//     // Deletar categoria (marcar como deletada)
+//     public async Task<bool> DeleteCategoria(string id)
+//     {
+//         return await _categoriaRepository.DeleteCategoria(id);
+//     }
+// }
+
+using ComparacaoPrecos.Repository.Interfaces;
+using ComparacaoPrecos.Models;
 
 namespace ComparacaoPrecos.Service;
 
-public class CategoriaService {
-    private readonly CategoriaRepository _categoriaRepository;
+public class CategoriaService
+{
+    private readonly ICategoriaReader _categoriaReader;
+    private readonly ICategoriaWriter _categoriaWriter;
 
-    public CategoriaService(CategoriaRepository categoriaRepository) {
-        _categoriaRepository = categoriaRepository;
+    public CategoriaService(ICategoriaReader categoriaReader, ICategoriaWriter categoriaWriter)
+    {
+        _categoriaReader = categoriaReader;
+        _categoriaWriter = categoriaWriter;
     }
 
-    // Buscar todas as categorias que não estão deletadas
     public async Task<IEnumerable<Categoria>> GetAllCategorias()
     {
-        return await _categoriaRepository.GetAllCategorias();
+        return await _categoriaReader.GetAllCategorias();
     }
 
-    // Criar uma nova categoria
     public async Task<Categoria> AddCategoria(Categoria categoria)
     {
-        return await _categoriaRepository.AddCategoria(categoria);
+        return await _categoriaWriter.AddCategoria(categoria);
     }
 
-    // Atualizar categoria
     public async Task<Categoria> UpdateCategoria(Categoria categoria)
     {
-        return await _categoriaRepository.UpdateCategoria(categoria);
+        return await _categoriaWriter.UpdateCategoria(categoria);
     }
 
-    // Deletar categoria (marcar como deletada)
     public async Task<bool> DeleteCategoria(string id)
     {
-        return await _categoriaRepository.DeleteCategoria(id);
+        return await _categoriaWriter.DeleteCategoria(id);
     }
 }
