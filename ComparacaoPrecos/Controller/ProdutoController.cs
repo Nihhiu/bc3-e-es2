@@ -8,9 +8,11 @@ namespace ComparacaoPrecos.Controller;
 [Route("produto")]
 public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
     private readonly ProdutoService _produtoService;
+    private readonly CategoriaService _categoriaService;
 
-    public ProdutoController(ProdutoService produtoService) {
+    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService) {
         _produtoService = produtoService;
+        _categoriaService = categoriaService;
     }
 
     // GET: /produto
@@ -18,6 +20,14 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
     public async Task<IActionResult> Index()
     {
         var produtos = await _produtoService.GetAllProdutos();
+        var categorias = await _categoriaService.GetAllCategorias();
+
+        ViewData["Categorias"] = categorias.Select(c => new SelectListItem
+        {
+            Value = c.CategoriaID,
+            Text = c.CategoriaID
+        }).ToList();
+
         return View(produtos);
     }
 
@@ -31,24 +41,27 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
         return View(viewModel);
     }
 
-
+    // GET: /produto/criar
     [HttpGet("criar")]
     public async Task<IActionResult> Create()
     {
-        var viewModel = await _produtoService.GetProdutoCreateViewModel();
-        return View(viewModel);
+        var produto = new ProdutoViewModel();
+        var categorias = await _categoriaService.GetAllCategorias();
+
+        ViewData["Categorias"] = categorias.Select(c => new SelectListItem
+        {
+            Value = c.CategoriaID,
+            Text = c.CategoriaID
+        }).ToList();
+
+        return View(produto);
     }
 
+    // POST: /produto/criar
     [HttpPost("criar")]
     public async Task<IActionResult> Create(ProdutoViewModel model)
     {
-        if (!ModelState.IsValid)
-        {
-            model = await _produtoService.RecarregarCategorias(model);
-            return View(model);
-        }
-
-        await _produtoService.CriarProdutoAsync(model);
+        await _produtoService.CriarProdutoAsync(model.Produto);
         return RedirectToAction("Index");
     }
 

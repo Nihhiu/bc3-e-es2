@@ -7,15 +7,7 @@ namespace ComparacaoPrecos.Models;
 public class ProdutoViewModel
 {
     [Required]
-    [StringLength(100)]
-    public string Nome { get; set; }
-
-    [Required]
-    public string CategoriaID { get; set; }
-
-    public List<SelectListItem> Categorias { get; set; } = new List<SelectListItem>();
-
-    public bool Deleted { get; set; } = false;
+    public Produto Produto { get; set; } = new Produto();
 
     public List<ProdutoLojaViewModel> InfoPorLoja { get; set; } = new List<ProdutoLojaViewModel>();
     

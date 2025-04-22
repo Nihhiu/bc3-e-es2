@@ -36,16 +36,10 @@ public class ProdutoService {
         if (produto == null) return null;
 
         var produtoLoja = await _produtoLojaRepository.GetProdutoLojaByProduto(id);
-        var categorias = await _categoriaRepository.GetAllCategorias();
 
         return new ProdutoViewModel
         {
-            Nome = produto.Nome,
-            CategoriaID = produto.CategoriaID,
-            Deleted = produto.Deleted,
-            Categorias = categorias
-                .Select(c => new SelectListItem { Value = c.CategoriaID, Text = c.CategoriaID })
-                .ToList(),
+            Produto = produto,
             InfoPorLoja = produtoLoja?.Select(pl => new ProdutoLojaViewModel
             {
                 NomeLoja = pl.Loja.Nome,
@@ -54,46 +48,9 @@ public class ProdutoService {
         };
     }
 
-
-    // Listar o formulário de criação de produto
-    public async Task<ProdutoViewModel> GetProdutoCreateViewModel()
-    {
-        var categorias = await _categoriaRepository.GetAllCategorias();
-
-        return new ProdutoViewModel
-        {
-            Categorias = categorias
-                .Select(c => new SelectListItem
-                {
-                    Value = c.CategoriaID,
-                    Text = c.CategoriaID
-                }).ToList()
-        };
-    }
-
-    // Recarregar categorias no formulário de criação de produto
-    public async Task<ProdutoViewModel> RecarregarCategorias(ProdutoViewModel model)
-    {
-        var categorias = await _categoriaRepository.GetAllCategorias();
-        model.Categorias = categorias
-            .Select(c => new SelectListItem
-            {
-                Value = c.CategoriaID,
-                Text = c.CategoriaID
-            }).ToList();
-
-        return model;
-    }
-
     // Criar produto
-    public async Task CriarProdutoAsync(ProdutoViewModel model)
+    public async Task CriarProdutoAsync(Produto produto)
     {
-        var produto = new Produto
-        {
-            Nome = model.Nome,
-            CategoriaID = model.CategoriaID
-        };
-
         await _produtoRepository.AddProduto(produto);
     }
     

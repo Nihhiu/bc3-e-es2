@@ -15,17 +15,17 @@
 
                     <form asp-action="criar" asp-controller="Produto" method="post" novalidate>
                         <div class="mb-3">
-                            <label asp-for="Nome" class="form-label fw-semibold"></label>
-                            <input asp-for="Nome" class="form-control" placeholder="Nome do produto" />
-                            <span asp-validation-for="Nome" class="text-danger small"></span>
+                            <label asp-for="Produto.Nome" class="form-label fw-semibold"></label>
+                            <input asp-for="Produto.Nome" class="form-control" placeholder="Nome do produto" />
+                            <span asp-validation-for="Produto.Nome" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="CategoriaID" class="form-label fw-semibold">Categoria</label>
-                            <select asp-for="CategoriaID" asp-items="Model.Categorias" class="form-select">
+                            <label asp-for="Produto.CategoriaID" class="form-label fw-semibold">Categoria</label>
+                            <select asp-for="Produto.CategoriaID" asp-items="@(ViewData["Categorias"] as List<SelectListItem>) " class="form-select">
                                 <option value="">Selecione uma categoria</option>
                             </select>
-                            <span asp-validation-for="CategoriaID" class="text-danger small"></span>
+                            <span asp-validation-for="Produto.CategoriaID" class="text-danger small"></span>
                         </div>
 
                         <div class="d-grid">
