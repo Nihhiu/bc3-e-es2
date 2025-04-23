@@ -2,10 +2,12 @@ using ComparacaoPrecos.Repository;
 
 namespace ComparacaoPrecos.Service;
 
-public class CategoriaService {
+public class CategoriaService
+{
     private readonly CategoriaRepository _categoriaRepository;
 
-    public CategoriaService(CategoriaRepository categoriaRepository) {
+    public CategoriaService(CategoriaRepository categoriaRepository)
+    {
         _categoriaRepository = categoriaRepository;
     }
 

@@ -6,20 +6,21 @@ using ComparacaoPrecos.Models;
 namespace ComparacaoPrecos.Controller;
 
 [Route("produto")]
-public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
+public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
+{
     private readonly ProdutoService _produtoService;
     private readonly CategoriaService _categoriaService;
 
-    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService) {
+    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService)
+    {
         _produtoService = produtoService;
         _categoriaService = categoriaService;
     }
 
     // GET: /produto
     [HttpGet("")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string categoria)
     {
-        var produtos = await _produtoService.GetAllProdutos();
         var categorias = await _categoriaService.GetAllCategorias();
 
         ViewData["Categorias"] = categorias.Select(c => new SelectListItem
@@ -27,6 +28,17 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller {
             Value = c.CategoriaID,
             Text = c.CategoriaID
         }).ToList();
+
+        IEnumerable<Produto> produtos;
+
+        if (!string.IsNullOrEmpty(categoria))
+        {
+            produtos = await _produtoService.GetProdutosPorCategoria(categoria);
+        }
+        else
+        {
+            produtos = await _produtoService.GetAllProdutos();
+        }
 
         return View(produtos);
     }

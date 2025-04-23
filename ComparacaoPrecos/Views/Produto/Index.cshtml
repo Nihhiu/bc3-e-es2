@@ -9,11 +9,40 @@
 <div class="container my-5">
     <h1 class="text-center mb-4 text-primary">Lista de Produtos</h1>
 
+    <div class="d-flex justify-content-start mb-4">
+        <button id="filtroBtn" class="btn btn-outline-primary me-2">Filtrar por Categoria</button>
+    </div>
+
+    <div id="filtroCategoria" class="d-none mb-4">
+        <form asp-controller="Produto" asp-action="Index" method="get" class="d-flex align-items-center">
+            <label for="categoria" class="me-2 mb-0 fw-bold">Categoria:</label>
+            @{
+                var categorias = ViewData["Categorias"] as List<SelectListItem> ?? new List<SelectListItem>();
+                var categoriaSelecionada = Context.Request.Query["categoria"].ToString();
+            }
+
+            <select name="categoria" id="categoria" class="form-select me-2" onchange="this.form.submit()"> 
+                <option value="">Selecione uma categoria</option>
+
+                @foreach (var categoria in categorias)
+                {
+                    var selected = categoria.Value == categoriaSelecionada ? "selected" : "";
+                    <option value="@categoria.Value" selected="@selected">@categoria.Text</option>
+                }
+            </select>
+
+            <noscript>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </noscript>
+        </form>
+    </div>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         @foreach (var produto in Model)
         {
             <div class="col">
-                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.ProdutoID" class="text-decoration-none text-dark">
+                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.ProdutoID"
+                    class="text-decoration-none text-dark">
                     <div class="card h-100 shadow-sm border-0 hover-shadow transition">
                         <div class="card-body text-center">
                             <h5 class="card-title">@produto.Nome</h5>
@@ -24,3 +53,12 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById("filtroBtn").addEventListener("click", function () {
+            var filtroDiv = document.getElementById("filtroCategoria");
+            filtroDiv.classList.toggle("d-none");
+        });
+    </script>
+}

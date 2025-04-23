@@ -6,17 +6,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComparacaoPrecos.Service;
 
-public class ProdutoService {
+public class ProdutoService
+{
 
     private readonly ProdutoRepository _produtoRepository;
     private readonly CategoriaRepository _categoriaRepository;
     private readonly ProdutoLojaRepository _produtoLojaRepository;
     private readonly LojaRepository _lojaRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository, 
-                          CategoriaRepository categoriaRepository, 
-                          ProdutoLojaRepository produtoLojaRepository, 
-                          LojaRepository lojaRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository,
+                          CategoriaRepository categoriaRepository,
+                          ProdutoLojaRepository produtoLojaRepository,
+                          LojaRepository lojaRepository)
+    {
         _produtoRepository = produtoRepository;
         _categoriaRepository = categoriaRepository;
         _produtoLojaRepository = produtoLojaRepository;
@@ -53,5 +55,11 @@ public class ProdutoService {
     {
         await _produtoRepository.AddProduto(produto);
     }
-    
+
+    // Buscar produtos por categoria
+    public async Task<List<Produto>> GetProdutosPorCategoria(string categoriaId)
+{
+    var produtos = await _produtoRepository.GetAllProdutos();
+    return produtos.Where(p => p.CategoriaID == categoriaId).ToList();
+}
 }
