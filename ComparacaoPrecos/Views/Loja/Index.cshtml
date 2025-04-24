@@ -1,0 +1,22 @@
+@model IEnumerable<Loja>
+
+@{
+    ViewData["Title"] = "Detalhes da Loja";
+}
+
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4"></div>
+@foreach (var loja in Model)
+{
+    <div class="col">
+        <a asp-controller="Loja" asp-action="Detalhes" asp-route-id="@loja.LojaID"
+            class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@loja.Nome</h5>
+                </div>
+            </div>
+        </a>
+    </div>
+}
+</div>
