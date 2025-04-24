@@ -3,8 +3,8 @@ using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Models;
 
 namespace ComparacaoPrecos.Controllers;
-    [Route("loja")]
-    public class LojaController : Microsoft.AspNetCore.Mvc.Controller
+[Route("loja")]
+public class LojaController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly LojaService _lojaService;
 
@@ -18,5 +18,13 @@ namespace ComparacaoPrecos.Controllers;
     {
         var lojas = await _lojaService.GetAllLojas();
         return View(lojas);
+    }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Detalhes(int id)
+    {
+        var viewModel = await _lojaService.GetLojaById(id);
+        if (viewModel == null) return NotFound();
+
+        return View(viewModel);
     }
 }

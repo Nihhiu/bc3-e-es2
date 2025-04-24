@@ -1,22 +1,26 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<Loja>
 
 @{
-    ViewData["Title"] = "Detalhes da Loja";
+    ViewData["Title"] = "Lista de Lojas";
+    Layout = "_Layout";
 }
 
-
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4"></div>
-@foreach (var loja in Model)
-{
-    <div class="col">
-        <a asp-controller="Loja" asp-action="Detalhes" asp-route-id="@loja.LojaID"
-            class="text-decoration-none text-dark">
-            <div class="card h-100 shadow-sm border-0 hover-shadow transition">
-                <div class="card-body text-center">
-                    <h5 class="card-title">@loja.Nome</h5>
-                </div>
+<div class="container my-5">
+    <h1 class="text-center mb-4 text-primary">Lista de Lojas</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        @foreach (var loja in Model)
+        {
+            <div class="col">
+                <a asp-controller="Loja" asp-action="Detalhes" asp-route-id="@loja.LojaID"
+                    class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@loja.Nome</h5>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </a>
+        }
     </div>
-}
 </div>

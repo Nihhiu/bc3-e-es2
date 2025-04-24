@@ -1,0 +1,21 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Loja
+
+@{
+    ViewData["Title"] = "Detalhes da Loja";
+    Layout = "_Layout";
+}
+
+<div class="container my-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h2 class="card-title text-primary">@Model.Nome</h2>
+            <p class="text-muted mb-4">
+                <strong>ID:</strong> @Model.LojaID
+            </p>
+
+            <h4 class="mb-3">Lojas disponíveis</h4>
+
+        </div>
+    </div>
+</div>
