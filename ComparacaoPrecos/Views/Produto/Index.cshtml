@@ -9,11 +9,7 @@
 <div class="container my-5">
     <h1 class="text-center mb-4 text-primary">Lista de Produtos</h1>
 
-    <div class="d-flex justify-content-start mb-4">
-        <button id="filtroBtn" class="btn btn-outline-primary me-2">Filtrar por Categoria</button>
-    </div>
-
-    <div id="filtroCategoria" class="d-none mb-4">
+    <div id="filtroCategoria" class="mb-4">
         <form asp-controller="Produto" asp-action="Index" method="get" class="d-flex align-items-center">
             <label for="categoria" class="me-2 mb-0 fw-bold">Categoria:</label>
             @{
@@ -22,12 +18,19 @@
             }
 
             <select name="categoria" id="categoria" class="form-select me-2" onchange="this.form.submit()"> 
-                <option value="">Selecione uma categoria</option>
+                
+                <option value="" selected>Todas</option>
 
                 @foreach (var categoria in categorias)
                 {
-                    var selected = categoria.Value == categoriaSelecionada ? "selected" : "";
-                    <option value="@categoria.Value" selected="@selected">@categoria.Text</option>
+                    if (categoria.Value == categoriaSelecionada)
+                    {
+                        <option value="@categoria.Value" selected>@categoria.Text</option>
+                    }
+                    else
+                    {
+                        <option value="@categoria.Value">@categoria.Text</option>
+                    }
                 }
             </select>
 
