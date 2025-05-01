@@ -45,7 +45,8 @@ public class ProdutoService
             InfoPorLoja = produtoLoja?.Select(pl => new ProdutoLojaViewModel
             {
                 NomeLoja = pl.Loja.Nome,
-                Preco = pl.preco
+                Preco = pl.preco,
+                DataHora = pl.DataHora
             }).ToList() ?? new List<ProdutoLojaViewModel>()
         };
     }
@@ -58,8 +59,15 @@ public class ProdutoService
 
     // Buscar produtos por categoria
     public async Task<List<Produto>> GetProdutosPorCategoria(string categoriaId)
-{
-    var produtos = await _produtoRepository.GetAllProdutos();
-    return produtos.Where(p => p.CategoriaID == categoriaId).ToList();
-}
+    {
+        var produtos = await _produtoRepository.GetAllProdutos();
+        return produtos.Where(p => p.CategoriaID == categoriaId).ToList();
+    }
+
+    public async Task<List<Produto>> GetProdutosPorLoja(int LojaID)
+    {
+        var produtos = await _produtoRepository.GetAllProdutos();
+        var produtosLoja = await _produtoLojaRepository.GetProdutoLojaByLoja(LojaID);
+        return produtos.Where(p => produtosLoja.Any(pl => pl.ProdutoID == p.ProdutoID)).ToList();
+    }
 }

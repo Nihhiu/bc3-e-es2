@@ -20,4 +20,7 @@ public class ProdutoLojaViewModel
     
     [Required]
     public double Preco { get; set; }
+    
+    [Required]
+    public DateTime DataHora { get; set; } 
 }

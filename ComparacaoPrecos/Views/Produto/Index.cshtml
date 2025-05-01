@@ -9,18 +9,37 @@
 <div class="container my-5">
     <h1 class="text-center mb-4 text-primary">Lista de Produtos</h1>
 
-    <div id="filtroCategoria" class="mb-4">
+    <div id="filtroProduto" class="mb-4">
         <form asp-controller="Produto" asp-action="Index" method="get" class="d-flex align-items-center">
+            <!-- Filtro de Loja -->
+            <label for="loja" class="me-2 mb-0 fw-bold">Loja:</label>
+            @{
+                var lojas = ViewData["Lojas"] as List<SelectListItem> ?? new List<SelectListItem>();
+                var lojaSelecionada = Context.Request.Query["loja"].ToString();
+            }
+            <select name="loja" id="loja" class="form-select me-2" onchange="this.form.submit()">
+                <option value="">Todas</option>
+                @foreach (var loja in lojas)
+                {
+                    if (loja.Value == lojaSelecionada)
+                    {
+                        <option value="@loja.Value" selected>@loja.Text</option>
+                    }
+                    else
+                    {
+                        <option value="@loja.Value">@loja.Text</option>
+                    }
+                }
+            </select>
+
+            <!-- Filtro de Categoria -->
             <label for="categoria" class="me-2 mb-0 fw-bold">Categoria:</label>
             @{
                 var categorias = ViewData["Categorias"] as List<SelectListItem> ?? new List<SelectListItem>();
                 var categoriaSelecionada = Context.Request.Query["categoria"].ToString();
             }
-
-            <select name="categoria" id="categoria" class="form-select me-2" onchange="this.form.submit()"> 
-                
-                <option value="" selected>Todas</option>
-
+            <select name="categoria" id="categoria" class="form-select me-2" onchange="this.form.submit()">
+                <option value="">Todas</option>
                 @foreach (var categoria in categorias)
                 {
                     if (categoria.Value == categoriaSelecionada)
@@ -33,6 +52,17 @@
                     }
                 }
             </select>
+
+            <!-- Filtro de Data -->
+            <label for="dataInicio" class="me-2 mb-0 fw-bold">De:</label>
+            @{
+                var dataInicio = Context.Request.Query["dataInicio"].ToString();
+                var dataFim = Context.Request.Query["dataFim"].ToString();
+            }
+            <input type="date" name="dataInicio" id="dataInicio" class="form-control me-2" value="@dataInicio" onchange="this.form.submit()" />
+
+            <label for="dataFim" class="me-2 mb-0 fw-bold">Até:</label>
+            <input type="date" name="dataFim" id="dataFim" class="form-control me-2" value="@dataFim" onchange="this.form.submit()" />
 
             <noscript>
                 <button type="submit" class="btn btn-primary">Filtrar</button>

@@ -10,18 +10,21 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly ProdutoService _produtoService;
     private readonly CategoriaService _categoriaService;
+    private readonly LojaService _lojaService;
 
-    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService)
+    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService, LojaService lojaService)
     {
         _produtoService = produtoService;
         _categoriaService = categoriaService;
+        _lojaService = lojaService;
     }
 
     // GET: /produto
     [HttpGet("")]
-    public async Task<IActionResult> Index(string categoria)
+    public async Task<IActionResult> Index(string categoria, int loja, DateTime? dataInicio, DateTime? dataFim)
     {
         var categorias = await _categoriaService.GetAllCategorias();
+        var lojas = await _lojaService.GetAllLojas();
 
         ViewData["Categorias"] = categorias.Select(c => new SelectListItem
         {
@@ -29,19 +32,31 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
             Text = c.CategoriaID
         }).ToList();
 
+        ViewData["Lojas"] = lojas.Select(l => new SelectListItem
+        {
+            Value = l.LojaID.ToString(),
+            Text = l.Nome
+        }).ToList();
+
         IEnumerable<Produto> produtos;
 
-        if (!string.IsNullOrEmpty(categoria))
+        if (loja != 0)
         {
-            produtos = await _produtoService.GetProdutosPorCategoria(categoria);
+            produtos = await _produtoService.GetProdutosPorLoja(loja);
         }
         else
         {
             produtos = await _produtoService.GetAllProdutos();
         }
 
+        if (!string.IsNullOrEmpty(categoria))
+        {
+            produtos = produtos.Where(p => p.CategoriaID == categoria).ToList();
+        }
+
         return View(produtos);
     }
+
 
     // GET: /produto/{id}
     [HttpGet("{id}")]

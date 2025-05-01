@@ -27,4 +27,9 @@ public class ProdutoLojaRepository{
         return await _context.Produto_Loja.Include(p => p.Loja).Where(p => p.ProdutoID == id && !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync() 
                ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
     }
+
+    public async Task<List<Produto_Loja>> GetProdutoLojaByLoja(int id) {
+        return await _context.Produto_Loja.Include(p => p.Produto).Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync() 
+               ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
+    }
 }
