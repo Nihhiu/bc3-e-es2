@@ -1,5 +1,5 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<Produto>
+@model IEnumerable<ComparacaoPrecos.Models.ProdutoViewModel>
 
 @{
     ViewData["Title"] = "Produtos";
@@ -11,13 +11,20 @@
 
     <div id="filtroProduto" class="mb-4">
         <form asp-controller="Produto" asp-action="Index" method="get" class="d-flex align-items-center">
+            <!-- Filtro por Nome -->
+            <label for="nome" class="me-2 mb-0 fw-bold">Nome:</label>
+            @{
+                var nome = Context.Request.Query["nome"].ToString();
+            }
+            <input type="text" name="nome" id="nome" class="form-control me-2" value="@nome"
+                placeholder="Buscar por nome..." />
             <!-- Filtro de Loja -->
             <label for="loja" class="me-2 mb-0 fw-bold">Loja:</label>
             @{
                 var lojas = ViewData["Lojas"] as List<SelectListItem> ?? new List<SelectListItem>();
                 var lojaSelecionada = Context.Request.Query["loja"].ToString();
             }
-            <select name="loja" id="loja" class="form-select me-2" onchange="this.form.submit()">
+            <select name="loja" id="loja" class="form-select me-2">
                 <option value="">Todas</option>
                 @foreach (var loja in lojas)
                 {
@@ -38,7 +45,7 @@
                 var categorias = ViewData["Categorias"] as List<SelectListItem> ?? new List<SelectListItem>();
                 var categoriaSelecionada = Context.Request.Query["categoria"].ToString();
             }
-            <select name="categoria" id="categoria" class="form-select me-2" onchange="this.form.submit()">
+            <select name="categoria" id="categoria" class="form-select me-2">
                 <option value="">Todas</option>
                 @foreach (var categoria in categorias)
                 {
@@ -59,14 +66,11 @@
                 var dataInicio = Context.Request.Query["dataInicio"].ToString();
                 var dataFim = Context.Request.Query["dataFim"].ToString();
             }
-            <input type="date" name="dataInicio" id="dataInicio" class="form-control me-2" value="@dataInicio" onchange="this.form.submit()" />
+            <input type="date" name="dataInicio" id="dataInicio" class="form-control me-2" value="@dataInicio" />
 
             <label for="dataFim" class="me-2 mb-0 fw-bold">Até:</label>
-            <input type="date" name="dataFim" id="dataFim" class="form-control me-2" value="@dataFim" onchange="this.form.submit()" />
-
-            <noscript>
-                <button type="submit" class="btn btn-primary">Filtrar</button>
-            </noscript>
+            <input type="date" name="dataFim" id="dataFim" class="form-control me-2" value="@dataFim" />
+            <button type="submit" class="btn btn-primary">Filtrar</button>
         </form>
     </div>
 
@@ -74,11 +78,11 @@
         @foreach (var produto in Model)
         {
             <div class="col">
-                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.ProdutoID"
+                <a asp-controller="Produto" asp-action="Detalhes" asp-route-id="@produto.Produto.ProdutoID"
                     class="text-decoration-none text-dark">
                     <div class="card h-100 shadow-sm border-0 hover-shadow transition">
                         <div class="card-body text-center">
-                            <h5 class="card-title">@produto.Nome</h5>
+                            <h5 class="card-title">@produto.Produto.Nome</h5>
                         </div>
                     </div>
                 </a>

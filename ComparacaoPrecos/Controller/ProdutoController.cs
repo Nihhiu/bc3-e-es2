@@ -21,7 +21,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 
     // GET: /produto
     [HttpGet("")]
-    public async Task<IActionResult> Index(string categoria, int loja, DateTime? dataInicio, DateTime? dataFim)
+    public async Task<IActionResult> Index(string categoria, int loja, DateTime? dataInicio, DateTime? dataFim, string Nome)
     {
         var categorias = await _categoriaService.GetAllCategorias();
         var lojas = await _lojaService.GetAllLojas();
@@ -38,20 +38,47 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
             Text = l.Nome
         }).ToList();
 
-        IEnumerable<Produto> produtos;
+        IEnumerable<ComparacaoPrecos.Models.ProdutoViewModel> produtos;
 
         if (loja != 0)
         {
-            produtos = await _produtoService.GetProdutosPorLoja(loja);
+            var produtosLoja = await _produtoService.GetProdutosPorLoja(loja);
+            produtos = produtosLoja.Select(p => new ProdutoViewModel
+            {
+                Produto = p
+            });
         }
         else
         {
-            produtos = await _produtoService.GetAllProdutos();
+            var produtosLoja = await _produtoService.GetAllProdutos();
+            produtos = produtosLoja.Select(p => new ProdutoViewModel
+            {
+                Produto = p
+            });
         }
 
         if (!string.IsNullOrEmpty(categoria))
         {
-            produtos = produtos.Where(p => p.CategoriaID == categoria).ToList();
+            produtos = produtos.Where(p => p.Produto.CategoriaID == categoria);
+        }
+
+        if (dataInicio.HasValue)
+        {
+            produtos = produtos.Where(p =>
+                p.InfoPorLoja.Any(loja => loja.DataHora >= dataInicio.Value));
+        }
+
+        if (dataFim.HasValue)
+        {
+            produtos = produtos.Where(p =>
+                p.InfoPorLoja.Any(loja => loja.DataHora <= dataFim.Value));
+        }
+
+        if (!string.IsNullOrWhiteSpace(Nome) && Nome.Length >= 2)
+        {
+            produtos = produtos.Where(p =>
+                p.Produto.Nome != null &&
+                p.Produto.Nome.ToLower().Contains(Nome.ToLower()));
         }
 
         return View(produtos);
