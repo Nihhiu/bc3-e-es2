@@ -26,9 +26,33 @@ public class ProdutoService
     }
 
     // Buscar todos os produtos que não estão deletados
-    public async Task<IEnumerable<Produto>> GetAllProdutos()
+    public async Task<IEnumerable<ProdutoViewModel>> GetAllProdutos()
     {
-        return await _produtoRepository.GetAllProdutos();
+        var produtos = await _produtoRepository.GetAllProdutos();
+        var produtosLoja = await _produtoLojaRepository.GetAllProdutosLojas();
+        
+        var result = produtos
+            .Select(produto =>
+            {
+            var infoPorLoja = produtosLoja
+                .Where(pl => pl.ProdutoID == produto.ProdutoID)
+                .Select(pl => new ProdutoLojaViewModel
+                {
+                NomeLoja = pl.Loja.Nome,
+                Preco = pl.preco,
+                DataHora = pl.DataHora
+                })
+                .ToList();
+
+            return new ProdutoViewModel
+            {
+                Produto = produto,
+                InfoPorLoja = infoPorLoja
+            };
+            })
+            .ToList();
+
+        return result;
     }
 
     // Buscar produto por id que não estão deletados
@@ -64,10 +88,32 @@ public class ProdutoService
         return produtos.Where(p => p.CategoriaID == categoriaId).ToList();
     }
 
-    public async Task<List<Produto>> GetProdutosPorLoja(int LojaID)
+    public async Task<List<ProdutoViewModel>> GetProdutosPorLoja(int LojaID)
     {
         var produtos = await _produtoRepository.GetAllProdutos();
         var produtosLoja = await _produtoLojaRepository.GetProdutoLojaByLoja(LojaID);
-        return produtos.Where(p => produtosLoja.Any(pl => pl.ProdutoID == p.ProdutoID)).ToList();
+
+        var result = produtos
+            .Select(produto =>
+            {
+            var infoPorLoja = produtosLoja
+                .Where(pl => pl.ProdutoID == produto.ProdutoID)
+                .Select(pl => new ProdutoLojaViewModel
+                {
+                NomeLoja = pl.Loja.Nome,
+                Preco = pl.preco,
+                DataHora = pl.DataHora
+                })
+                .ToList();
+
+            return new ProdutoViewModel
+            {
+                Produto = produto,
+                InfoPorLoja = infoPorLoja
+            };
+            })
+            .ToList();
+
+        return result;
     }
 }

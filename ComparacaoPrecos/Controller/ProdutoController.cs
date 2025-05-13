@@ -38,23 +38,15 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
             Text = l.Nome
         }).ToList();
 
-        IEnumerable<ComparacaoPrecos.Models.ProdutoViewModel> produtos;
+        IEnumerable<ProdutoViewModel> produtos;
 
         if (loja != 0)
         {
-            var produtosLoja = await _produtoService.GetProdutosPorLoja(loja);
-            produtos = produtosLoja.Select(p => new ProdutoViewModel
-            {
-                Produto = p
-            });
+            produtos = await _produtoService.GetProdutosPorLoja(loja);
         }
         else
         {
-            var produtosLoja = await _produtoService.GetAllProdutos();
-            produtos = produtosLoja.Select(p => new ProdutoViewModel
-            {
-                Produto = p
-            });
+            produtos = await _produtoService.GetAllProdutos();
         }
 
         if (!string.IsNullOrEmpty(categoria))
@@ -65,7 +57,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         if (dataInicio.HasValue)
         {
             produtos = produtos.Where(p =>
-                p.InfoPorLoja.Any(loja => loja.DataHora >= dataInicio.Value));
+                p.InfoPorLoja.Any(loja => loja.DataHora >= dataInicio));
         }
 
         if (dataFim.HasValue)
