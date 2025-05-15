@@ -1,0 +1,25 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ComparacaoPrecos.Models.ProdutoViewModel
+
+@{
+    ViewData["Title"] = "Add Preço";
+    Layout = "_Layout";
+}
+
+<form asp-action="AddPreco" method="post" class="mt-4">
+    <div class="mb-3">
+        <label asp-for="InfoPorLoja[0].Preco" class="form-label fw-semibold">Preço</label>
+        <input asp-for="InfoPorLoja[0].Preco" class="form-control" placeholder="Digite o preço" />
+        <span asp-validation-for="InfoPorLoja[0].Preco" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="InfoPorLoja[0].LojaID" class="form-label fw-semibold">Loja</label>
+        <select asp-for="InfoPorLoja[0].LojaID" asp-items="@(ViewData["Lojas"] as List<SelectListItem>)" class="form-select">
+            <option value="">Selecione uma loja</option>
+        </select>
+        <span asp-validation-for="InfoPorLoja[0].LojaID" class="text-danger small"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Adicionar Preço</button>
+</form>

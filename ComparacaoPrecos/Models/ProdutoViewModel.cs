@@ -16,6 +16,9 @@ public class ProdutoViewModel
 public class ProdutoLojaViewModel
 {
     [Required]
+    public int LojaID { get; set; }
+
+    [Required]
     public string NomeLoja { get; set; }
     
     [Required]

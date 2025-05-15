@@ -38,6 +38,7 @@ public class ProdutoService
                 .Where(pl => pl.ProdutoID == produto.ProdutoID)
                 .Select(pl => new ProdutoLojaViewModel
                 {
+                LojaID = pl.LojaID,
                 NomeLoja = pl.Loja.Nome,
                 Preco = pl.preco,
                 DataHora = pl.DataHora
@@ -68,6 +69,7 @@ public class ProdutoService
             Produto = produto,
             InfoPorLoja = produtoLoja?.Select(pl => new ProdutoLojaViewModel
             {
+                LojaID = pl.Loja.LojaID,
                 NomeLoja = pl.Loja.Nome,
                 Preco = pl.preco,
                 DataHora = pl.DataHora
@@ -100,6 +102,7 @@ public class ProdutoService
                 .Where(pl => pl.ProdutoID == produto.ProdutoID)
                 .Select(pl => new ProdutoLojaViewModel
                 {
+                LojaID = pl.Loja.LojaID,
                 NomeLoja = pl.Loja.Nome,
                 Preco = pl.preco,
                 DataHora = pl.DataHora
@@ -116,4 +119,9 @@ public class ProdutoService
 
         return result;
     }
+
+    public async Task AddProdutoLoja(Produto_Loja produtoLoja){
+        await _produtoLojaRepository.AddProdutoLoja(produtoLoja);
+    }
+
 }

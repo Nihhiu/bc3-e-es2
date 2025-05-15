@@ -84,6 +84,11 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         var viewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
         if (viewModel == null) return NotFound();
 
+        // O calculo da credibilidade deve ser através da distancia entre a data e a data atual
+        var credibilidade = 10; // Placeholder para o calculo da credibilidade
+
+        ViewData["credibilidade"] = credibilidade;
+
         return View(viewModel);
     }
 
@@ -111,4 +116,41 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         return RedirectToAction("Index");
     }
 
+    // GET: /produto/add_preco/{id}
+    [HttpGet("add_preco/{id}")]
+    public async Task<IActionResult> AddPreco(int id)
+    {
+        var produto = await _produtoService.GetProdutoDetalhesViewModel(id);
+        if (produto == null) return NotFound();
+
+        var lojas = await _lojaService.GetAllLojas();
+        ViewData["Lojas"] = lojas.Select(l => new SelectListItem
+        {
+            Value = l.LojaID.ToString(),
+            Text = l.Nome
+        }).ToList();
+
+        return View(produto);
+    }
+
+    // POST: /produto/add_preco/{id}
+    [HttpPost("add_preco/{id}")]
+    public async Task<IActionResult> AddPreco(ProdutoViewModel model)
+    {   
+        if (User.Identity?.Name == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var produtoLoja = new Produto_Loja
+        {
+            ProdutoID = model.Produto.ProdutoID,
+            LojaID = model.InfoPorLoja[0].LojaID,
+            preco = model.InfoPorLoja[0].Preco,
+            DataHora = DateTime.Now,
+            Id = User.Identity?.Name ?? string.Empty
+        };
+        await _produtoService.AddProdutoLoja(produtoLoja);
+        return RedirectToAction("Index");
+    }
 }
