@@ -120,17 +120,23 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     [HttpGet("add_preco/{id}")]
     public async Task<IActionResult> AddPreco(int id)
     {
-        var produto = await _produtoService.GetProdutoDetalhesViewModel(id);
-        if (produto == null) return NotFound();
+    var produtoViewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
+    if (produtoViewModel == null)
+        return NotFound();
 
-        var lojas = await _lojaService.GetAllLojas();
-        ViewData["Lojas"] = lojas.Select(l => new SelectListItem
-        {
-            Value = l.LojaID.ToString(),
-            Text = l.Nome
-        }).ToList();
+    var lojas = await _lojaService.GetAllLojas();
+    ViewData["Lojas"] = lojas.Select(l => new SelectListItem
+    {
+        Value = l.LojaID.ToString(),
+        Text = l.Nome
+    }).ToList();
 
-        return View(produto);
+    if (produtoViewModel.InfoPorLoja.Count == 0)
+    {
+        produtoViewModel.InfoPorLoja.Add(new ProdutoLojaViewModel());
+    }
+
+    return View(produtoViewModel); 
     }
 
     // POST: /produto/add_preco/{id}
