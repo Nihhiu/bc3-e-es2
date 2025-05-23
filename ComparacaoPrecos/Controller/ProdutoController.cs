@@ -80,15 +80,16 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 
     // GET: /produto/{id}
     [HttpGet("{id}")]
-    public async Task<IActionResult> Detalhes(int id)
+    public async Task<IActionResult> Detalhes(ProdutoViewModel model, int id)
     {
         var viewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
         if (viewModel == null) return NotFound();
 
-        // O calculo da credibilidade deve ser através da distancia entre a data e a data atual
-        var credibilidade = 10; // Placeholder para o calculo da credibilidade
-
-        ViewData["credibilidade"] = credibilidade;
+        foreach (var item in viewModel.InfoPorLoja)
+        {
+            var dias = (DateTime.UtcNow - item.DataHora).Days;
+            item.credibilidade = Math.Clamp(10 - (dias / 30), 0, 10); // 1 ponto por mês
+        }
 
         return View(viewModel);
     }

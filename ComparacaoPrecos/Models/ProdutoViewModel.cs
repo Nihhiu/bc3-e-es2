@@ -20,10 +20,12 @@ public class ProdutoLojaViewModel
 
     [Required]
     public string NomeLoja { get; set; }
-    
+
     [Required]
     public double Preco { get; set; }
-    
+
     [Required]
     public DateTime DataHora { get; set; } 
+    
+    public int? credibilidade { get; set; }
 }
