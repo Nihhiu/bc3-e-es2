@@ -2,6 +2,7 @@ using ComparacaoPrecos.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ComparacaoPrecos.Models;
+using System.Security.Claims;
 
 namespace ComparacaoPrecos.Controller;
 
@@ -141,20 +142,20 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 
     // POST: /produto/add_preco/{id}
     [HttpPost("add_preco/{id}")]
-    public async Task<IActionResult> AddPreco(ProdutoViewModel model)
+    public async Task<IActionResult> AddPreco(ProdutoViewModel model, int id)
     {   
         if (User.Identity?.Name == null)
         {
             return RedirectToAction("Login", "Account");
         }
-
+        Console.WriteLine(User.Identity.Name);
         var produtoLoja = new Produto_Loja
         {
-            ProdutoID = model.Produto.ProdutoID,
+            ProdutoID = id,
             LojaID = model.InfoPorLoja[0].LojaID,
             preco = model.InfoPorLoja[0].Preco,
-            DataHora = DateTime.Now,
-            Id = User.Identity?.Name ?? string.Empty
+            DataHora = DateTime.UtcNow,
+            Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
         };
         await _produtoService.AddProdutoLoja(produtoLoja);
         return RedirectToAction("Index");
