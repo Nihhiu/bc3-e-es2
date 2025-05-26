@@ -122,42 +122,58 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     [HttpGet("add_preco/{id}")]
     public async Task<IActionResult> AddPreco(int id)
     {
-    var produtoViewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
-    if (produtoViewModel == null)
-        return NotFound();
+        var produtoViewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
+        if (produtoViewModel == null)
+            return NotFound();
 
-    var lojas = await _lojaService.GetAllLojas();
-    ViewData["Lojas"] = lojas.Select(l => new SelectListItem
-    {
-        Value = l.LojaID.ToString(),
-        Text = l.Nome
-    }).ToList();
+        var lojas = await _lojaService.GetAllLojas();
+        ViewData["Lojas"] = lojas.Select(l => new SelectListItem
+        {
+            Value = l.LojaID.ToString(),
+            Text = l.Nome
+        }).ToList();
 
-    if (produtoViewModel.InfoPorLoja.Count == 0)
-    {
-        produtoViewModel.InfoPorLoja.Add(new ProdutoLojaViewModel());
-    }
+        if (produtoViewModel.InfoPorLoja.Count == 0)
+        {
+            produtoViewModel.InfoPorLoja.Add(new ProdutoLojaViewModel());
+        }
 
-    return View(produtoViewModel); 
+        return View(produtoViewModel);
     }
 
     // POST: /produto/add_preco/{id}
     [HttpPost("add_preco/{id}")]
     public async Task<IActionResult> AddPreco(ProdutoViewModel model, int id)
-    {   
+    {
         if (User.Identity?.Name == null)
         {
             return RedirectToAction("Login", "Account");
         }
-        Console.WriteLine(User.Identity.Name);
+
+        var lojaId = model.InfoPorLoja[0].LojaID;
+
+        // Verifica se já existe preço para esse produto e loja
+        var precoExistente = await _produtoService.GetProdutoLojaAsync(id, lojaId);
+
+        if (precoExistente != null && !Request.Form.ContainsKey("confirmar"))
+        {
+            TempData["ConfirmarAlteracao"] = true;
+            TempData["PrecoAntigo"] = precoExistente.preco.ToString();
+            TempData["ProdutoId"] = id;
+            TempData["LojaId"] = lojaId;
+            TempData["PrecoNovo"] = model.InfoPorLoja[0].Preco.ToString();
+            return RedirectToAction("VerificarPreco");
+        }
+
         var produtoLoja = new Produto_Loja
         {
             ProdutoID = id,
-            LojaID = model.InfoPorLoja[0].LojaID,
+            LojaID = lojaId,
             preco = model.InfoPorLoja[0].Preco,
             DataHora = DateTime.UtcNow,
             Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
         };
+
         await _produtoService.AddProdutoLoja(produtoLoja);
         return RedirectToAction("Index");
     }

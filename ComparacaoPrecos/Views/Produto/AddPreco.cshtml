@@ -15,11 +15,66 @@
 
     <div class="mb-3">
         <label asp-for="InfoPorLoja[0].LojaID" class="form-label fw-semibold">Loja</label>
-        <select asp-for="InfoPorLoja[0].LojaID" asp-items="@(ViewData["Lojas"] as List<SelectListItem>)" class="form-select">
+        <select asp-for="InfoPorLoja[0].LojaID" asp-items="@(ViewData["Lojas"] as List<SelectListItem>)"
+            class="form-select">
             <option value="">Selecione uma loja</option>
         </select>
         <span asp-validation-for="InfoPorLoja[0].LojaID" class="text-danger small"></span>
     </div>
 
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar alteração de preço</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body" id="modal-body-text">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="confirmarAlteracaoBtn" class="btn btn-primary">Sim, substituir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-primary">Adicionar Preço</button>
 </form>
+
+<script>
+    document.querySelector('form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const form = this;
+        const lojaId = document.querySelector('[name="InfoPorLoja[0].LojaID"]').value;
+        const precoNovo = document.querySelector('[name="InfoPorLoja[0].Preco"]').value;
+        const produtoId = "@Model.Produto.ProdutoID"; 
+
+        const response = await fetch(`/produto/verificar_preco?produtoId=${produtoId}&lojaId=${lojaId}`);
+        const data = await response.json();
+
+        if (data.existe) {
+            document.getElementById('modal-body-text').innerHTML = `
+                A loja já tem um preço registrado: <strong>${data.precoAntigo}</strong><br/>
+                Deseja substituir pelo novo preço: <strong>${precoNovo}</strong>?
+            `;
+
+            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            modal.show();
+
+            document.getElementById('confirmarAlteracaoBtn').onclick = () => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'confirmar';
+                input.value = 'true';
+                form.appendChild(input);
+
+                modal.hide();
+                form.submit();
+            };
+        } else {
+            form.submit(); 
+        }
+    });
+</script>

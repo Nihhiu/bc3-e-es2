@@ -30,26 +30,26 @@ public class ProdutoService
     {
         var produtos = await _produtoRepository.GetAllProdutos();
         var produtosLoja = await _produtoLojaRepository.GetAllProdutosLojas();
-        
+
         var result = produtos
             .Select(produto =>
             {
-            var infoPorLoja = produtosLoja
-                .Where(pl => pl.ProdutoID == produto.ProdutoID)
-                .Select(pl => new ProdutoLojaViewModel
-                {
-                LojaID = pl.LojaID,
-                NomeLoja = pl.Loja.Nome,
-                Preco = pl.preco,
-                DataHora = pl.DataHora
-                })
-                .ToList();
+                var infoPorLoja = produtosLoja
+                    .Where(pl => pl.ProdutoID == produto.ProdutoID)
+                    .Select(pl => new ProdutoLojaViewModel
+                    {
+                        LojaID = pl.LojaID,
+                        NomeLoja = pl.Loja.Nome,
+                        Preco = pl.preco,
+                        DataHora = pl.DataHora
+                    })
+                    .ToList();
 
-            return new ProdutoViewModel
-            {
-                Produto = produto,
-                InfoPorLoja = infoPorLoja
-            };
+                return new ProdutoViewModel
+                {
+                    Produto = produto,
+                    InfoPorLoja = infoPorLoja
+                };
             })
             .ToList();
 
@@ -98,30 +98,36 @@ public class ProdutoService
         var result = produtos
             .Select(produto =>
             {
-            var infoPorLoja = produtosLoja
-                .Where(pl => pl.ProdutoID == produto.ProdutoID)
-                .Select(pl => new ProdutoLojaViewModel
-                {
-                LojaID = pl.Loja.LojaID,
-                NomeLoja = pl.Loja.Nome,
-                Preco = pl.preco,
-                DataHora = pl.DataHora
-                })
-                .ToList();
+                var infoPorLoja = produtosLoja
+                    .Where(pl => pl.ProdutoID == produto.ProdutoID)
+                    .Select(pl => new ProdutoLojaViewModel
+                    {
+                        LojaID = pl.Loja.LojaID,
+                        NomeLoja = pl.Loja.Nome,
+                        Preco = pl.preco,
+                        DataHora = pl.DataHora
+                    })
+                    .ToList();
 
-            return new ProdutoViewModel
-            {
-                Produto = produto,
-                InfoPorLoja = infoPorLoja
-            };
+                return new ProdutoViewModel
+                {
+                    Produto = produto,
+                    InfoPorLoja = infoPorLoja
+                };
             })
             .ToList();
 
         return result;
     }
 
-    public async Task AddProdutoLoja(Produto_Loja produtoLoja){
+    public async Task AddProdutoLoja(Produto_Loja produtoLoja)
+    {
         await _produtoLojaRepository.AddProdutoLoja(produtoLoja);
+    }
+    
+    public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID)
+    {
+        return await _produtoLojaRepository.GetProdutoLojaAsync(ProdutoID, LojaID);
     }
 
 }
