@@ -6,7 +6,27 @@
     Layout = "_Layout";
 }
 
-<form asp-action="AddPreco" method="post" class="mt-4">
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmacaoModalLabel">Confirmar Alteração de Preço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Já existe um preço de <span id="precoAntigo"></span> nesta loja. 
+                Deseja alterar para <span id="precoNovo"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmarAlteracao">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form asp-action="AddPreco" method="post" class="mt-4" id="precoForm">
     <div class="mb-3">
         <label asp-for="InfoPorLoja[0].Preco" class="form-label fw-semibold">Preço</label>
         <input asp-for="InfoPorLoja[0].Preco" class="form-control" placeholder="Digite o preço" />
@@ -21,60 +41,60 @@
         </select>
         <span asp-validation-for="InfoPorLoja[0].LojaID" class="text-danger small"></span>
     </div>
-
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirmar alteração de preço</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body" id="modal-body-text">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" id="confirmarAlteracaoBtn" class="btn btn-primary">Sim, substituir</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <button type="submit" class="btn btn-primary">Adicionar Preço</button>
 </form>
 
-<script>
-    document.querySelector('form').addEventListener('submit', async function (e) {
-        e.preventDefault();
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#precoForm').submit(async function(e) {
+                e.preventDefault();
+                
+                const form = $(this);
+                const url = form.attr('action');
+                const formData = form.serialize();
 
-        const form = this;
-        const lojaId = document.querySelector('[name="InfoPorLoja[0].LojaID"]').value;
-        const precoNovo = document.querySelector('[name="InfoPorLoja[0].Preco"]').value;
-        const produtoId = "@Model.Produto.ProdutoID"; 
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        body: formData
+                    });
 
-        const response = await fetch(`/produto/verificar_preco?produtoId=${produtoId}&lojaId=${lojaId}`);
-        const data = await response.json();
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                        return;
+                    }
 
-        if (data.existe) {
-            document.getElementById('modal-body-text').innerHTML = `
-                A loja já tem um preço registrado: <strong>${data.precoAntigo}</strong><br/>
-                Deseja substituir pelo novo preço: <strong>${precoNovo}</strong>?
-            `;
+                    const result = await response.json();
 
-            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-            modal.show();
-
-            document.getElementById('confirmarAlteracaoBtn').onclick = () => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'confirmar';
-                input.value = 'true';
-                form.appendChild(input);
-
-                modal.hide();
-                form.submit();
-            };
-        } else {
-            form.submit(); 
-        }
-    });
-</script>
+                    if (result.requiresConfirmation) {
+                        // Preenche o modal com os valores
+                        $('#precoAntigo').text(result.oldPrice);
+                        $('#precoNovo').text(result.newPrice);
+                        
+                        // Exibe o modal
+                        const modal = new bootstrap.Modal('#confirmacaoModal');
+                        modal.show();
+                        
+                        // Configura a confirmação
+                        $('#confirmarAlteracao').off('click').on('click', function() {
+                            // Adiciona campo hidden para confirmação
+                            form.append('<input type="hidden" name="confirmar" value="true" />');
+                            form.submit();
+                            modal.hide();
+                        });
+                    } else if (result.redirectUrl) {
+                        window.location.href = result.redirectUrl;
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                }
+            });
+        });
+    </script>
+}

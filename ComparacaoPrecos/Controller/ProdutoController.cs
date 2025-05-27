@@ -151,18 +151,16 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         }
 
         var lojaId = model.InfoPorLoja[0].LojaID;
-
-        // Verifica se já existe preço para esse produto e loja
         var precoExistente = await _produtoService.GetProdutoLojaAsync(id, lojaId);
 
         if (precoExistente != null && !Request.Form.ContainsKey("confirmar"))
         {
-            TempData["ConfirmarAlteracao"] = true;
-            TempData["PrecoAntigo"] = precoExistente.preco.ToString();
-            TempData["ProdutoId"] = id;
-            TempData["LojaId"] = lojaId;
-            TempData["PrecoNovo"] = model.InfoPorLoja[0].Preco.ToString();
-            return RedirectToAction("VerificarPreco");
+            return Json(new 
+            { 
+                requiresConfirmation = true,
+                oldPrice = precoExistente.preco.ToString("N2"),
+                newPrice = model.InfoPorLoja[0].Preco.ToString("N2")
+            });
         }
 
         var produtoLoja = new Produto_Loja
@@ -175,6 +173,6 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         };
 
         await _produtoService.AddProdutoLoja(produtoLoja);
-        return RedirectToAction("Index");
+        return Json(new { redirectUrl = Url.Action("Index") });
     }
 }

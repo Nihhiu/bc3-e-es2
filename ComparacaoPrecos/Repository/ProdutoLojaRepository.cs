@@ -15,9 +15,24 @@ public class ProdutoLojaRepository
     // Criar um novo produto
     public async Task<Produto_Loja> AddProdutoLoja(Produto_Loja produtoLoja)
     {
-        _context.Produto_Loja.Add(produtoLoja);
+        var existing = await _context.Produto_Loja
+            .FirstOrDefaultAsync(pl => 
+                pl.ProdutoID == produtoLoja.ProdutoID && 
+                pl.LojaID == produtoLoja.LojaID);
+
+        if (existing != null)
+        {
+            existing.preco = produtoLoja.preco;
+            existing.DataHora = DateTime.UtcNow;
+            existing.Id = produtoLoja.Id;
+        }
+        else
+        {
+            _context.Produto_Loja.Add(produtoLoja);
+        }
+
         await _context.SaveChangesAsync();
-        return produtoLoja;
+        return existing ?? produtoLoja;
     }
 
     // Buscar todos os produtos que não estão deletados
