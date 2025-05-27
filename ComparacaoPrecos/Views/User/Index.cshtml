@@ -1,0 +1,27 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<ComparacaoPrecos.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Utilizadores";
+    Layout = "_Layout";
+}
+
+<h2>Lista de Utilizadores</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome de Utilizador</th>
+            <th style="text-align: right;">Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td style="text-align: right;">@user.Role</td>
+            </tr>
+        }
+    </tbody>
+</table>

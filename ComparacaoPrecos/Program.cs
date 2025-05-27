@@ -11,11 +11,13 @@ builder.Services.AddScoped<ProdutoRepository>();
 builder.Services.AddScoped<CategoriaRepository>();
 builder.Services.AddScoped<ProdutoLojaRepository>();
 builder.Services.AddScoped<LojaRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddScoped<ProdutoLojaService>();
 builder.Services.AddScoped<LojaService>();
+builder.Services.AddScoped<UserService>();
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -48,16 +50,17 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
+        // Garantir que ambas as roles (Admin e User) são criadas
         await SeedAdminAsync(services);
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Erro ao criar administrador: {ex.Message}");
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Erro durante a seed de inicialização");
     }
 }
 
-
-// Configure the HTTP request pipeline.
+// Configurar o pipeline normalmente
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -65,21 +68,17 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
+app.MapRazorPages();
 
 app.Run();
 
@@ -91,26 +90,15 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
     string adminEmail = "admin@gmail.com";
     string adminPassword = "Admin@123";
 
-    // Criar a role de Administrador, se não existir
-    if (!await roleManager.RoleExistsAsync("Admin"))
+    // Criar roles "Admin" e "User" se não existirem
+    string[] roles = { "Admin", "User" };
+    foreach (var roleName in roles)
     {
-        await roleManager.CreateAsync(new IdentityRole("Admin"));
-    }
-
-    if (!await roleManager.RoleExistsAsync("Admin"))
-    {
-        var roleResult = await roleManager.CreateAsync(new IdentityRole("Admin"));
-        if (roleResult.Succeeded)
+        if (!await roleManager.RoleExistsAsync(roleName))
         {
-            Console.WriteLine("Role 'Admin' criada com sucesso!");
-        }
-        else
-        {
-            Console.WriteLine("Erro ao criar role 'Admin': " + string.Join(", ", roleResult.Errors));
-            return;
+            await roleManager.CreateAsync(new IdentityRole(roleName));
         }
     }
-
 
     // Verificar se o usuário admin já existe
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
