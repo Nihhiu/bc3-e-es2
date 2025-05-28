@@ -14,20 +14,4 @@ public class AuthController : ControllerBase
     {
         _userManager = userManager;
     }
-
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterModel model)
-    {
-        var user = new ApplicationUser { UserName = model.Email, Email = model.Email }; // Correto
-        var result = await _userManager.CreateAsync(user, model.Password);
-
-        if (result.Succeeded)
-        {
-            // Atribuir a role "User"
-            await _userManager.AddToRoleAsync(user, "User");
-            return Ok("Usuário registrado com sucesso!");
-        }
-
-        return BadRequest(result.Errors);
-    }
 }

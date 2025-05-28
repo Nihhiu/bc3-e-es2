@@ -3,6 +3,7 @@ using ComparacaoPrecos.Data;
 using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Repository;
 using Microsoft.AspNetCore.Identity;
+using ComparacaoPrecos.Areas.Identity.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
