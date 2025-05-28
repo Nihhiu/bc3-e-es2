@@ -3,7 +3,8 @@ using ComparacaoPrecos.Repository;
 
 namespace ComparacaoPrecos.Service;
 
-public class ProdutoLojaService {
+public class ProdutoLojaService
+{
     private readonly ProdutoLojaRepository _produtoLojaRepository;
 
     public ProdutoLojaService(ProdutoLojaRepository produtoLojaRepository)
@@ -22,4 +23,9 @@ public class ProdutoLojaService {
     {
         return await _produtoLojaRepository.GetProdutoLojaByProduto(id);
     }
+    public async Task<IEnumerable<Produto_Loja>> GetProdutoLojaByLoja(int lojaId)
+    {
+        return await _produtoLojaRepository.GetProdutoLojaByLoja(lojaId);
+    }
+
 }

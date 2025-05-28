@@ -3,6 +3,7 @@ using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Models;
 
 namespace ComparacaoPrecos.Controllers;
+
 [Route("loja")]
 public class LojaController : Microsoft.AspNetCore.Mvc.Controller
 {
@@ -27,4 +28,16 @@ public class LojaController : Microsoft.AspNetCore.Mvc.Controller
 
         return View(viewModel);
     }
+    [HttpGet("{lojaId}/produtos")]
+    public async Task<IActionResult> ProdutosPorLoja(int lojaId)
+    {
+        if (!User.IsInRole("Admin"))
+        {
+            return Unauthorized(); // Or RedirectToAction("Index", "Home");
+        }
+
+        var produtos = await _lojaService.GetProdutoLojaByLoja(lojaId);
+        return View(produtos); // Or return Json(produtos);
+    }
+
 }

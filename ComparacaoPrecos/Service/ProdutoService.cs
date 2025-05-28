@@ -96,26 +96,25 @@ public class ProdutoService
         var produtosLoja = await _produtoLojaRepository.GetProdutoLojaByLoja(LojaID);
 
         var result = produtos
-            .Select(produto =>
+    .Where(produto => produtosLoja.Any(pl => pl.ProdutoID == produto.ProdutoID)) 
+    .Select(produto =>
+    {
+        var infoPorLoja = produtosLoja
+            .Where(pl => pl.ProdutoID == produto.ProdutoID)
+            .Select(pl => new ProdutoLojaViewModel
             {
-                var infoPorLoja = produtosLoja
-                    .Where(pl => pl.ProdutoID == produto.ProdutoID)
-                    .Select(pl => new ProdutoLojaViewModel
-                    {
-                        LojaID = pl.Loja.LojaID,
-                        NomeLoja = pl.Loja.Nome,
-                        Preco = pl.preco,
-                        DataHora = pl.DataHora
-                    })
-                    .ToList();
+                LojaID = pl.Loja.LojaID,
+                NomeLoja = pl.Loja.Nome,
+                Preco = pl.preco,
+                DataHora = pl.DataHora
+            }).ToList();
 
-                return new ProdutoViewModel
-                {
-                    Produto = produto,
-                    InfoPorLoja = infoPorLoja
-                };
-            })
-            .ToList();
+        return new ProdutoViewModel
+        {
+            Produto = produto,
+            InfoPorLoja = infoPorLoja
+        };
+    }).ToList();
 
         return result;
     }
@@ -124,7 +123,7 @@ public class ProdutoService
     {
         await _produtoLojaRepository.AddProdutoLoja(produtoLoja);
     }
-    
+
     public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID)
     {
         return await _produtoLojaRepository.GetProdutoLojaAsync(ProdutoID, LojaID);

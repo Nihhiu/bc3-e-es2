@@ -3,6 +3,7 @@ using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Models;
 
 namespace ComparacaoPrecos.Controllers;
+
 [Route("user")]
 public class UserController : Microsoft.AspNetCore.Mvc.Controller
 {
@@ -13,8 +14,8 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         _userService = userService;
     }
 
-    [HttpGet("registo")]
-    public async Task<IActionResult> Index()
+    [HttpGet("registo/Role/{id?}")]
+    public async Task<IActionResult> Index(string id)
     {
         var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
@@ -23,7 +24,13 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
             return RedirectToAction("Index", "Home");
         }
 
-        var user = await _userService.GetAllUsers();
-        return View(user);
+        var users = await _userService.GetAllUsers();
+
+        if (!string.IsNullOrEmpty(id))
+        {
+            users = users.Where(u => u.Role == id).ToList();
+        }
+
+        return View(users);
     }
 }

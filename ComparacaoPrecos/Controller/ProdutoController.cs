@@ -43,7 +43,9 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 
         if (loja != 0)
         {
+            Console.WriteLine(loja);
             produtos = await _produtoService.GetProdutosPorLoja(loja);
+            Console.WriteLine(produtos.Count());
         }
         else
         {

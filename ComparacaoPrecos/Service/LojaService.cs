@@ -6,10 +6,17 @@ namespace ComparacaoPrecos.Service;
 public class LojaService
 {
     private readonly LojaRepository _lojaRepository;
+    private readonly ProdutoLojaRepository _produtoLojaRepository;
 
-    public LojaService(LojaRepository lojaRepository)
+    public LojaService(LojaRepository lojaRepository, ProdutoLojaRepository produtoLojaRepository)
     {
         _lojaRepository = lojaRepository;
+        _produtoLojaRepository = produtoLojaRepository;
+    }
+
+    public async Task<IEnumerable<Produto_Loja>> GetProdutoLojaByLoja(int lojaId)
+    {
+        return await _produtoLojaRepository.GetProdutoLojaByLoja(lojaId);
     }
 
     // Criar uma nova loja
