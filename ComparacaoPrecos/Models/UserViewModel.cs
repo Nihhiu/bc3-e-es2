@@ -9,6 +9,9 @@ public class UserViewModel
     [Required]
     public String Username { get; set; }
 
+    [Required]
     public String Role { get; set; }
+
+    public String Password { get; set; }
 
 }

@@ -36,13 +36,11 @@
                                 Produtos
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="produtoDropdown">
-                                <li><a class="dropdown-item" asp-controller="Produto" asp-action="Index">Listar
-                                        Produtos</a></li>
+                                <li><a class="dropdown-item" asp-controller="Produto" asp-action="Index">Listar Produtos</a></li>
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <li>
-                                        <a class="dropdown-item" asp-controller="Produto" asp-action="Create">Criar
-                                            Produto</a>
+                                        <a class="dropdown-item" asp-controller="Produto" asp-action="Create">Criar Produto</a>
                                     </li>
                                 }
                             </ul>
@@ -65,9 +63,10 @@
                                     Utilizadores
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Listar
-                                            Utilizadores</a></li>
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Listar Utilizadores</a></li>
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Create">Criar Utilizadore</a></li>
                                 </ul>
+                                
                             </li>
                         }
                     </ul>

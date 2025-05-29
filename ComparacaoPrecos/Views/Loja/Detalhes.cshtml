@@ -30,32 +30,6 @@
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
-            @if (User.IsInRole("Admin"))
-            {
-                <div class="mt-5">
-                    <h3>Produtos da Loja (Admin)</h3>
-
-                    @if (Model.Produtos?.Any() == true)
-                    {
-                        <table class="table table-striped">
-                            <!-- ... estrutura da tabela ... -->
-                        </table>
-                    }
-                    else
-                    {
-                        <div class="alert alert-info">
-                            Nenhum produto encontrado nesta loja.
-                        </div>
-                    }
-
-                    <!-- Link para a página de produtos -->
-                    <a asp-controller="SeuController" asp-action="ProdutosPorLoja" asp-route-lojaId="@Model.LojaID"
-                        class="btn btn-primary mt-3">
-                        Gerenciar Produtos
-                    </a>
-                </div>
-            }
-
         </div>
     </div>
 </div>
