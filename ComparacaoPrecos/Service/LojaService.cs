@@ -1,4 +1,5 @@
 using ComparacaoPrecos.Data;
+using ComparacaoPrecos.Models;
 using ComparacaoPrecos.Repository;
 
 namespace ComparacaoPrecos.Service;
@@ -36,4 +37,29 @@ public class LojaService
     {
         return await _lojaRepository.GetLojaById(id);
     }
+
+    // Buscar dados dos produtos de uma loja específica e preços
+    public async Task<List<ProdutoViewModel>> GetProdutosDaLoja(int id)
+    {
+        var produtosLoja = await _produtoLojaRepository.GetProdutoLojaByLoja(id);
+        
+        Console.WriteLine($"Produtos encontrados para a loja {id}: {produtosLoja.Count}");
+        
+        return produtosLoja
+            .GroupBy(pl => pl.Produto)
+            .Select(g => new ProdutoViewModel
+            {
+                Produto = g.Key,
+
+                InfoPorLoja = g.Select(pl => new ProdutoLojaViewModel
+                {
+                    LojaID = id,
+                    NomeLoja = pl.Loja.Nome,
+                    Preco = (double)pl.preco,
+                    DataHora = pl.DataHora,
+                }).ToList()
+            })
+            .ToList();
+    }
+
 }

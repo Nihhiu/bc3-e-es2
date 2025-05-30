@@ -23,21 +23,24 @@ public class LojaController : Microsoft.AspNetCore.Mvc.Controller
     [HttpGet("{id}")]
     public async Task<IActionResult> Detalhes(int id)
     {
-        var viewModel = await _lojaService.GetLojaById(id);
-        if (viewModel == null) return NotFound();
+        // Busca a entidade loja pura (com latitude/longitude etc)
+        var loja = await _lojaService.GetLojaById(id);
+        if (loja == null) return NotFound();
+            
+        ViewData["IsAdmin"] = User.Identity.IsAuthenticated && User.IsInRole("Admin");
 
-        return View(viewModel);
-    }
-    [HttpGet("{lojaId}/produtos")]
-    public async Task<IActionResult> ProdutosPorLoja(int lojaId)
-    {
-        if (!User.IsInRole("Admin"))
+        if (User.IsInRole("Admin"))
         {
-            return Unauthorized(); // Or RedirectToAction("Index", "Home");
+            var produtosDaLoja = await _lojaService.GetProdutosDaLoja(id);
+
+            ViewData["Produtos"] = produtosDaLoja
+                .OrderByDescending(p => p.InfoPorLoja.Max(i => i.DataHora))
+                .ToList();
+
         }
 
-        var produtos = await _lojaService.GetProdutoLojaByLoja(lojaId);
-        return View(produtos); // Or return Json(produtos);
+        return View(loja);
     }
+    
 
 }

@@ -5,6 +5,8 @@
     ViewData["Title"] = "Detalhes da Loja";
     Layout = "_Layout";
 
+    var isAdmin = ViewData["IsAdmin"] as bool? ?? false;
+
     // calcula o offset:
     var latAjustada = Model.Latitude;
     var lngAjustada = Model.Longitude;
@@ -33,3 +35,65 @@
         </div>
     </div>
 </div>
+
+
+@if (isAdmin){
+    <div class="container my-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+
+                <h3 class="mb-4">Produtos Disponíveis</h3>
+                @using ComparacaoPrecos.Models
+                @{
+                    var produtos = ViewData["Produtos"] as List<ProdutoViewModel>;
+                }
+                
+                @if (produtos != null && produtos.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Preço</th>
+                                    <th>Última Atualização</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var produto in produtos)
+                                {
+                                    // Verifica se há informações da loja
+                                    if (produto.InfoPorLoja != null && produto.InfoPorLoja.Any())
+                                    {
+                                        <tr>
+                                            <td>@produto.Produto.Nome</td>
+                                            <td>
+                                                @foreach (var info in produto.InfoPorLoja)
+                                                {
+                                                    <div>@info.Preco.ToString("C")</div>
+                                                }
+                                            </td>
+                                            <td>
+                                                @foreach (var info in produto.InfoPorLoja)
+                                                {
+                                                    <div>@info.DataHora.ToString("dd/MM/yyyy HH:mm")</div>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        Nenhum produto disponível nesta loja
+                    </div>
+                }
+                    </div>
+                </div>
+            </div>
+}
+            
