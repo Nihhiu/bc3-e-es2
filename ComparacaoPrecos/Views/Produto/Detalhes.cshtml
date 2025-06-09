@@ -7,41 +7,47 @@
 }
 
 <div class="container my-5">
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
-            <h2 class="card-title text-primary">@Model.Produto.Nome</h2>
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <!-- Produto -->
+            <h2 class="text-primary fw-semibold">@Model.Produto.Nome</h2>
             <p class="text-muted mb-4">
-                <strong>Categoria:</strong> @Model.Produto.CategoriaID
+                <span class="fw-medium">Categoria:</span> @Model.Produto.CategoriaID
             </p>
 
-            <h4 class="mb-3 d-flex align-items-center">
-                <span class="me-auto">Lojas disponíveis</span>
+            <!-- Título Lojas + Botão -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0 fw-semibold">Lojas disponíveis</h4>
 
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                @if (User.Identity?.IsAuthenticated == true)
                 {
                     <a asp-action="AddPreco"
-                    asp-controller="Produto"
-                    asp-route-id="@Model.Produto.ProdutoID"
-                    class="btn btn-sm btn-primary">
-                        <i class="bi bi-plus-lg"></i> Adicionar loja
+                       asp-controller="Produto"
+                       asp-route-id="@Model.Produto.ProdutoID"
+                       class="btn btn-sm btn-primary rounded-pill px-3">
+                        <i class="bi bi-plus-lg me-1"></i> Adicionar loja
                     </a>
                 }
-            </h4>
+            </div>
 
+            <!-- Lista de Lojas -->
             @if (Model.InfoPorLoja.Any())
             {
                 @foreach (var loja in Model.InfoPorLoja)
                 {
-                    <div class="card mb-3 shadow-sm border border-light-subtle">
+                    <div class="card mb-3 border-0 shadow-sm rounded-3">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="card-title mb-1">
-                                    <a asp-controller="Loja" asp-action="Detalhes" asp-route-id="@loja.LojaID" class="text-decoration-none text-dark">
+                                <h5 class="mb-1">
+                                    <a asp-controller="Loja"
+                                       asp-action="Detalhes"
+                                       asp-route-id="@loja.LojaID"
+                                       class="text-decoration-none text-dark">
                                         @loja.NomeLoja
                                     </a>
                                 </h5>
-                                <p class="card-text text-muted mb-0">Preço:</p>
-                                <p class="card-text text-muted mb-0">@loja.credibilidade/10</p>
+                                <p class="text-muted mb-0 small">Preço:</p>
+                                <p class="text-muted mb-1 small">Credibilidade: @loja.credibilidade/10</p>
                             </div>
                             <span class="fs-5 fw-semibold text-success">
                                 @loja.Preco.ToString("C")
@@ -49,14 +55,13 @@
                         </div>
                     </div>
                 }
-            } else
+            }
+            else
             {
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-info text-center rounded-3 mt-4">
                     Nenhuma loja disponível para este produto.
                 </div>
             }
-
-            
         </div>
     </div>
 </div>

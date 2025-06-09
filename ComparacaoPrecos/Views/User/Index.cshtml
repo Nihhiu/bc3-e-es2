@@ -6,22 +6,24 @@
     Layout = "_Layout";
 }
 
-<h2>Lista de Utilizadores</h2>
+<h2 class="mb-4 text-primary fw-semibold">Lista de Utilizadores</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nome de Utilizador</th>
-            <th style="text-align: right;">Role</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead class="table-light">
             <tr>
-                <td>@user.Username</td>
-                <td style="text-align: right;">@user.Role</td>
+                <th>Nome de Utilizador</th>
+                <th class="text-end">Role</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="fw-medium">@user.Username</td>
+                    <td class="text-end text-secondary">@user.Role</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

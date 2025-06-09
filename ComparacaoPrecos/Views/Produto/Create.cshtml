@@ -9,27 +9,34 @@
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <h2 class="card-title mb-4 text-center text-primary">Criar Produto</h2>
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="text-center text-primary fw-semibold mb-4">Criar Produto</h2>
 
                     <form asp-action="criar" asp-controller="Produto" method="post" novalidate>
+                        <!-- Nome -->
                         <div class="mb-3">
-                            <label asp-for="Produto.Nome" class="form-label fw-semibold"></label>
-                            <input asp-for="Produto.Nome" class="form-control" placeholder="Nome do produto" />
+                            <label asp-for="Produto.Nome" class="form-label fw-medium"></label>
+                            <input asp-for="Produto.Nome" class="form-control rounded-3" placeholder="Nome do produto" />
                             <span asp-validation-for="Produto.Nome" class="text-danger small"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Produto.CategoriaID" class="form-label fw-semibold">Categoria</label>
-                            <select asp-for="Produto.CategoriaID" asp-items="@(ViewData["Categorias"] as List<SelectListItem>) " class="form-select">
+                        <!-- Categoria -->
+                        <div class="mb-4">
+                            <label asp-for="Produto.CategoriaID" class="form-label fw-medium">Categoria</label>
+                            <select asp-for="Produto.CategoriaID"
+                                    asp-items="@(ViewData["Categorias"] as List<SelectListItem>)"
+                                    class="form-select rounded-3">
                                 <option value="">Selecione uma categoria</option>
                             </select>
                             <span asp-validation-for="Produto.CategoriaID" class="text-danger small"></span>
                         </div>
 
+                        <!-- Submit -->
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-success">Salvar Produto</button>
+                            <button type="submit" class="btn btn-primary rounded-3 fw-semibold">
+                                Criar Produto
+                            </button>
                         </div>
                     </form>
 
@@ -38,3 +45,4 @@
         </div>
     </div>
 </div>
+

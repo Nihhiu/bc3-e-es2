@@ -6,7 +6,7 @@
     Layout = "_Layout";
 }
 
-<!-- Modal de Confirmação -->
+@* <!-- Modal de Confirmação -->
 <div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -43,7 +43,53 @@
     </div>
     
     <button type="submit" class="btn btn-primary">Adicionar Preço</button>
-</form>
+</form> *@
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-semibold" id="confirmacaoModalLabel">Confirmar Alteração de Preço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body text-muted">
+                Já existe um preço de <strong id="precoAntigo"></strong> nesta loja. <br />
+                Deseja alterar para <strong id="precoNovo"></strong>?
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4" id="confirmarAlteracao">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <h3 class="text-primary fw-semibold mb-4">Adicionar Preço</h3>
+            <form asp-action="AddPreco" method="post" id="precoForm" novalidate>
+                <div class="mb-3">
+                    <label asp-for="InfoPorLoja[0].Preco" class="form-label fw-medium">Preço</label>
+                    <input asp-for="InfoPorLoja[0].Preco" class="form-control" placeholder="Digite o preço" />
+                    <span asp-validation-for="InfoPorLoja[0].Preco" class="text-danger small"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="InfoPorLoja[0].LojaID" class="form-label fw-medium">Loja</label>
+                    <select asp-for="InfoPorLoja[0].LojaID" asp-items="@(ViewData["Lojas"] as List<SelectListItem>)" class="form-select">
+                        <option value="">Selecione uma loja</option>
+                    </select>
+                    <span asp-validation-for="InfoPorLoja[0].LojaID" class="text-danger small"></span>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 py-2">Adicionar Preço</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <script>
