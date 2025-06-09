@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ComparacaoPrecos.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8fffbbd1d0a035883471cd8fa1824dfd808c35b1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0f84ce0d881ca7c09a2a81225c331f8be766143")]
 [assembly: System.Reflection.AssemblyProductAttribute("ComparacaoPrecos.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ComparacaoPrecos.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
