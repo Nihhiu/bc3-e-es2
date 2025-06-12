@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {}
+    "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {
+    "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+        "projectUniqueName": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
         "projectName": "ComparacaoPrecos.Tests",
-        "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
-        "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
+        "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+        "packagesPath": "C:\\Users\\Nihhiu\\.nuget\\packages\\",
+        "outputPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Nihhiu\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -26,8 +26,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
-                "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
+              "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
+                "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
               }
             }
           }
@@ -51,6 +51,10 @@
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[17.14.1, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
             },
             "NUnit": {
               "target": "Package",
@@ -85,21 +89,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
+    "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
+        "projectUniqueName": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
         "projectName": "ComparacaoPrecos",
-        "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
-        "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\obj\\",
+        "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
+        "packagesPath": "C:\\Users\\Nihhiu\\.nuget\\packages\\",
+        "outputPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Nihhiu\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -159,9 +163,21 @@
               "target": "Package",
               "version": "[9.0.2, )"
             },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.14.1, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[4.3.2, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
@@ -191,7 +207,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

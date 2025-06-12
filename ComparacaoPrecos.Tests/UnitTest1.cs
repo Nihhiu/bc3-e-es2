@@ -1,4 +1,6 @@
-﻿namespace ComparacaoPrecos.Tests;
+﻿using NUnit.Framework;
+
+namespace ComparacaoPrecos.Tests;
 
 public class Tests
 {

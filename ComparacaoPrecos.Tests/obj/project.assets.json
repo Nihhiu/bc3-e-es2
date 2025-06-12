@@ -2,6 +2,22 @@
   "version": 3,
   "targets": {
     "net9.0": {
+      "Castle.Core/5.1.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Diagnostics.EventLog": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Castle.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Castle.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "coverlet.collector/6.0.2": {
         "type": "package",
         "build": {
@@ -2496,6 +2512,18 @@
           "buildTransitive/Mono.TextTemplating.targets": {}
         }
       },
+      "Moq/4.20.72": {
+        "type": "package",
+        "dependencies": {
+          "Castle.Core": "5.1.1"
+        },
+        "compile": {
+          "lib/net6.0/Moq.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Moq.dll": {}
+        }
+      },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
@@ -3317,7 +3345,10 @@
           "Microsoft.EntityFrameworkCore": "9.0.3",
           "Microsoft.EntityFrameworkCore.Sqlite": "9.0.2",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.2",
+          "Microsoft.NET.Test.Sdk": "17.14.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "9.0.0",
+          "NUnit": "4.3.2",
+          "NUnit3TestAdapter": "5.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4",
           "Swashbuckle.AspNetCore": "8.0.0"
         },
@@ -3334,6 +3365,30 @@
     }
   },
   "libraries": {
+    "Castle.Core/5.1.1": {
+      "sha512": "rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
+      "type": "package",
+      "path": "castle.core/5.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ASL - Apache Software Foundation License.txt",
+        "CHANGELOG.md",
+        "LICENSE",
+        "castle-logo.png",
+        "castle.core.5.1.1.nupkg.sha512",
+        "castle.core.nuspec",
+        "lib/net462/Castle.Core.dll",
+        "lib/net462/Castle.Core.xml",
+        "lib/net6.0/Castle.Core.dll",
+        "lib/net6.0/Castle.Core.xml",
+        "lib/netstandard2.0/Castle.Core.dll",
+        "lib/netstandard2.0/Castle.Core.xml",
+        "lib/netstandard2.1/Castle.Core.dll",
+        "lib/netstandard2.1/Castle.Core.xml",
+        "readme.txt"
+      ]
+    },
     "coverlet.collector/6.0.2": {
       "sha512": "bJShQ6uWRTQ100ZeyiMqcFlhP7WJ+bCuabUs885dJiBEzMsJMSFr7BOyeCw4rgvQokteGi5rKQTlkhfQPUXg2A==",
       "type": "package",
@@ -7611,6 +7666,23 @@
         "readme.md"
       ]
     },
+    "Moq/4.20.72": {
+      "sha512": "EA55cjyNn8eTNWrgrdZJH5QLFp2L43oxl1tlkoYUKIE9pRwL784OWiTXeCV5ApS+AMYEAlt7Fo03A2XfouvHmQ==",
+      "type": "package",
+      "path": "moq/4.20.72",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net462/Moq.dll",
+        "lib/net6.0/Moq.dll",
+        "lib/netstandard2.0/Moq.dll",
+        "lib/netstandard2.1/Moq.dll",
+        "moq.4.20.72.nupkg.sha512",
+        "moq.nuspec",
+        "readme.md"
+      ]
+    },
     "Newtonsoft.Json/13.0.3": {
       "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
       "type": "package",
@@ -8813,6 +8885,7 @@
     "net9.0": [
       "ComparacaoPrecos >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.14.1",
+      "Moq >= 4.20.72",
       "NUnit >= 4.3.2",
       "NUnit.Analyzers >= 4.4.0",
       "NUnit3TestAdapter >= 5.0.0",
@@ -8820,19 +8893,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sofia\\.nuget\\packages\\": {}
+    "C:\\Users\\Nihhiu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+      "projectUniqueName": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
       "projectName": "ComparacaoPrecos.Tests",
-      "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
-      "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
+      "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+      "packagesPath": "C:\\Users\\Nihhiu\\.nuget\\packages\\",
+      "outputPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Nihhiu\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -8844,8 +8917,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
-              "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
+            "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
+              "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
             }
           }
         }
@@ -8869,6 +8942,10 @@
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[17.14.1, )"
+          },
+          "Moq": {
+            "target": "Package",
+            "version": "[4.20.72, )"
           },
           "NUnit": {
             "target": "Package",
@@ -8903,7 +8980,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
