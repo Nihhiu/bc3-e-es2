@@ -8893,19 +8893,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nihhiu\\.nuget\\packages\\": {}
+    "C:\\Users\\Sofia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Sofia\\Documents\\GitHub\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
       "projectName": "ComparacaoPrecos.Tests",
-      "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
-      "packagesPath": "C:\\Users\\Nihhiu\\.nuget\\packages\\",
-      "outputPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
+      "projectPath": "C:\\Users\\Sofia\\Documents\\GitHub\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+      "packagesPath": "C:\\Users\\Sofia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Sofia\\Documents\\GitHub\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Nihhiu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -8917,8 +8917,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
-              "projectPath": "D:\\Documentos\\uni\\ES2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
+            "C:\\Users\\Sofia\\Documents\\GitHub\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
+              "projectPath": "C:\\Users\\Sofia\\Documents\\GitHub\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
             }
           }
         }
