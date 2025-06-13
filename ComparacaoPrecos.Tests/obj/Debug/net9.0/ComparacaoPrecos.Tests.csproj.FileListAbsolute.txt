@@ -98,7 +98,6 @@ C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoP
 C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoPrecos.Tests\bin\Debug\net9.0\NuGet.Protocol.dll
 C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoPrecos.Tests\bin\Debug\net9.0\NuGet.Versioning.dll
 C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoPrecos.Tests\bin\Debug\net9.0\nunit.framework.dll
-C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoPrecos.Tests\bin\Debug\net9.0\nunit.framework.legacy.dll
 C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoPrecos.Tests\bin\Debug\net9.0\SQLitePCLRaw.batteries_v2.dll
 C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoPrecos.Tests\bin\Debug\net9.0\SQLitePCLRaw.core.dll
 C:\Users\sofia\Documents\_escola\_este_ano\2_2_5_ES2\24_25\bc3-e-es2\ComparacaoPrecos.Tests\bin\Debug\net9.0\SQLitePCLRaw.provider.e_sqlite3.dll
