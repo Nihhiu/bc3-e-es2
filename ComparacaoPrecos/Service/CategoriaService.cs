@@ -1,12 +1,14 @@
 using ComparacaoPrecos.Repository;
+using ComparacaoPrecos.Service.Interfaces;
+using ComparacaoPrecos.Repository.Interfaces;
 
 namespace ComparacaoPrecos.Service;
 
-public class CategoriaService
+public class CategoriaService : ICategoriaService
 {
-    private readonly CategoriaRepository _categoriaRepository;
+    private readonly ICategoriaRepository _categoriaRepository;
 
-    public CategoriaService(CategoriaRepository categoriaRepository)
+    public CategoriaService(ICategoriaRepository categoriaRepository)
     {
         _categoriaRepository = categoriaRepository;
     }

@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
+using ComparacaoPrecos.Repository.Interfaces;
 
 namespace ComparacaoPrecos.Repository;
 
-public class LojaRepository
+public class LojaRepository : ILojaRepository
 {
     private readonly ApplicationDbContext _context;
 

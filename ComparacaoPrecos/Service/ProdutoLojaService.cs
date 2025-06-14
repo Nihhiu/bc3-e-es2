@@ -1,13 +1,13 @@
-using ComparacaoPrecos.Data;
-using ComparacaoPrecos.Repository;
+using ComparacaoPrecos.Service.Interfaces;
+using ComparacaoPrecos.Repository.Interfaces;
 
 namespace ComparacaoPrecos.Service;
 
-public class ProdutoLojaService
+public class ProdutoLojaService : IProdutoLojaService
 {
-    private readonly ProdutoLojaRepository _produtoLojaRepository;
+    private readonly IProdutoLojaRepository _produtoLojaRepository;
 
-    public ProdutoLojaService(ProdutoLojaRepository produtoLojaRepository)
+    public ProdutoLojaService(IProdutoLojaRepository produtoLojaRepository)
     {
         _produtoLojaRepository = produtoLojaRepository;
     }

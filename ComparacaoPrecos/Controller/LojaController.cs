@@ -1,15 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Models;
+using ComparacaoPrecos.Service.Interfaces;
 
 namespace ComparacaoPrecos.Controllers;
 
 [Route("loja")]
 public class LojaController : Microsoft.AspNetCore.Mvc.Controller
 {
-    private readonly LojaService _lojaService;
+    private readonly ILojaService _lojaService;
 
-    public LojaController(LojaService lojaService)
+    public LojaController(ILojaService lojaService)
     {
         _lojaService = lojaService;
     }

@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
 using ComparacaoPrecos.Models;
+using ComparacaoPrecos.Repository.Interfaces;
 
 namespace ComparacaoPrecos.Repository;
 
-public class UserRepository
+public class UserRepository : IUserRepository
 {
     private readonly ApplicationDbContext _context;
 
@@ -33,4 +34,18 @@ public class UserRepository
 
         return usersWithRoles;
     }
+
+    public async Task<bool> DeleteUserAsync(string userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+
+        if (user == null)
+            return false;
+
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
 }

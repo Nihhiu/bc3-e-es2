@@ -3,17 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ComparacaoPrecos.Models;
 using System.Security.Claims;
+using ComparacaoPrecos.Service.Interfaces;
 
 namespace ComparacaoPrecos.Controller;
 
 [Route("produto")]
 public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 {
-    private readonly ProdutoService _produtoService;
-    private readonly CategoriaService _categoriaService;
-    private readonly LojaService _lojaService;
+    private readonly IProdutoService _produtoService;
+    private readonly ICategoriaService _categoriaService;
+    private readonly ILojaService _lojaService;
 
-    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService, LojaService lojaService)
+    public ProdutoController(IProdutoService produtoService, ICategoriaService categoriaService, ILojaService lojaService)
     {
         _produtoService = produtoService;
         _categoriaService = categoriaService;

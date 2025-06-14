@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
+using ComparacaoPrecos.Repository.Interfaces;
 
 namespace ComparacaoPrecos.Repository;
 
-public class ProdutoRepository {
+public class ProdutoRepository : IProdutoRepository {
     private readonly ApplicationDbContext _context;
 
     public ProdutoRepository(ApplicationDbContext context) {

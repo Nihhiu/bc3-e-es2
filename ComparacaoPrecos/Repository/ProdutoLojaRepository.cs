@@ -1,9 +1,10 @@
 using ComparacaoPrecos.Data;
 using Microsoft.EntityFrameworkCore;
+using ComparacaoPrecos.Repository.Interfaces;
 
 namespace ComparacaoPrecos.Repository;
 
-public class ProdutoLojaRepository
+public class ProdutoLojaRepository : IProdutoLojaRepository
 {
     private readonly ApplicationDbContext _context;
 
@@ -16,8 +17,8 @@ public class ProdutoLojaRepository
     public async Task<Produto_Loja> AddProdutoLoja(Produto_Loja produtoLoja)
     {
         var existing = await _context.Produto_Loja
-            .FirstOrDefaultAsync(pl => 
-                pl.ProdutoID == produtoLoja.ProdutoID && 
+            .FirstOrDefaultAsync(pl =>
+                pl.ProdutoID == produtoLoja.ProdutoID &&
                 pl.LojaID == produtoLoja.LojaID);
 
         if (existing != null)
@@ -49,13 +50,19 @@ public class ProdutoLojaRepository
     }
 
     public async Task<List<Produto_Loja>> GetProdutoLojaByLoja(int id)
-{
-    return await _context.Produto_Loja
-        .Include(p => p.Produto)
-        .Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted)
-        .ToListAsync() 
-        ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
-}
-    
-    public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID) => await _context.Produto_Loja.FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID);
+    {
+        return await _context.Produto_Loja
+            .Include(p => p.Produto)
+            .Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted)
+            .ToListAsync()
+            ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
+    }
+
+    public async Task<Produto_Loja> GetProdutoLojaAsync(int ProdutoID, int LojaID)
+    {
+        var result = await _context.Produto_Loja
+            .FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID);
+
+        return result ?? throw new InvalidOperationException("Produto_Loja not found.");
+    }
 }

@@ -1,15 +1,17 @@
 using ComparacaoPrecos.Data;
 using ComparacaoPrecos.Models;
 using ComparacaoPrecos.Repository;
+using ComparacaoPrecos.Service.Interfaces;
+using ComparacaoPrecos.Repository.Interfaces;
 
 namespace ComparacaoPrecos.Service;
 
-public class LojaService
+public class LojaService : ILojaService
 {
-    private readonly LojaRepository _lojaRepository;
-    private readonly ProdutoLojaRepository _produtoLojaRepository;
+    private readonly ILojaRepository _lojaRepository;
+    private readonly IProdutoLojaRepository _produtoLojaRepository;
 
-    public LojaService(LojaRepository lojaRepository, ProdutoLojaRepository produtoLojaRepository)
+    public LojaService(ILojaRepository lojaRepository, IProdutoLojaRepository produtoLojaRepository)
     {
         _lojaRepository = lojaRepository;
         _produtoLojaRepository = produtoLojaRepository;
