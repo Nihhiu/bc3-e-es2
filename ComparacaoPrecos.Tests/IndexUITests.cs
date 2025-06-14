@@ -101,31 +101,25 @@ namespace ComparacaoPrecos.Tests
                 string appUrl = "http://localhost:5056";
                 driver.Navigate().GoToUrl($"{appUrl}/produto");
 
-                // Maximiza para evitar layout colapsado
                 driver.Manage().Window.Maximize();
 
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
-                // Espera o formulário estar visível
                 wait.Until(ExpectedConditions.ElementIsVisible(By.Id("filtroProduto")));
 
-                // Preenche o campo de nome (ex: "Lego")
                 var nomeInput = driver.FindElement(By.Id("nome"));
                 nomeInput.Clear();
                 nomeInput.SendKeys("Lego");
 
-                // Clica no botão "Filtrar" via JavaScript para evitar interceptação
                 var botaoFiltrar = driver.FindElement(By.CssSelector("form button[type='submit']"));
                 ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", botaoFiltrar);
 
-                // Espera os resultados atualizarem (cards ou mensagem)
                 wait.Until(d =>
                 {
                     return d.FindElements(By.CssSelector(".card-title")).Any() ||
                            d.FindElements(By.CssSelector(".alert-info")).Any();
                 });
 
-                // Valida se apareceu pelo menos um produto OU a mensagem de alerta
                 var produtos = driver.FindElements(By.CssSelector(".card-title"));
                 var mensagem = driver.FindElements(By.CssSelector(".alert-info"));
 
