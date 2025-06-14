@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComparacaoPrecos.Service;
 
-public class ProdutoService
+public class ProdutoService : IProdutoService
 {
 
     private readonly ProdutoRepository _produtoRepository;

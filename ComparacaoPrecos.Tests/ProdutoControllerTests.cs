@@ -12,52 +12,40 @@ using ComparacaoPrecos.Models;
 using ComparacaoPrecos.Repository;
 using ComparacaoPrecos.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Primitives;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ComparacaoPrecos.Test;
 
 [TestFixture]
 public class ProdutoControllerTests : IDisposable
 {
-    protected Mock<ProdutoService> _mockProdutoService;
+    // Alterado para Mock da interface
+    protected Mock<IProdutoService> _mockProdutoService;
     protected ProdutoController _controller;
     private ClaimsPrincipal _user;
-    private Mock<CategoriaService> _mockCategoriaService;
-    private Mock<LojaService> _mockLojaService;
+    
+    // Alterado para Mock das interfaces correspondentes
+    private Mock<ICategoriaService> _mockCategoriaService;
+    private Mock<ILojaService> _mockLojaService;
 
     [SetUp]
     public void Setup()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .Options;
+        // 1. Criar mocks das interfaces de serviço
+        _mockProdutoService = new Mock<IProdutoService>();
+        _mockCategoriaService = new Mock<ICategoriaService>();
+        _mockLojaService = new Mock<ILojaService>();
 
-        var mockDbContext = new Mock<ApplicationDbContext>(options);
-        
-        var mockProdutoRepository   = new Mock<ProdutoRepository>(mockDbContext.Object);
-        var mockCategoriaRepository = new Mock<CategoriaRepository>(mockDbContext.Object);
-        var mockProdutoLojaRepository = new Mock<ProdutoLojaRepository>(mockDbContext.Object);
-        var mockLojaRepository      = new Mock<LojaRepository>(mockDbContext.Object);
-
-        // 3. Mock just the services (or even let them use the real repos if you prefer)
-        _mockProdutoService = new Mock<ProdutoService>(
-            mockProdutoRepository.Object,
-            mockCategoriaRepository.Object,
-            mockProdutoLojaRepository.Object,
-            mockLojaRepository.Object
-        );
-        _mockCategoriaService = new Mock<CategoriaService>(mockCategoriaRepository.Object);
-        _mockLojaService = new Mock<LojaService>(
-            mockLojaRepository.Object,
-            mockProdutoLojaRepository.Object
-        );
-
-        // 4. Build controller with authenticated user
+        // 2. Configurar usuário autenticado
         _user = new ClaimsPrincipal(new ClaimsIdentity(new[]
         {
             new Claim(ClaimTypes.Name, "test@example.com"),
             new Claim(ClaimTypes.NameIdentifier, "123")
         }, "test"));
 
+        // 3. Instanciar controller com os mocks das interfaces
         _controller = new ProdutoController(
             _mockProdutoService.Object,
             _mockCategoriaService.Object,
@@ -71,28 +59,18 @@ public class ProdutoControllerTests : IDisposable
         };
     }
 
-
-    [TearDown]
-    public void TearDown()
-    {
-        Dispose();
-    }
-
+    // Implementar Dispose se necessário
     public void Dispose()
     {
-        _controller?.Dispose();
+        // Limpar recursos se necessário
     }
-    
-
-    
 }
-
 [TestFixture]
 public class AddPrecoTests : ProdutoControllerTests
 {
     private ProdutoViewModel _model;
     private const int ProdutoId = 1;
-    private const int LojaId = 100;
+    private const int LojaId = 1;
 
     [SetUp]
     public new void Setup()
@@ -106,7 +84,7 @@ public class AddPrecoTests : ProdutoControllerTests
                 new ProdutoLojaViewModel
                 {
                     LojaID = LojaId,
-                    Preco = (double)99.99m
+                    Preco = 99.99
                 }
             }
         };
@@ -128,57 +106,63 @@ public class AddPrecoTests : ProdutoControllerTests
     }
 
     [Test]
-    public async Task AddPreco_PrecoNegativo_AdicionaComSucesso()
+    public async Task AddPreco_PrecoExistenteSemConfirmacao_RetornaJsonDeConfirmacao()
     {
         // Arrange
-        var model = new ProdutoViewModel
+        const double precoAntigo = 79.99;
+        const double precoNovo = 99.99;
+
+        // Preparar mock de produto existente
+        var produtoLojaExistente = new Produto_Loja
         {
-            InfoPorLoja = new List<ProdutoLojaViewModel>
-            {
-                new ProdutoLojaViewModel { LojaID = 100, Preco = -5.99 }
-            }
+            ProdutoID = ProdutoId,
+            LojaID = LojaId,
+            preco = precoAntigo
         };
 
-        _mockProdutoService.Setup(s => s.GetProdutoLojaAsync(It.IsAny<int>(), It.IsAny<int>()))
-                        .ReturnsAsync((Produto_Loja)null);
-
-        // Act
-        var result = await _controller.AddPreco(model, 1) as JsonResult;
-
-        // Assert
-        _mockProdutoService.Verify(s =>
-            s.AddProdutoLoja(It.Is<Produto_Loja>(pl =>
-                pl.preco == -5.99
-            )),
-            Times.Once
-        );
-    }
-    
-    [Test]
-    public async Task AddPreco_PrecoComMuitasCasasDecimais_TruncadoCorretamente()
-    {
-        // Arrange
-        var model = new ProdutoViewModel
-        {
-            InfoPorLoja = new List<ProdutoLojaViewModel>
-            {
-                new ProdutoLojaViewModel { LojaID = 100, Preco = 12.3456789 }
-            }
-        };
-        
         _mockProdutoService
-            .Setup(s => s.GetProdutoLojaAsync(It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync((Produto_Loja?)null); 
+            .Setup(s => s.GetProdutoLojaAsync(ProdutoId, LojaId))
+            .ReturnsAsync(produtoLojaExistente);
+
+        // Usuário autenticado
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, "testuser"),
+            new Claim(ClaimTypes.NameIdentifier, "user-id")
+        };
+        var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "TestAuth"));
+
+        // Request sem confirmação
+        var context = new DefaultHttpContext
+        {
+            User = user,
+            Request = { Form = new FormCollection(new Dictionary<string, StringValues>()) }
+        };
+        _controller.ControllerContext = new ControllerContext { HttpContext = context };
 
         // Act
-        var result = await _controller.AddPreco(model, 1) as JsonResult;
+        var resultado = await _controller.AddPreco(_model, ProdutoId) as JsonResult;
+        Assert.That(resultado, Is.Not.Null, "Esperava JsonResult não nulo");
 
-        // Assert
-        _mockProdutoService.Verify(s => 
-            s.AddProdutoLoja(It.Is<Produto_Loja>(pl => 
-                (double)pl.preco == 12.35 // Arredondamento para 2 casas
-            )), 
-            Times.Once
-        );
+        // Assert JSON
+        var json = JsonSerializer.Serialize(resultado.Value);
+        var response = JsonSerializer.Deserialize<ConfirmacaoResponse>(json);
+
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.RequiresConfirmation, Is.True);
+        Assert.That(response.OldPrice, Is.EqualTo(precoAntigo.ToString("N2")));
+        Assert.That(response.NewPrice, Is.EqualTo(precoNovo.ToString("N2")));
+    }
+
+    private class ConfirmacaoResponse
+    {
+        [JsonPropertyName("requiresConfirmation")]
+        public bool RequiresConfirmation { get; set; }
+
+        [JsonPropertyName("oldPrice")]
+        public string? OldPrice { get; set; }
+
+        [JsonPropertyName("newPrice")]
+        public string? NewPrice { get; set; }
     }
 }

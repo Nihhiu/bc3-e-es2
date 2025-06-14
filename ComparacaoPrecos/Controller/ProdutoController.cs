@@ -9,13 +9,13 @@ namespace ComparacaoPrecos.Controller;
 [Route("produto")]
 public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 {
-    private readonly ProdutoService _produtoService;
-    private readonly CategoriaService _categoriaService;
-    private readonly LojaService _lojaService;
+    private readonly IProdutoService _IprodutoService;
+    private readonly ICategoriaService _categoriaService;
+    private readonly ILojaService _lojaService;
 
-    public ProdutoController(ProdutoService produtoService, CategoriaService categoriaService, LojaService lojaService)
+    public ProdutoController(IProdutoService IprodutoService, ICategoriaService categoriaService, ILojaService lojaService)
     {
-        _produtoService = produtoService;
+        _IprodutoService = IprodutoService;
         _categoriaService = categoriaService;
         _lojaService = lojaService;
     }
@@ -44,12 +44,12 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         if (loja != 0)
         {
             Console.WriteLine(loja);
-            produtos = await _produtoService.GetProdutosPorLoja(loja);
+            produtos = await _IprodutoService.GetProdutosPorLoja(loja);
             Console.WriteLine(produtos.Count());
         }
         else
         {
-            produtos = await _produtoService.GetAllProdutos();
+            produtos = await _IprodutoService.GetAllProdutos();
         }
 
         if (!string.IsNullOrEmpty(categoria))
@@ -84,7 +84,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     [HttpGet("{id}")]
     public async Task<IActionResult> Detalhes(ProdutoViewModel model, int id)
     {
-        var viewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
+        var viewModel = await _IprodutoService.GetProdutoDetalhesViewModel(id);
         if (viewModel == null) return NotFound();
 
         foreach (var item in viewModel.InfoPorLoja)
@@ -116,7 +116,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     [HttpPost("criar")]
     public async Task<IActionResult> Create(ProdutoViewModel model)
     {
-        await _produtoService.CriarProdutoAsync(model.Produto);
+        await _IprodutoService.CriarProdutoAsync(model.Produto);
         return RedirectToAction("Index");
     }
 
@@ -124,7 +124,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     [HttpGet("add_preco/{id}")]
     public async Task<IActionResult> AddPreco(int id)
     {
-        var produtoViewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
+        var produtoViewModel = await _IprodutoService.GetProdutoDetalhesViewModel(id);
         if (produtoViewModel == null)
             return NotFound();
 
@@ -153,7 +153,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         }
 
         var lojaId = model.InfoPorLoja[0].LojaID;
-        var precoExistente = await _produtoService.GetProdutoLojaAsync(id, lojaId);
+        var precoExistente = await _IprodutoService.GetProdutoLojaAsync(id, lojaId);
 
         if (precoExistente != null && !Request.Form.ContainsKey("confirmar"))
         {
@@ -174,7 +174,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
             Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
         };
 
-        await _produtoService.AddProdutoLoja(produtoLoja);
+        await _IprodutoService.AddProdutoLoja(produtoLoja);
         return Json(new { redirectUrl = Url.Action("Index") });
     }
 }

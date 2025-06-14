@@ -4,7 +4,7 @@ using ComparacaoPrecos.Repository;
 
 namespace ComparacaoPrecos.Service;
 
-public class LojaService
+public class LojaService : ILojaService
 {
     private readonly LojaRepository _lojaRepository;
     private readonly ProdutoLojaRepository _produtoLojaRepository;

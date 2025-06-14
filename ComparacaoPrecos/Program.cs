@@ -14,10 +14,10 @@ builder.Services.AddScoped<ProdutoLojaRepository>();
 builder.Services.AddScoped<LojaRepository>();
 builder.Services.AddScoped<UserRepository>();
 
-builder.Services.AddScoped<ProdutoService>();
-builder.Services.AddScoped<CategoriaService>();
+builder.Services.AddScoped<IProdutoService , ProdutoService>();
+builder.Services.AddScoped<ICategoriaService , CategoriaService>();
 builder.Services.AddScoped<ProdutoLojaService>();
-builder.Services.AddScoped<LojaService>();
+builder.Services.AddScoped<ILojaService , LojaService>();
 builder.Services.AddScoped<UserService>();
 
 
