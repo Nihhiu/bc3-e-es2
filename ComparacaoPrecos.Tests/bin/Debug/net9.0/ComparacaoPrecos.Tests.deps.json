@@ -9,10 +9,14 @@
       "ComparacaoPrecos.Tests/1.0.0": {
         "dependencies": {
           "ComparacaoPrecos": "1.0.0",
+          "DotNetSeleniumExtras.WaitHelpers": "3.11.0",
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.3",
           "Microsoft.NET.Test.Sdk": "17.14.1",
-          "NUnit": "4.3.2",
+          "NUnit": "3.13.3",
           "NUnit.Analyzers": "4.4.0",
           "NUnit3TestAdapter": "5.0.0",
+          "Selenium.Support": "4.20.0",
+          "Selenium.WebDriver": "4.20.0",
           "coverlet.collector": "6.0.2"
         },
         "runtime": {
@@ -20,6 +24,17 @@
         }
       },
       "coverlet.collector/6.0.2": {},
+      "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
+        "dependencies": {
+          "Selenium.WebDriver": "4.20.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SeleniumExtras.WaitHelpers.dll": {
+            "assemblyVersion": "3.11.0.0",
+            "fileVersion": "3.11.0.0"
+          }
+        }
+      },
       "Humanizer/2.14.1": {
         "dependencies": {
           "Humanizer.Core.af": "2.14.1",
@@ -592,7 +607,7 @@
       },
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/9.0.2": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "9.0.2"
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.3"
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll": {
@@ -603,7 +618,7 @@
       },
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore/9.0.2": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "9.0.2",
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.3",
           "Microsoft.Extensions.Identity.Stores": "9.0.5"
         },
         "runtime": {
@@ -1161,17 +1176,17 @@
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/9.0.3": {},
-      "Microsoft.EntityFrameworkCore.Relational/9.0.2": {
+      "Microsoft.EntityFrameworkCore.Relational/9.0.3": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.3",
           "Microsoft.Extensions.Caching.Memory": "9.0.3",
-          "Microsoft.Extensions.Configuration.Abstractions": "9.0.2",
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.3",
           "Microsoft.Extensions.Logging": "9.0.5"
         },
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll": {
-            "assemblyVersion": "9.0.2.0",
-            "fileVersion": "9.0.225.6701"
+            "assemblyVersion": "9.0.3.0",
+            "fileVersion": "9.0.325.11202"
           }
         }
       },
@@ -1179,7 +1194,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Sqlite.Core": "9.0.2",
           "Microsoft.Extensions.Caching.Memory": "9.0.3",
-          "Microsoft.Extensions.Configuration.Abstractions": "9.0.2",
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.3",
           "Microsoft.Extensions.DependencyModel": "9.0.2",
           "Microsoft.Extensions.Logging": "9.0.5",
           "SQLitePCLRaw.bundle_e_sqlite3": "2.1.10",
@@ -1190,9 +1205,9 @@
       "Microsoft.EntityFrameworkCore.Sqlite.Core/9.0.2": {
         "dependencies": {
           "Microsoft.Data.Sqlite.Core": "9.0.2",
-          "Microsoft.EntityFrameworkCore.Relational": "9.0.2",
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.3",
           "Microsoft.Extensions.Caching.Memory": "9.0.3",
-          "Microsoft.Extensions.Configuration.Abstractions": "9.0.2",
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.3",
           "Microsoft.Extensions.DependencyModel": "9.0.2",
           "Microsoft.Extensions.Logging": "9.0.5",
           "SQLitePCLRaw.core": "2.1.10",
@@ -1233,14 +1248,14 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/9.0.2": {
+      "Microsoft.Extensions.Configuration.Abstractions/9.0.3": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "9.0.5"
         },
         "runtime": {
           "lib/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
             "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.225.6610"
+            "fileVersion": "9.0.325.11113"
           }
         }
       },
@@ -1377,6 +1392,7 @@
           "Microsoft.TestPlatform.TestHost": "17.14.1"
         }
       },
+      "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.OpenApi/1.6.23": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
@@ -2065,6 +2081,11 @@
           }
         }
       },
+      "NETStandard.Library/2.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.1.0"
+        }
+      },
       "Newtonsoft.Json/13.0.3": {
         "runtime": {
           "lib/net6.0/Newtonsoft.Json.dll": {
@@ -2087,7 +2108,7 @@
       "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.4": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.3",
-          "Microsoft.EntityFrameworkCore.Relational": "9.0.2",
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.3",
           "Npgsql": "9.0.3"
         },
         "runtime": {
@@ -2197,15 +2218,14 @@
           }
         }
       },
-      "NUnit/4.3.2": {
+      "NUnit/3.13.3": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.0"
+        },
         "runtime": {
-          "lib/net8.0/nunit.framework.dll": {
-            "assemblyVersion": "4.3.2.0",
-            "fileVersion": "4.3.2.0"
-          },
-          "lib/net8.0/nunit.framework.legacy.dll": {
-            "assemblyVersion": "4.3.2.0",
-            "fileVersion": "4.3.2.0"
+          "lib/netstandard2.0/nunit.framework.dll": {
+            "assemblyVersion": "3.13.3.0",
+            "fileVersion": "3.13.3.0"
           }
         }
       },
@@ -2214,6 +2234,28 @@
         "dependencies": {
           "Microsoft.Testing.Extensions.VSTestBridge": "1.5.3",
           "Microsoft.Testing.Platform.MSBuild": "1.5.3"
+        }
+      },
+      "Selenium.Support/4.20.0": {
+        "dependencies": {
+          "Selenium.WebDriver": "4.20.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.Support.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Selenium.WebDriver/4.20.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
         }
       },
       "SQLitePCLRaw.bundle_e_sqlite3/2.1.10": {
@@ -2552,6 +2594,13 @@
       "sha512": "sha512-bJShQ6uWRTQ100ZeyiMqcFlhP7WJ+bCuabUs885dJiBEzMsJMSFr7BOyeCw4rgvQokteGi5rKQTlkhfQPUXg2A==",
       "path": "coverlet.collector/6.0.2",
       "hashPath": "coverlet.collector.6.0.2.nupkg.sha512"
+    },
+    "DotNetSeleniumExtras.WaitHelpers/3.11.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xc6jVVl5ymgk3ZNWnC/KHxkEup1QpnwYbrwF+NQoCOGERsD8YMlLwmsX4lGhLXCLo/YQTRTIwlKCN9E/doGUNg==",
+      "path": "dotnetseleniumextras.waithelpers/3.11.0",
+      "hashPath": "dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512"
     },
     "Humanizer/2.14.1": {
       "type": "package",
@@ -3099,12 +3148,12 @@
       "path": "microsoft.entityframeworkcore.analyzers/9.0.3",
       "hashPath": "microsoft.entityframeworkcore.analyzers.9.0.3.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Relational/9.0.2": {
+    "Microsoft.EntityFrameworkCore.Relational/9.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-r7O4N5uaM95InVSGUj7SMOQWN0f1PBF2Y30ow7Jg+pGX5GJCRVd/1fq83lQ50YMyq+EzyHac5o4CDQA2RsjKJQ==",
-      "path": "microsoft.entityframeworkcore.relational/9.0.2",
-      "hashPath": "microsoft.entityframeworkcore.relational.9.0.2.nupkg.sha512"
+      "sha512": "sha512-xsS+5TM7M5f3tCSRaSbzouGCoIgD2zokQxBGXvf9z3DusRztWvT1NNT9XJaY2JoK1qEEDcHah8is6azYmpZhIg==",
+      "path": "microsoft.entityframeworkcore.relational/9.0.3",
+      "hashPath": "microsoft.entityframeworkcore.relational.9.0.3.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Sqlite/9.0.2": {
       "type": "package",
@@ -3148,12 +3197,12 @@
       "path": "microsoft.extensions.caching.memory/9.0.3",
       "hashPath": "microsoft.extensions.caching.memory.9.0.3.nupkg.sha512"
     },
-    "Microsoft.Extensions.Configuration.Abstractions/9.0.2": {
+    "Microsoft.Extensions.Configuration.Abstractions/9.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-I0O/270E/lUNqbBxlRVjxKOMZyYjP88dpEgQTveml+h2lTzAP4vbawLVwjS9SC7lKaU893bwyyNz0IVJYsm9EA==",
-      "path": "microsoft.extensions.configuration.abstractions/9.0.2",
-      "hashPath": "microsoft.extensions.configuration.abstractions.9.0.2.nupkg.sha512"
+      "sha512": "sha512-q5qlbm6GRUrle2ZZxy9aqS/wWoc+mRD3JeP6rcpiJTh5XcemYkplAcJKq8lU11ZfPom5lfbZZfnQvDqcUhqD5Q==",
+      "path": "microsoft.extensions.configuration.abstractions/9.0.3",
+      "hashPath": "microsoft.extensions.configuration.abstractions.9.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/9.0.5": {
       "type": "package",
@@ -3245,6 +3294,13 @@
       "sha512": "sha512-HJKqKOE+vshXra2aEHpi2TlxYX7Z9VFYkr+E5rwEvHC8eIXiyO+K9kNm8vmNom3e2rA56WqxU+/N9NJlLGXsJQ==",
       "path": "microsoft.net.test.sdk/17.14.1",
       "hashPath": "microsoft.net.test.sdk.17.14.1.nupkg.sha512"
+    },
+    "Microsoft.NETCore.Platforms/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "path": "microsoft.netcore.platforms/1.1.0",
+      "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
     },
     "Microsoft.OpenApi/1.6.23": {
       "type": "package",
@@ -3358,6 +3414,13 @@
       "path": "mono.texttemplating/3.0.0",
       "hashPath": "mono.texttemplating.3.0.0.nupkg.sha512"
     },
+    "NETStandard.Library/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7jnbRU+L08FXKMxqUflxEXtVymWvNOrS8yHgu9s6EM8Anr6T/wIX4nZ08j/u3Asz+tCufp3YVwFSEvFTPYmBPA==",
+      "path": "netstandard.library/2.0.0",
+      "hashPath": "netstandard.library.2.0.0.nupkg.sha512"
+    },
     "Newtonsoft.Json/13.0.3": {
       "type": "package",
       "serviceable": true,
@@ -3442,12 +3505,12 @@
       "path": "nuget.versioning/6.11.0",
       "hashPath": "nuget.versioning.6.11.0.nupkg.sha512"
     },
-    "NUnit/4.3.2": {
+    "NUnit/3.13.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-puVXayXNmEu7MFQSUswGmUjOy3M3baprMbkLl5PAutpeDoGTr+jPv33qAYsqxywi2wJCq8l/O3EhHoLulPE1iQ==",
-      "path": "nunit/4.3.2",
-      "hashPath": "nunit.4.3.2.nupkg.sha512"
+      "sha512": "sha512-KNPDpls6EfHwC3+nnA67fh5wpxeLb3VLFAfLxrug6JMYDLHH6InaQIWR7Sc3y75d/9IKzMksH/gi08W7XWbmnQ==",
+      "path": "nunit/3.13.3",
+      "hashPath": "nunit.3.13.3.nupkg.sha512"
     },
     "NUnit.Analyzers/4.4.0": {
       "type": "package",
@@ -3462,6 +3525,20 @@
       "sha512": "sha512-sy4cLoUAdE6TDM4wNX5gmNCyhMev5wUz4cA6ZRf/aON9vf9t4xTVGLj/4huhDKcS4dFfmVVcgcP70yC7WC9kKg==",
       "path": "nunit3testadapter/5.0.0",
       "hashPath": "nunit3testadapter.5.0.0.nupkg.sha512"
+    },
+    "Selenium.Support/4.20.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ANrmrsgGUIP53wHxBcAEAsAMpcGr1D7Dtb8wjftuqyxBl/GmX9tU9uN5WDmEVo4WQI32OWgc/KG1ugsOmlr96w==",
+      "path": "selenium.support/4.20.0",
+      "hashPath": "selenium.support.4.20.0.nupkg.sha512"
+    },
+    "Selenium.WebDriver/4.20.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Z9rYD5t2d7nBhjluj5MxnrTqMjrfGDQSXWThIdBMwgpVCGTcHMYot7nWV3XoVnUtUBb5wrYag++GV9vq/evTZQ==",
+      "path": "selenium.webdriver/4.20.0",
+      "hashPath": "selenium.webdriver.4.20.0.nupkg.sha512"
     },
     "SQLitePCLRaw.bundle_e_sqlite3/2.1.10": {
       "type": "package",
