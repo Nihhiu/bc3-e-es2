@@ -116,6 +116,15 @@ public class AddPrecoTests : ProdutoControllerTests
         Assert.That(resultado.ControllerName, Is.EqualTo("Account"));
     }
 
+    /// <summary>
+    /// Tests the <c>AddPreco</c> action to ensure that when a price already exists for a product in a store and no confirmation is provided,
+    /// the controller returns a JSON response indicating that confirmation is required, along with the old and new prices.
+    /// </summary>
+    /// <remarks>
+    /// This test sets up a mock existing product price, simulates an authenticated user, and sends a request without confirmation.
+    /// It asserts that the response is a <see cref="JsonResult"/> containing a <see cref="ConfirmacaoResponse"/> with <c>RequiresConfirmation</c> set to true,
+    /// and verifies that the old and new prices are correctly included in the response.
+    /// </remarks>
     [Test]
     public async Task AddPreco_PrecoExistenteSemConfirmacao_RetornaJsonDeConfirmacao()
     {
@@ -239,4 +248,62 @@ public class AddPrecoTests : ProdutoControllerTests
 
         Assert.That(redirectUrl, Is.EqualTo("/produto/"));
     }
+
+    [Test]
+    public async Task AddPreco_PrecoVazio_RetornaBadRequestComErroDeModelState()
+    {
+        // Arrange
+        // Simular usuário autenticado
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Name, "testuser"),
+            new Claim(ClaimTypes.NameIdentifier, "user-id")
+        };
+        _controller.ControllerContext = new ControllerContext
+        {
+            HttpContext = new DefaultHttpContext
+            {
+                User = new ClaimsPrincipal(new ClaimsIdentity(claims, "TestAuth")),
+                // Simular form sem o campo Preco
+                Request = { Form = new FormCollection(new Dictionary<string, StringValues>()) }
+            }
+        };
+
+        // Forçar erro de binding/validação no ModelState,
+        // como se “InfoPorLoja[0].Preco” não tivesse sido enviado
+        _controller.ModelState.AddModelError(
+            "InfoPorLoja[0].Preco",
+            "O preço é obrigatório."
+        );
+
+        // Preencher o resto do view-model (sem se preocupar com Preco)
+        var vm = new ProdutoViewModel
+        {
+            InfoPorLoja = new List<ProdutoLojaViewModel>
+            {
+                new ProdutoLojaViewModel
+                {
+                    LojaID = LojaId,
+                    // Preco não importa aqui
+                }
+            }
+        };
+
+        // Act
+        var result = await _controller.AddPreco(vm, ProdutoId);
+
+        // Assert
+        // Deve ser BadRequestObjectResult com o próprio ModelState
+        Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+        var badRequest = (BadRequestObjectResult)result;
+        Assert.That(badRequest.Value, Is.Not.Null);
+
+        // Se quiser, pode descer no Value e verificar o erro:
+        var errors = ((SerializableError)badRequest.Value)
+                        .SelectMany(kvp => (string[])kvp.Value)
+                        .ToList();
+        Assert.That(errors, Has.One.Items);
+        Assert.That(errors.First(), Does.Contain("O preço é obrigatório."));
+    }
+
 }
