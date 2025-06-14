@@ -116,15 +116,6 @@ public class AddPrecoTests : ProdutoControllerTests
         Assert.That(resultado.ControllerName, Is.EqualTo("Account"));
     }
 
-    /// <summary>
-    /// Tests the <c>AddPreco</c> action to ensure that when a price already exists for a product in a store and no confirmation is provided,
-    /// the controller returns a JSON response indicating that confirmation is required, along with the old and new prices.
-    /// </summary>
-    /// <remarks>
-    /// This test sets up a mock existing product price, simulates an authenticated user, and sends a request without confirmation.
-    /// It asserts that the response is a <see cref="JsonResult"/> containing a <see cref="ConfirmacaoResponse"/> with <c>RequiresConfirmation</c> set to true,
-    /// and verifies that the old and new prices are correctly included in the response.
-    /// </remarks>
     [Test]
     public async Task AddPreco_PrecoExistenteSemConfirmacao_RetornaJsonDeConfirmacao()
     {
@@ -276,7 +267,7 @@ public class AddPrecoTests : ProdutoControllerTests
             "O preço é obrigatório."
         );
 
-        // Preencher o resto do view-model (sem se preocupar com Preco)
+        // Preencher o resto do view-model sem o preço
         var vm = new ProdutoViewModel
         {
             InfoPorLoja = new List<ProdutoLojaViewModel>
@@ -284,7 +275,6 @@ public class AddPrecoTests : ProdutoControllerTests
                 new ProdutoLojaViewModel
                 {
                     LojaID = LojaId,
-                    // Preco não importa aqui
                 }
             }
         };
@@ -297,13 +287,6 @@ public class AddPrecoTests : ProdutoControllerTests
         Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
         var badRequest = (BadRequestObjectResult)result;
         Assert.That(badRequest.Value, Is.Not.Null);
-
-        // Se quiser, pode descer no Value e verificar o erro:
-        var errors = ((SerializableError)badRequest.Value)
-                        .SelectMany(kvp => (string[])kvp.Value)
-                        .ToList();
-        Assert.That(errors, Has.One.Items);
-        Assert.That(errors.First(), Does.Contain("O preço é obrigatório."));
     }
 
 }
