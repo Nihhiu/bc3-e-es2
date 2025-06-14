@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ComparacaoPrecos.Test;
 
@@ -88,6 +89,16 @@ public class AddPrecoTests : ProdutoControllerTests
                 }
             }
         };
+
+        var mockUrlHelper = new Mock<IUrlHelper>();
+
+        // 2) Configura para devolver sempre "/Produto/Index" (ou o que a sua lógica gerar)
+        mockUrlHelper
+            .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
+            .Returns("/produto/");
+
+        // 3) Atribui ao controller antes de cada teste
+        _controller.Url = mockUrlHelper.Object;
     }
 
     [Test]
@@ -164,5 +175,68 @@ public class AddPrecoTests : ProdutoControllerTests
 
         [JsonPropertyName("newPrice")]
         public string? NewPrice { get; set; }
+    }
+
+    [Test]
+    public async Task AddPreco_SemPrecoExistente_AdicionaPrecoERetornaRedirectUrl()
+    {
+        // Arrange
+        const double precoNovo = 99.99;
+
+        // Mock de GetProdutoLojaAsync para simular que não há preço anterior
+        _mockProdutoService
+            .Setup(s => s.GetProdutoLojaAsync(ProdutoId, LojaId))
+            .ReturnsAsync((Produto_Loja?)null);
+
+        // Capturar a chamada de AddProdutoLoja
+        Produto_Loja? produtoLojaAdicionado = null;
+        _mockProdutoService
+            .Setup(s => s.AddProdutoLoja(It.IsAny<Produto_Loja>()))
+            .Callback<Produto_Loja>(pl => produtoLojaAdicionado = pl)
+            .Returns(Task.CompletedTask)
+            .Verifiable();
+
+        // Simular utilizador autenticado
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, "testuser"),
+            new Claim(ClaimTypes.NameIdentifier, "user-id")
+        };
+        var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "TestAuth"));
+
+        // Context sem confirmação (form vazio)
+        var context = new DefaultHttpContext
+        {
+            User = user,
+            Request = { Form = new FormCollection(new Dictionary<string, StringValues>()) }
+        };
+        _controller.ControllerContext = new ControllerContext { HttpContext = context };
+
+        // Ajustar o preço no view-model
+        _model.InfoPorLoja[0].Preco = precoNovo;
+
+        // Act
+        var result = await _controller.AddPreco(_model, ProdutoId) as JsonResult;
+
+        // Assert
+        Assert.That(result, Is.Not.Null, "Esperava JsonResult não nulo");
+
+        // Verifica que o serviço foi chamado
+        _mockProdutoService.Verify();
+
+        // Verifica que o objeto enviado ao serviço tem os dados corretos
+        Assert.That(produtoLojaAdicionado, Is.Not.Null, "Esperava ter sido criado um Produto_Loja");
+        Assert.That(produtoLojaAdicionado!.ProdutoID, Is.EqualTo(ProdutoId));
+        Assert.That(produtoLojaAdicionado.LojaID, Is.EqualTo(LojaId));
+        Assert.That(produtoLojaAdicionado.preco, Is.EqualTo(precoNovo));
+        Assert.That(produtoLojaAdicionado.Id, Is.EqualTo("user-id"));
+        Assert.That(produtoLojaAdicionado.DataHora, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(5)));
+
+        // Extrair o redirectUrl do JSON
+        var json = JsonSerializer.Serialize(result.Value);
+        using var doc = JsonDocument.Parse(json);
+        var redirectUrl = doc.RootElement.GetProperty("redirectUrl").GetString();
+
+        Assert.That(redirectUrl, Is.EqualTo("/produto/"));
     }
 }
