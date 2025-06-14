@@ -29,7 +29,7 @@ public class LojaRepository
     // Buscar loja por ID que não está deletada
     public async Task<Loja> GetLojaById(int id)
     {
-        var loja = await _context.Loja.FirstOrDefaultAsync(l => l.LojaID == id && !l.Deleted) ?? throw new KeyNotFoundException($"Loja with ID {id} not found or is deleted.");
+        var loja = await _context.Loja.FirstOrDefaultAsync(l => l.LojaID == id && !l.Deleted);
         return loja;
     }
 

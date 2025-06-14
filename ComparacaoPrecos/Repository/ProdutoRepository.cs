@@ -24,7 +24,7 @@ public class ProdutoRepository {
 
     // Buscar produto por ID que não está deletado
     public async Task<Produto> GetProdutoById(int id) {
-        var produto = await _context.Produto.FirstOrDefaultAsync(p => p.ProdutoID == id && !p.Deleted) ?? throw new KeyNotFoundException($"Produto with ID {id} not found or is deleted.");
+        var produto = await _context.Produto.FirstOrDefaultAsync(p => p.ProdutoID == id && !p.Deleted);
         return produto;
     }
 

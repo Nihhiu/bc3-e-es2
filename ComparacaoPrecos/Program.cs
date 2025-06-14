@@ -4,7 +4,7 @@ using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Repository;
 using Microsoft.AspNetCore.Identity;
 using ComparacaoPrecos.Areas.Identity.Data;
-
+using ComparacaoPrecos.Models; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +27,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -51,8 +50,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        // Garantir que ambas as roles (Admin e User) são criadas
         await SeedAdminAsync(services);
+        await SeedLojasAsync(services); 
     }
     catch (Exception ex)
     {
@@ -61,7 +60,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configurar o pipeline normalmente
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -91,7 +89,6 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
     string adminEmail = "admin@gmail.com";
     string adminPassword = "Admin@123";
 
-    // Criar roles "Admin" e "User" se não existirem
     string[] roles = { "Admin", "User" };
     foreach (var roleName in roles)
     {
@@ -101,7 +98,6 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
         }
     }
 
-    // Verificar se o usuário admin já existe
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)
     {
@@ -128,4 +124,27 @@ async Task SeedAdminAsync(IServiceProvider serviceProvider)
         Console.WriteLine("Administrador já existe.");
     }
 }
-// innocent comment
+
+async Task SeedLojasAsync(IServiceProvider serviceProvider)
+{
+    using (var context = serviceProvider.GetRequiredService<ApplicationDbContext>())
+    {
+        if (!context.Loja.Any())
+        {
+            var lojas = new List<Loja>
+            {
+                new Loja { Nome = "Continente", Latitude = (double)41.14961m, Longitude = (double)-8.61099m, Deleted = false },
+                new Loja { Nome = "Pingo Doce", Latitude = (double)40.6389m, Longitude = (double)-8.6553m, Deleted = false },
+                new Loja { Nome = "Lidl", Latitude = (double)38.7223m, Longitude = (double)-9.1393m, Deleted = false },
+                new Loja { Nome = "Minipreço", Latitude = (double)39.7445m, Longitude = (double)-8.4150m, Deleted = false }
+            };
+            await context.Loja.AddRangeAsync(lojas);
+            await context.SaveChangesAsync();
+            Console.WriteLine("Dados de Lojas teste criados com sucesso!");
+        }
+        else
+        {
+            Console.WriteLine("Dados de Lojas já existem.");
+        }
+    }
+}

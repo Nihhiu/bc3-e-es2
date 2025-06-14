@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {}
+    "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos.Tests/ComparacaoPrecos.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {
+    "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos.Tests/ComparacaoPrecos.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+        "projectUniqueName": "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos.Tests/ComparacaoPrecos.Tests.csproj",
         "projectName": "ComparacaoPrecos.Tests",
-        "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
-        "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
+        "projectPath": "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos.Tests/ComparacaoPrecos.Tests.csproj",
+        "packagesPath": "/home/jomicf/.nuget/packages/",
+        "outputPath": "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos.Tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/jomicf/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -26,8 +26,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
-                "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
+              "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos/ComparacaoPrecos.csproj": {
+                "projectPath": "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos/ComparacaoPrecos.csproj"
               }
             }
           }
@@ -48,9 +48,17 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "DotNetSeleniumExtras.WaitHelpers": {
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[17.14.1, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
             },
             "NUnit": {
               "target": "Package",
@@ -85,21 +93,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
+    "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos/ComparacaoPrecos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
+        "projectUniqueName": "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos/ComparacaoPrecos.csproj",
         "projectName": "ComparacaoPrecos",
-        "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
-        "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\obj\\",
+        "projectPath": "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos/ComparacaoPrecos.csproj",
+        "packagesPath": "/home/jomicf/.nuget/packages/",
+        "outputPath": "/home/jomicf/github/NUnit/bc3-e-es2/ComparacaoPrecos/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/jomicf/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -191,7 +199,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

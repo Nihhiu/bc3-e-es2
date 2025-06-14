@@ -125,8 +125,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     public async Task<IActionResult> AddPreco(int id)
     {
         var produtoViewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
-        if (produtoViewModel == null)
-            return NotFound();
+        if (produtoViewModel == null) return NotFound();
 
         var lojas = await _lojaService.GetAllLojas();
         ViewData["Lojas"] = lojas.Select(l => new SelectListItem
