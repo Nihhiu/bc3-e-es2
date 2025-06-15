@@ -18,9 +18,13 @@ public class UserService
     {
         return await _userRepository.GetAllUsers();
     }
-    
+
     public async Task<bool> DeleteUser(string username)
     {
         return await _userRepository.DeleteUserAsync(username);
+    }
+    public async Task<bool> UpdateUser(UserViewModel userViewModel) 
+    {
+        return await _userRepository.UpdateUserAsync(userViewModel);
     }
 }

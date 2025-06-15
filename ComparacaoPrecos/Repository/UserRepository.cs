@@ -49,5 +49,27 @@ public class UserRepository : IUserRepository
 
         return true;
     }
+    public async Task<bool> UpdateUserAsync(UserViewModel userViewModel)
+    {
+        var user = await _userManager.FindByNameAsync(userViewModel.Username);
 
+        if (user == null) return false;
+
+        var currentRoles = await _userManager.GetRolesAsync(user);
+
+        if (!string.IsNullOrEmpty(userViewModel.Role) && !currentRoles.Contains(userViewModel.Role))
+        {
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (!removeResult.Succeeded)
+            {
+                return false;
+            }
+            var addResult = await _userManager.AddToRoleAsync(user, userViewModel.Role);
+            if (!addResult.Succeeded)
+            {
+                return false;
+            }
+        }
+        return true; 
+    }
 }
