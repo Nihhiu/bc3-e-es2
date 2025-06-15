@@ -11,5 +11,6 @@ namespace ComparacaoPrecos.Service.Interfaces
         Task<List<ProdutoViewModel>> GetProdutosPorLoja(int lojaId);
         Task AddProdutoLoja(Produto_Loja produtoLoja);
         Task<Produto_Loja?> GetProdutoLojaAsync(int produtoId, int lojaId);
+        Task<bool> UpdateProdutoAsync(Produto produto);
     }
 }

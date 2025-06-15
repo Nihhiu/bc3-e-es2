@@ -94,7 +94,7 @@ public class ProdutoService : IProdutoService
         var produtosLoja = await _produtoLojaRepository.GetProdutoLojaByLoja(LojaID);
 
         var result = produtos
-    .Where(produto => produtosLoja.Any(pl => pl.ProdutoID == produto.ProdutoID)) 
+    .Where(produto => produtosLoja.Any(pl => pl.ProdutoID == produto.ProdutoID))
     .Select(produto =>
     {
         var infoPorLoja = produtosLoja
@@ -125,6 +125,24 @@ public class ProdutoService : IProdutoService
     public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID)
     {
         return await _produtoLojaRepository.GetProdutoLojaAsync(ProdutoID, LojaID);
+    }
+    
+    public async Task<bool> UpdateProdutoAsync(Produto produto)
+    {
+        try
+        {
+            await _produtoRepository.GetProdutoById(produto.ProdutoID);
+            await _produtoRepository.UpdateProduto(produto);
+            return true;
+        }
+        catch (KeyNotFoundException)
+        {
+            return false;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
     }
 
 }

@@ -23,7 +23,7 @@ public class UserService
     {
         return await _userRepository.DeleteUserAsync(username);
     }
-    public async Task<bool> UpdateUser(UserViewModel userViewModel) 
+    public async Task<bool> UpdateUser(UserViewModel userViewModel)
     {
         return await _userRepository.UpdateUserAsync(userViewModel);
     }
