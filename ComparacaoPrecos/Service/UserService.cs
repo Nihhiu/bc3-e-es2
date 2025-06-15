@@ -14,7 +14,13 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public async Task<List<UserViewModel>> GetAllUsers(){
+    public async Task<List<UserViewModel>> GetAllUsers()
+    {
         return await _userRepository.GetAllUsers();
+    }
+    
+    public async Task<bool> DeleteUser(string username)
+    {
+        return await _userRepository.DeleteUserAsync(username);
     }
 }

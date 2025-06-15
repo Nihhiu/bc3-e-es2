@@ -1,6 +1,8 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<ComparacaoPrecos.Models.UserViewModel>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 @{
     ViewData["Title"] = "Lista de Utilizadores";
     Layout = "_Layout";
@@ -8,10 +10,25 @@
 
 <h2 class="mb-4 text-primary fw-semibold">Lista de Utilizadores</h2>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning mt-3">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <div class="table-responsive">
     <table class="table table-striped align-middle">
         <thead class="table-light">
             <tr>
+                <th></th>
                 <th>Nome de Utilizador</th>
                 <th class="text-end">Role</th>
             </tr>
@@ -19,7 +36,15 @@
         <tbody>
             @foreach (var user in Model)
             {
-                <tr>
+                <tr class="user-row position-relative">
+                    <td class="delete-cell">
+                        <form asp-action="Delete" asp-route-username="@user.Username" method="post" onsubmit="return confirm('Eliminar utilizador @user.Username?');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-danger delete-btn">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
                     <td class="fw-medium">@user.Username</td>
                     <td class="text-end text-secondary">@user.Role</td>
                 </tr>
@@ -27,3 +52,36 @@
         </tbody>
     </table>
 </div>
+
+
+<style> 
+
+.delete-cell {
+    width: 1px;           /* apenas para colapsar a célula */
+    padding: 0;
+    position: relative;
+}
+.delete-btn {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Ao fazer hover na linha, mostra o botão */
+.user-row:hover .delete-btn {
+    display: inline-block;
+}
+
+.user-row .fw-medium {
+    transition: transform 0.3s ease;
+}
+
+/* Quando o botão de eliminar estiver visível (por exemplo, hover na linha) */
+.user-row:hover .fw-medium {
+    transform: translateX(10px); /* ajusta o valor como quiser */
+}
+
+
+</style>

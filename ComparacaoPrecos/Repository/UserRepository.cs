@@ -28,16 +28,18 @@ public class UserRepository : IUserRepository
                         role => role.Id,
                         (userRole, role) => role.Name
                     )
-                    .FirstOrDefault()
+                    .FirstOrDefault() ?? string.Empty
             })
             .ToListAsync();
 
         return usersWithRoles;
     }
 
-    public async Task<bool> DeleteUserAsync(string userId)
+    public async Task<bool> DeleteUserAsync(string username)
     {
-        var user = await _context.Users.FindAsync(userId);
+        // Busca o usuário pelo username (campo não-chave)
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.UserName == username);
 
         if (user == null)
             return false;

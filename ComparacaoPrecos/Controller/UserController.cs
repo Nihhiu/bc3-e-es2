@@ -24,16 +24,14 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         _userService = userService;
     }
 
-    [HttpGet("registo/{id?}")]
-    public async Task<IActionResult> Index(string? id)
+    [HttpGet("registo/{role?}")]
+    public async Task<IActionResult> Index(string? role)
     {
-        var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
-
         var users = await _userService.GetAllUsers();
 
-        if (!string.IsNullOrEmpty(id))
+        if (!string.IsNullOrEmpty(role))
         {
-            users = users.Where(u => u.Role == id).ToList();
+            users = users.Where(u => u.Role == role).ToList();
         }
 
         return View(users);
@@ -43,21 +41,21 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
     public IActionResult Create()
     {
         var roles = _roleManager.Roles
-            .Select(r => new SelectListItem 
+            .Select(r => new SelectListItem
             {
                 Text = r.Name,
                 Value = r.Name
             })
             .ToList();
-        
+
         ViewData["Roles"] = roles; // Agora é lista de SelectListItem
         return View(new UserViewModel());
     }
-    
+
     [HttpPost("registo/criar")]
     public async Task<IActionResult> Create(UserViewModel model)
     {
-        
+
         if (ModelState.IsValid)
         {
             var user = new ApplicationUser
@@ -71,7 +69,7 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, model.Role);
-                
+
                 return RedirectToAction("Index", "User");
             }
             else
@@ -86,5 +84,40 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         ViewData["Roles"] = new SelectList(roles);
 
         return View(model);
+    }
+
+    [HttpPost("delete/{username}")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(string username)
+    {
+        if (User.Identity == null || string.IsNullOrEmpty(username))
+        {
+            TempData["ErrorMessage"] = "Utilizador não encontrado.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        if (User.IsInRole("Admin") == false)
+        {
+            TempData["ErrorMessage"] = "Apenas utilizadores com o papel de Admin podem eliminar utilizadores.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        if (User.Identity.Name == username)
+        {
+            TempData["ErrorMessage"] = "Não pode eliminar o seu próprio utilizador.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        if (username == "admin")
+        {
+            TempData["ErrorMessage"] = "Não pode eliminar o utilizador admin.";
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+        await _userService.DeleteUser(username);
+        TempData["SuccessMessage"] = "Utilizador eliminado com sucesso.";
+        return RedirectToAction(nameof(Index));
     }
 }
