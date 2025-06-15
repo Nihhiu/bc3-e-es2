@@ -66,14 +66,33 @@ public class Produto_Loja
     [Required]
     public double preco { get; set; }
 
-    [Required][Range(0, 5)]
-    public int credibilidade { get; set; } = 5; 
+    [Required]
+    [Range(0, 5)]
+    public int credibilidade { get; set; } = 5;
 
     [Required]
     public string Id { get; set; }
 
     [ForeignKey("Id")]
     public ApplicationUser ApplicationUser { get; set; }
-    
+
     public bool Deleted { get; set; } = false;
+}
+
+public class Logs
+{
+    [Key]
+    public int LogID { get; set; }
+
+    [Required]
+    public string Message { get; set; }
+
+    [Required]
+    public DateTime DataHora { get; set; } = DateTime.Now;
+
+    [Required]
+    public string Id { get; set; }
+
+    [ForeignKey("Id")]
+    public ApplicationUser ApplicationUser { get; set; }
 }

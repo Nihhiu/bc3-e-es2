@@ -14,6 +14,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Categoria> Categoria { get; set; }
     public DbSet<Produto> Produto { get; set; }
     public DbSet<Produto_Loja> Produto_Loja { get; set; }
+    public DbSet<Logs> Logs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -55,32 +56,64 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             {
                 LojaID = 1,
                 Nome = "Pingo Doce",
-                Latitude = 41.7070278,
-                Longitude = -8.8251667,
+                Latitude = 41.7027114,
+                Longitude = -8.8167361,
                 Deleted = false
             },
             new Loja
             {
                 LojaID = 2,
                 Nome = "Lidl",
-                Latitude = 41.7070278,
-                Longitude = -8.8251667,
+                Latitude = 41.7063573,
+                Longitude = -8.8200369,
                 Deleted = false
             },
             new Loja
             {
                 LojaID = 3,
                 Nome = "Continente",
-                Latitude = 41.7042689,
-                Longitude = -8.8147794,
+                Latitude = 41.7043917,
+                Longitude = -8.8152299,
                 Deleted = false
             },
             new Loja
             {
                 LojaID = 4,
                 Nome = "Mercadona",
-                Latitude = 41.7070326,
-                Longitude = -8.8251517,
+                Latitude = 41.7070973,
+                Longitude = -8.8255711,
+                Deleted = false
+            },
+            new Loja
+            {
+                LojaID = 5,
+                Nome = "Worten",
+                Latitude = 41.6949737,
+                Longitude = -8.8331629,
+                Deleted = false
+            },
+            new Loja
+            {
+                LojaID = 6,
+                Nome = "Dimacer",
+                Latitude = 41.7031532,
+                Longitude = -8.8243453,
+                Deleted = false
+            },
+            new Loja
+            {
+                LojaID = 7,
+                Nome = "ALDI",
+                Latitude = 41.695014,
+                Longitude = -8.8439396,
+                Deleted = false
+            },
+            new Loja
+            {
+                LojaID = 8,
+                Nome = "Toyota-Macedo & Macedo",
+                Latitude = 41.6988158,
+                Longitude = -8.8464872,
                 Deleted = false
             }
         );
