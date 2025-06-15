@@ -2,16 +2,19 @@ using Microsoft.EntityFrameworkCore;
 using ComparacaoPrecos.Data;
 using ComparacaoPrecos.Models;
 using ComparacaoPrecos.Repository.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace ComparacaoPrecos.Repository;
 
 public class UserRepository : IUserRepository
 {
     private readonly ApplicationDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserRepository(ApplicationDbContext context)
+    public UserRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public async Task<List<UserViewModel>> GetAllUsers()

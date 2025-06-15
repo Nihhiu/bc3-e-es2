@@ -45,7 +45,7 @@ public class ProdutoLojaRepository : IProdutoLojaRepository
     // Buscar produto por ProdutoID que não está deletado
     public async Task<List<Produto_Loja>> GetProdutoLojaByProduto(int id)
     {
-        return await _context.Produto_Loja.Include(p => p.Loja).Where(p => p.ProdutoID == id && !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync()
+        return await _context.Produto_Loja.Include(p => p.Loja).Where(p => p.ProdutoID == id && !p.Produto.Deleted && !p.Loja.Deleted && !p.Deleted).ToListAsync()
                ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
     }
 
@@ -53,7 +53,7 @@ public class ProdutoLojaRepository : IProdutoLojaRepository
     {
         return await _context.Produto_Loja
             .Include(p => p.Produto)
-            .Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted)
+            .Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted && !p.Deleted)
             .ToListAsync()
             ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
     }
@@ -61,8 +61,23 @@ public class ProdutoLojaRepository : IProdutoLojaRepository
     public async Task<Produto_Loja> GetProdutoLojaAsync(int ProdutoID, int LojaID)
     {
         var result = await _context.Produto_Loja
-            .FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID);
+            .FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID && !pl.Deleted);
 
         return result ?? throw new InvalidOperationException("Produto_Loja not found.");
+    }
+
+    public async Task<bool> SoftDeleteProdutoLojaAsync(int lojaId, int produtoId)
+    {
+        var produtoLoja = await _context.Produto_Loja
+            .FirstOrDefaultAsync(pl => pl.LojaID == lojaId && pl.ProdutoID == produtoId);
+
+        if (produtoLoja == null)
+        {
+            return false;
+        }
+
+        produtoLoja.Deleted = true;
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

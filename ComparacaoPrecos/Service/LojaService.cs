@@ -44,9 +44,9 @@ public class LojaService : ILojaService
     public async Task<List<ProdutoViewModel>> GetProdutosDaLoja(int id)
     {
         var produtosLoja = await _produtoLojaRepository.GetProdutoLojaByLoja(id);
-        
+
         Console.WriteLine($"Produtos encontrados para a loja {id}: {produtosLoja.Count}");
-        
+
         return produtosLoja
             .GroupBy(pl => pl.Produto)
             .Select(g => new ProdutoViewModel
@@ -79,5 +79,10 @@ public class LojaService : ILojaService
             Console.WriteLine($"Error updating Loja with ID {loja.LojaID}: {ex.Message}");
             return false;
         }
+    }
+    
+    public async Task<bool> SoftDeleteProdutodaLojaAsync(int lojaId, int produtoId)
+    {
+        return await _produtoLojaRepository.SoftDeleteProdutoLojaAsync(lojaId, produtoId);
     }
 }

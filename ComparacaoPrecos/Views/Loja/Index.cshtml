@@ -1,6 +1,8 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<Loja>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 @{
     ViewData["Title"] = "Lista de Lojas";
     Layout = "_Layout";
@@ -16,6 +18,20 @@
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 </style>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning mt-3">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <div class="container my-5">
     <h1 class="text-center mb-4 text-primary fw-semibold">Lojas Disponíveis</h1>

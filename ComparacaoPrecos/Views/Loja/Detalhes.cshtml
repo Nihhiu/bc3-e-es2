@@ -1,6 +1,8 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Loja 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 @{
     ViewData["Title"] = "Detalhes da Loja";
     Layout = "_Layout";
@@ -77,6 +79,16 @@
                                                 {
                                                     <div class="text-muted small">@info.DataHora.ToString("dd/MM/yyyy HH:mm")</div>
                                                 }
+                                            </td>
+                                            <td>
+                                               <form asp-controller="Loja" asp-action="DeleteProduto" asp-route-lojaId="@Model.LojaID" asp-route-produtoId="@produto.Produto.ProdutoID" method="post"
+                                                      onsubmit="return confirm('Eliminar o produto @produto.Produto.Nome?');"
+                                                      class="d-inline delete-form"> 
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-sm btn-danger delete-product-btn">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     }

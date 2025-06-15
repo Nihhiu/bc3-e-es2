@@ -1,6 +1,8 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model ComparacaoPrecos.Models.ProdutoViewModel
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 @{
     ViewData["Title"] = "Detalhes do Produto";
     Layout = "_Layout";
@@ -19,16 +21,36 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="mb-0 fw-semibold">Lojas disponíveis</h4>
 
-                @if (User.Identity?.IsAuthenticated == true)
-                {
-                    <a asp-action="AddPreco"
-                       asp-controller="Produto"
-                       asp-route-id="@Model.Produto.ProdutoID"
-                       class="btn btn-sm btn-primary rounded-pill px-3">
-                        <i class="bi bi-plus-lg me-1"></i> Adicionar loja
-                    </a>
-                }
+                <div class="d-flex gap-2">
+                    @* Botão “Adicionar loja” visível a utilizadores autenticados *@
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-action="AddPreco"
+                        asp-controller="Produto"
+                        asp-route-id="@Model.Produto.ProdutoID"
+                        class="btn btn-sm btn-primary rounded-pill px-3">
+                            <i class="bi bi-plus-lg me-1"></i> Adicionar loja
+                        </a>
+                    }
+
+                    @* Botão “Eliminar produto” visível apenas a Admin *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <form asp-action="Delete"
+                            asp-controller="Produto"
+                            asp-route-id="@Model.Produto.ProdutoID"
+                            method="post"
+                            onsubmit="return confirm('Tem certeza que deseja eliminar este produto?');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger rounded-pill px-3">
+                                <i class="bi bi-trash me-1"></i>
+                            </button>
+                        </form>
+                    }
+                </div>
             </div>
+
 
             <!-- Lista de Lojas -->
             @if (Model.InfoPorLoja.Any())

@@ -158,8 +158,8 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 
         if (precoExistente != null && !Request.Form.ContainsKey("confirmar"))
         {
-            return Json(new 
-            { 
+            return Json(new
+            {
                 requiresConfirmation = true,
                 oldPrice = precoExistente.preco.ToString("N2"),
                 newPrice = model.InfoPorLoja[0].Preco.ToString("N2")
@@ -177,5 +177,26 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
 
         await _produtoService.AddProdutoLoja(produtoLoja);
         return Json(new { redirectUrl = Url.Action("Index") });
+    }
+
+    [HttpPost("delete/{id}")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (User.Identity == null || id == 0)
+        {
+            TempData["ErrorMessage"] = "Produto não encontrado.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        if (User.IsInRole("Admin") == false)
+        {
+            TempData["ErrorMessage"] = "Apenas utilizadores com o papel de Admin podem eliminar produtos.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        await _produtoService.SoftDeleteProdutoAsync(id);
+        TempData["SuccessMessage"] = "Utilizador eliminado com sucesso.";
+        return RedirectToAction(nameof(Index));
     }
 }
