@@ -12,16 +12,12 @@
             <div class="card border-0 shadow-sm rounded-4">
                 <div class="card-body p-4">
                     <h2 class="text-center text-primary fw-semibold mb-4">Criar Produto</h2>
-
                     <form asp-action="criar" asp-controller="Produto" method="post" novalidate>
-                        <!-- Nome -->
                         <div class="mb-3">
                             <label asp-for="Produto.Nome" class="form-label fw-medium"></label>
                             <input asp-for="Produto.Nome" class="form-control rounded-3" placeholder="Nome do produto" />
                             <span asp-validation-for="Produto.Nome" class="text-danger small"></span>
                         </div>
-
-                        <!-- Categoria -->
                         <div class="mb-4">
                             <label asp-for="Produto.CategoriaID" class="form-label fw-medium">Categoria</label>
                             <select asp-for="Produto.CategoriaID"
@@ -31,15 +27,12 @@
                             </select>
                             <span asp-validation-for="Produto.CategoriaID" class="text-danger small"></span>
                         </div>
-
-                        <!-- Submit -->
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary rounded-3 fw-semibold">
                                 Criar Produto
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

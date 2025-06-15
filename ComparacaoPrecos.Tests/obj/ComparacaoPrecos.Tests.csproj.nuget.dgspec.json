@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {}
+    "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {
+    "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
         "projectName": "ComparacaoPrecos.Tests",
-        "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
-        "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
+        "projectPath": "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos.Tests\\ComparacaoPrecos.Tests.csproj",
+        "packagesPath": "C:\\Users\\pmrfr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\pmrfr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -26,8 +26,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
-                "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
+              "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
+                "projectPath": "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj"
               }
             }
           }
@@ -52,9 +52,13 @@
               "target": "Package",
               "version": "[17.14.1, )"
             },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
+            },
             "NUnit": {
               "target": "Package",
-              "version": "[4.3.2, )"
+              "version": "[3.13.3, )"
             },
             "NUnit.Analyzers": {
               "target": "Package",
@@ -85,21 +89,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
+    "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
+        "projectUniqueName": "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
         "projectName": "ComparacaoPrecos",
-        "projectPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
-        "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\Documents\\_escola\\_este_ano\\2_2_5_ES2\\24_25\\bc3-e-es2\\ComparacaoPrecos\\obj\\",
+        "projectPath": "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos\\ComparacaoPrecos.csproj",
+        "packagesPath": "C:\\Users\\pmrfr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pmrfr\\OneDrive\\Ambiente de Trabalho\\uni\\2ano\\2semestre\\EngenhariaSoftware2\\bc3-e-es2\\ComparacaoPrecos\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\pmrfr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -191,7 +195,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

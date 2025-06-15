@@ -1,61 +1,124 @@
 using ComparacaoPrecos.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ComparacaoPrecos.Repository;
+// namespace ComparacaoPrecos.Repository;
 
-public class ProdutoLojaRepository
-{
-    private readonly ApplicationDbContext _context;
+// public class ProdutoLojaRepository
+// {
+//     private readonly ApplicationDbContext _context;
 
-    public ProdutoLojaRepository(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+//     public ProdutoLojaRepository(ApplicationDbContext context)
+//     {
+//         _context = context;
+//     }
 
-    // Criar um novo produto
-    public async Task<Produto_Loja> AddProdutoLoja(Produto_Loja produtoLoja)
-    {
-        var existing = await _context.Produto_Loja
-            .FirstOrDefaultAsync(pl => 
-                pl.ProdutoID == produtoLoja.ProdutoID && 
-                pl.LojaID == produtoLoja.LojaID);
+//     // Criar um novo produto
+//     public async Task<Produto_Loja> AddProdutoLoja(Produto_Loja produtoLoja)
+//     {
+//         var existing = await _context.Produto_Loja
+//             .FirstOrDefaultAsync(pl => 
+//                 pl.ProdutoID == produtoLoja.ProdutoID && 
+//                 pl.LojaID == produtoLoja.LojaID);
 
-        if (existing != null)
-        {
-            existing.preco = produtoLoja.preco;
-            existing.DataHora = DateTime.UtcNow;
-            existing.Id = produtoLoja.Id;
-        }
-        else
-        {
-            _context.Produto_Loja.Add(produtoLoja);
-        }
+//         if (existing != null)
+//         {
+//             existing.preco = produtoLoja.preco;
+//             existing.DataHora = DateTime.UtcNow;
+//             existing.Id = produtoLoja.Id;
+//         }
+//         else
+//         {
+//             _context.Produto_Loja.Add(produtoLoja);
+//         }
 
-        await _context.SaveChangesAsync();
-        return existing ?? produtoLoja;
-    }
+//         await _context.SaveChangesAsync();
+//         return existing ?? produtoLoja;
+//     }
 
-    // Buscar todos os produtos que não estão deletados
-    public async Task<List<Produto_Loja>> GetAllProdutosLojas()
-    {
-        return await _context.Produto_Loja.Where(p => !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync();
-    }
+//     // Buscar todos os produtos que não estão deletados
+//     public async Task<List<Produto_Loja>> GetAllProdutosLojas()
+//     {
+//         return await _context.Produto_Loja.Where(p => !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync();
+//     }
 
-    // Buscar produto por ProdutoID que não está deletado
-    public async Task<List<Produto_Loja>> GetProdutoLojaByProduto(int id)
-    {
-        return await _context.Produto_Loja.Include(p => p.Loja).Where(p => p.ProdutoID == id && !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync()
-               ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
-    }
+//     // Buscar produto por ProdutoID que não está deletado
+//     public async Task<List<Produto_Loja>> GetProdutoLojaByProduto(int id)
+//     {
+//         return await _context.Produto_Loja.Include(p => p.Loja).Where(p => p.ProdutoID == id && !p.Produto.Deleted && !p.Loja.Deleted).ToListAsync()
+//                ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
+//     }
 
-    public async Task<List<Produto_Loja>> GetProdutoLojaByLoja(int id)
-{
-    return await _context.Produto_Loja
-        .Include(p => p.Produto)
-        .Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted)
-        .ToListAsync() 
-        ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
-}
+//     public async Task<List<Produto_Loja>> GetProdutoLojaByLoja(int id)
+// {
+//     return await _context.Produto_Loja
+//         .Include(p => p.Produto)
+//         .Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted)
+//         .ToListAsync() 
+//         ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
+// }
     
-    public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID) => await _context.Produto_Loja.FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID);
+//     public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID) => await _context.Produto_Loja.FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID);
+// }
+
+namespace ComparacaoPrecos.Repository
+{
+    public class ProdutoLojaRepository : IProdutoLojaRepository
+    {
+        private readonly ApplicationDbContext _context;
+
+        public ProdutoLojaRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Produto_Loja> AddProdutoLoja(Produto_Loja produtoLoja)
+        {
+            var existing = await _context.Produto_Loja
+                .FirstOrDefaultAsync(pl => 
+                    pl.ProdutoID == produtoLoja.ProdutoID && 
+                    pl.LojaID == produtoLoja.LojaID);
+
+            if (existing != null)
+            {
+                existing.preco = produtoLoja.preco;
+                existing.DataHora = DateTime.UtcNow;
+                existing.Id = produtoLoja.Id;
+            }
+            else
+            {
+                _context.Produto_Loja.Add(produtoLoja);
+            }
+
+            await _context.SaveChangesAsync();
+            return existing ?? produtoLoja;
+        }
+
+        public async Task<List<Produto_Loja>> GetAllProdutosLojas()
+        {
+            return await _context.Produto_Loja
+                .Where(p => !p.Produto.Deleted && !p.Loja.Deleted)
+                .ToListAsync();
+        }
+
+        public async Task<List<Produto_Loja>> GetProdutoLojaByProduto(int id)
+        {
+            return await _context.Produto_Loja
+                .Include(p => p.Loja)
+                .Where(p => p.ProdutoID == id && !p.Produto.Deleted && !p.Loja.Deleted)
+                .ToListAsync()
+                ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
+        }
+
+        public async Task<List<Produto_Loja>> GetProdutoLojaByLoja(int id)
+        {
+            return await _context.Produto_Loja
+                .Include(p => p.Produto)
+                .Where(p => p.LojaID == id && !p.Produto.Deleted && !p.Loja.Deleted)
+                .ToListAsync()
+                ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
+        }
+
+        public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID) =>
+            await _context.Produto_Loja.FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID);
+    }
 }
