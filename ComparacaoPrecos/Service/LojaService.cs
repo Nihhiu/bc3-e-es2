@@ -63,5 +63,21 @@ public class LojaService : ILojaService
             })
             .ToList();
     }
-
+    public async Task<bool> UpdateLojaAsync(Loja loja)
+    {
+        try
+        {
+            await _lojaRepository.GetLojaById(loja.LojaID);
+            return await _lojaRepository.UpdateLoja(loja);
+        }
+        catch (KeyNotFoundException)
+        {
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating Loja with ID {loja.LojaID}: {ex.Message}");
+            return false;
+        }
+    }
 }

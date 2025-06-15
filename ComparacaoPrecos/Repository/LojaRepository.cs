@@ -33,5 +33,27 @@ public class LojaRepository : ILojaRepository
         var loja = await _context.Loja.FirstOrDefaultAsync(l => l.LojaID == id && !l.Deleted) ?? throw new KeyNotFoundException($"Loja with ID {id} not found or is deleted.");
         return loja;
     }
-
+    public async Task<bool> UpdateLoja(Loja loja)
+    {
+        var existingLoja = await _context.Loja.FindAsync(loja.LojaID);
+        if (existingLoja == null || existingLoja.Deleted)
+        {
+            return false;
+        }
+        _context.Entry(existingLoja).CurrentValues.SetValues(loja);
+        _context.Loja.Update(existingLoja); 
+        try
+        {
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return false;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
 }
