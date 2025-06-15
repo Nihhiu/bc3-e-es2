@@ -6,44 +6,6 @@
     Layout = "_Layout";
 }
 
-@* <!-- Modal de Confirmação -->
-<div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmacaoModalLabel">Confirmar Alteração de Preço</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Já existe um preço de <span id="precoAntigo"></span> nesta loja. 
-                Deseja alterar para <span id="precoNovo"></span>?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmarAlteracao">Confirmar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<form asp-action="AddPreco" method="post" class="mt-4" id="precoForm">
-    <div class="mb-3">
-        <label asp-for="InfoPorLoja[0].Preco" class="form-label fw-semibold">Preço</label>
-        <input asp-for="InfoPorLoja[0].Preco" class="form-control" placeholder="Digite o preço" />
-        <span asp-validation-for="InfoPorLoja[0].Preco" class="text-danger small"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="InfoPorLoja[0].LojaID" class="form-label fw-semibold">Loja</label>
-        <select asp-for="InfoPorLoja[0].LojaID" asp-items="@(ViewData["Lojas"] as List<SelectListItem>)"
-            class="form-select">
-            <option value="">Selecione uma loja</option>
-        </select>
-        <span asp-validation-for="InfoPorLoja[0].LojaID" class="text-danger small"></span>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Adicionar Preço</button>
-</form> *@
 
 <!-- Modal de Confirmação -->
 <div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">

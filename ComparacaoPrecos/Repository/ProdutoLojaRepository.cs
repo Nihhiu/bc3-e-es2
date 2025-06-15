@@ -58,13 +58,7 @@ public class ProdutoLojaRepository : IProdutoLojaRepository
             ?? throw new InvalidOperationException("Produto_Loja not found or is deleted.");
     }
 
-    public async Task<Produto_Loja> GetProdutoLojaAsync(int ProdutoID, int LojaID)
-    {
-        var result = await _context.Produto_Loja
-            .FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID && !pl.Deleted);
-
-        return result ?? throw new InvalidOperationException("Produto_Loja not found.");
-    }
+    public async Task<Produto_Loja?> GetProdutoLojaAsync(int ProdutoID, int LojaID) => await _context.Produto_Loja.FirstOrDefaultAsync(pl => pl.ProdutoID == ProdutoID && pl.LojaID == LojaID && !pl.Deleted);
 
     public async Task<bool> SoftDeleteProdutoLojaAsync(int lojaId, int produtoId)
     {

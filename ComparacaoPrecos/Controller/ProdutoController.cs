@@ -148,6 +148,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     [HttpPost("add_preco/{id}")]
     public async Task<IActionResult> AddPreco(ProdutoViewModel model, int id)
     {
+
         if (User.Identity?.Name == null)
         {
             return RedirectToAction("Login", "Account");

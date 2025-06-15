@@ -56,9 +56,10 @@
                         <table class="table table-striped align-middle">
                             <thead class="table-light">
                                 <tr>
+                                    <th></th>
                                     <th scope="col">Produto</th>
-                                    <th scope="col">Preço</th>
-                                    <th scope="col">Última Atualização</th>
+                                    <th class="text-end"scope="col">Preço</th>
+                                    <th class="text-end" scope="col">Última Atualização</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,29 +67,29 @@
                                 {
                                     if (produto.InfoPorLoja != null && produto.InfoPorLoja.Any())
                                     {
-                                        <tr>
+                                        <tr class="user-row position-relative">
+                                            <td class="delete-cell">
+                                               <form asp-controller="Loja" asp-action="DeleteProduto" asp-route-lojaId="@Model.LojaID" asp-route-produtoId="@produto.Produto.ProdutoID" method="post"
+                                                      onsubmit="return confirm('Eliminar o produto @produto.Produto.Nome?');"
+                                                      class="d-inline delete-form"> 
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-sm btn-danger delete-btn">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                             <td class="fw-medium">@produto.Produto.Nome</td>
-                                            <td>
+                                            <td class="text-end">
                                                 @foreach (var info in produto.InfoPorLoja)
                                                 {
                                                     <div class="text-success fw-semibold">@info.Preco.ToString("C")</div>
                                                 }
                                             </td>
-                                            <td>
+                                            <td class="text-end">
                                                 @foreach (var info in produto.InfoPorLoja)
                                                 {
                                                     <div class="text-muted small">@info.DataHora.ToString("dd/MM/yyyy HH:mm")</div>
                                                 }
-                                            </td>
-                                            <td>
-                                               <form asp-controller="Loja" asp-action="DeleteProduto" asp-route-lojaId="@Model.LojaID" asp-route-produtoId="@produto.Produto.ProdutoID" method="post"
-                                                      onsubmit="return confirm('Eliminar o produto @produto.Produto.Nome?');"
-                                                      class="d-inline delete-form"> 
-                                                    @Html.AntiForgeryToken()
-                                                    <button type="submit" class="btn btn-sm btn-danger delete-product-btn">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                </form>
                                             </td>
                                         </tr>
                                     }
@@ -108,4 +109,36 @@
     </div>
 }
 
+
+<style> 
+
+.delete-cell {
+    width: 1px;           /* apenas para colapsar a célula */
+    padding: 0;
+    position: relative;
+}
+.delete-btn {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Ao fazer hover na linha, mostra o botão */
+.user-row:hover .delete-btn {
+    display: inline-block;
+}
+
+.user-row .fw-medium {
+    transition: transform 0.3s ease;
+}
+
+/* Quando o botão de eliminar estiver visível (por exemplo, hover na linha) */
+.user-row:hover .fw-medium {
+    transform: translateX(10px); /* ajusta o valor como quiser */
+}
+
+
+</style>
             
