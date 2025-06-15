@@ -12,5 +12,6 @@ namespace ComparacaoPrecos.Service.Interfaces
         Task AddProdutoLoja(Produto_Loja produtoLoja);
         Task<Produto_Loja?> GetProdutoLojaAsync(int produtoId, int lojaId);
         Task<bool> UpdateProdutoAsync(Produto produto);
+        Task<bool> SoftDeleteProdutoAsync(int id);
     }
 }

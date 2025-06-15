@@ -144,5 +144,8 @@ public class ProdutoService : IProdutoService
             return false;
         }
     }
-
+    public async Task<bool> SoftDeleteProdutoAsync(int id)
+    {
+        return await _produtoRepository.DeleteProduto(id);
+    }
 }
