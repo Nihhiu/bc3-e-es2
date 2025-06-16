@@ -100,4 +100,22 @@ public class LojaService : ILojaService
         string mensagem = "Removeu o Produto <" + nomeProduto + "> do catálogo da loja <" + nomeLoja + ">";
         await _logsRepository.AddLog(userId, mensagem);
     }
+
+    public async Task AddLojaLog(string userId, string tipo , string nomeLoja, int? lojaId)
+    {
+        string mensagem;
+        switch (tipo)
+        {
+            case "Criar":
+                mensagem = "Adicionou a Loja de ID <" + lojaId + "> com o nome <" + nomeLoja + "> ao catálogo";
+                break;
+            case "Editar":
+                mensagem = "Atualizou a Loja de ID <" + lojaId + "> para <" + nomeLoja + "> no catálogo";
+                break;
+            default:
+                mensagem = "Ação desconhecida para a Loja <" + nomeLoja + ">";
+                break;
+        }
+        await _logsRepository.AddLog(userId, mensagem);
+    }
 }

@@ -121,7 +121,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         TempData["SuccessMessage"] = "Produto criado com sucesso.";
         if (User.Identity?.Name != null)
         {
-            await _produtoService.AddLogProduto(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Criar", model.Produto.Nome);
+            await _produtoService.AddLogProduto(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Criar", model.Produto.Nome, model.Produto.ProdutoID);
         }
         return RedirectToAction("Index");
     }
@@ -235,8 +235,42 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
         await _produtoService.SoftDeleteProdutoAsync(id);
         TempData["SuccessMessage"] = "Produto eliminado com sucesso.";
 
-        await _produtoService.AddLogProduto(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Deletar", produto.Nome);
+        await _produtoService.AddLogProduto(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Deletar", produto.Nome, id);
 
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet("editar/{id}")]
+    public async Task<IActionResult> Editar(int id)
+    {
+        var viewModel = await _produtoService.GetProdutoDetalhesViewModel(id);
+        if (viewModel == null)
+        {
+            TempData["ErrorMessage"] = "Produto não encontrado.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        var categorias = await _categoriaService.GetAllCategorias();
+
+        ViewData["Categorias"] = categorias.Select(c => new SelectListItem
+        {
+            Value = c.CategoriaID,
+            Text = c.CategoriaID
+        }).ToList();
+
+
+        return View(viewModel);
+    }
+
+    [HttpPost("editar/{id}")]
+    public async Task<IActionResult> Editar(ProdutoViewModel model, int id)
+    {
+        await _produtoService.UpdateProdutoAsync(model.Produto);
+        TempData["SuccessMessage"] = "Produto editado com sucesso.";
+        if (User.Identity?.Name != null)
+        {
+            await _produtoService.AddLogProduto(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Editar", model.Produto.Nome, id);
+        }
+        return RedirectToAction("Index");
     }
 }

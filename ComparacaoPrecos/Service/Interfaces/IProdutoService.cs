@@ -14,6 +14,6 @@ public interface IProdutoService
     Task<Produto_Loja?> GetProdutoLojaAsync(int produtoId, int lojaId);
     Task<bool> UpdateProdutoAsync(Produto produto);
     Task<bool> SoftDeleteProdutoAsync(int id);
-    Task AddLogProduto(string userId, string tipo, string? nomeProduto);
+    Task AddLogProduto(string userId, string tipo, string? nomeProduto, int? produtoId);
     Task AddLogPreco(string userId, string tipo, string? nomeLoja, string? nomeProduto, double? preco);
 }

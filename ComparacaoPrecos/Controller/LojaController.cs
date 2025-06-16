@@ -71,4 +71,31 @@ public class LojaController : Microsoft.AspNetCore.Mvc.Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet("editar/{id}")]
+    public async Task<IActionResult> Editar(int id)
+    {
+        var loja = await _lojaService.GetLojaById(id);
+        return View(loja);
+    }
+
+    [HttpPost("editar/{id}")]
+    public async Task<IActionResult> Editar(int id, Loja loja)
+    {
+        if (id != loja.LojaID)
+        {
+            return BadRequest("ID da loja não corresponde.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(loja);
+        }
+
+        await _lojaService.UpdateLojaAsync(loja);
+        TempData["SuccessMessage"] = "Loja atualizada com sucesso.";
+
+        await _lojaService.AddLojaLog(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Editar" , loja.Nome, loja.LojaID);
+        return RedirectToAction(nameof(Index));
+    }
 }

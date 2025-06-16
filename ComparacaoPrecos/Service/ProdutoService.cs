@@ -158,16 +158,16 @@ public class ProdutoService : IProdutoService
         return await _produtoRepository.DeleteProduto(id);
     }
 
-    public async Task AddLogProduto(string userId, string tipo, string? nomeProduto)
+    public async Task AddLogProduto(string userId, string tipo, string? nomeProduto, int? produtoId = null)
     {
         string mensagem;
         switch (tipo)
         {
             case "Criar":
-                mensagem = "Adicionou o Produto <" + nomeProduto + ">";
+                mensagem = "Adicionou o Produto de ID <" + produtoId + "> com o nome <" + nomeProduto + ">";
                 break;
             case "Editar":
-                mensagem = "Atualizou o Produto <" + nomeProduto + ">";
+                mensagem = "Atualizou o Produto de ID <" + produtoId + "> para <" + nomeProduto + ">";
                 break;
             case "Deletar":
                 mensagem = "Removeu o Produto <" + nomeProduto + ">";
