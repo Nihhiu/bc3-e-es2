@@ -11,16 +11,19 @@ public class ProdutoService : IProdutoService
     private readonly ICategoriaRepository _categoriaRepository;
     private readonly IProdutoLojaRepository _produtoLojaRepository;
     private readonly ILojaRepository _lojaRepository;
+    private readonly ILogsRepository _logsRepository;
 
     public ProdutoService(IProdutoRepository produtoRepository,
                           ICategoriaRepository categoriaRepository,
                           IProdutoLojaRepository produtoLojaRepository,
-                          ILojaRepository lojaRepository)
+                          ILojaRepository lojaRepository,
+                          ILogsRepository logsRepository)
     {
         _produtoRepository = produtoRepository;
         _categoriaRepository = categoriaRepository;
         _produtoLojaRepository = produtoLojaRepository;
         _lojaRepository = lojaRepository;
+        _logsRepository = logsRepository;
     }
 
     // Buscar todos os produtos que não estão deletados
@@ -52,6 +55,12 @@ public class ProdutoService : IProdutoService
             .ToList();
 
         return result;
+    }
+
+    // Buscar produto por id que não estão deletados
+    public async Task<Produto?> GetProdutoById(int id)
+    {
+        return await _produtoRepository.GetProdutoById(id);
     }
 
     // Buscar produto por id que não estão deletados
@@ -126,7 +135,7 @@ public class ProdutoService : IProdutoService
     {
         return await _produtoLojaRepository.GetProdutoLojaAsync(ProdutoID, LojaID);
     }
-    
+
     public async Task<bool> UpdateProdutoAsync(Produto produto)
     {
         try
@@ -147,5 +156,47 @@ public class ProdutoService : IProdutoService
     public async Task<bool> SoftDeleteProdutoAsync(int id)
     {
         return await _produtoRepository.DeleteProduto(id);
+    }
+
+    public async Task AddLogProduto(string userId, string tipo, string? nomeProduto)
+    {
+        string mensagem;
+        switch (tipo)
+        {
+            case "Criar":
+                mensagem = "Adicionou o Produto <" + nomeProduto + ">";
+                break;
+            case "Editar":
+                mensagem = "Atualizou o Produto <" + nomeProduto + ">";
+                break;
+            case "Deletar":
+                mensagem = "Removeu o Produto <" + nomeProduto + ">";
+                break;
+            default:
+                throw new ArgumentException("Tipo de log inválido");
+        }
+
+        await _logsRepository.AddLog(userId, mensagem);
+    }
+
+    public async Task AddLogPreco(string userId, string tipo, string? nomeLoja, string? nomeProduto, double? preco)
+    {
+        string mensagem;
+        switch (tipo)
+        {
+            case "Criar":
+                mensagem = "Adicionou o Produto <" + nomeProduto + "> na loja <" + nomeLoja + "> com o preço de <" + preco + ">";
+                break;
+            case "Editar":
+                mensagem = "Atualizou o Produto <" + nomeProduto + "> na loja <" + nomeLoja + "> com o preço de <" + preco + ">";
+                break;
+            case "Atualizar":
+                mensagem = "Confirmou a validade do Produto <" + nomeProduto + "> na loja <" + nomeLoja + "> com  <" + preco + ">";
+                break;
+            default:
+                throw new ArgumentException("Tipo de log inválido");
+        }
+
+        await _logsRepository.AddLog(userId, mensagem);
     }
 }

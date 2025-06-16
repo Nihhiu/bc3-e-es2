@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ComparacaoPrecos.Service;
 using ComparacaoPrecos.Models;
 using ComparacaoPrecos.Service.Interfaces;
+using System.Security.Claims;
 
 namespace ComparacaoPrecos.Controllers;
 
@@ -43,7 +44,7 @@ public class LojaController : Microsoft.AspNetCore.Mvc.Controller
         return View(loja);
     }
 
-    [HttpPost("{lojaId}/delete/produto/{produtoId}")]
+    [HttpPost("{lojaId}/delete-produto/{produtoId}")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteProduto(int lojaId, int produtoId)
     {
@@ -59,8 +60,15 @@ public class LojaController : Microsoft.AspNetCore.Mvc.Controller
             return RedirectToAction(nameof(Index));
         }
 
+        var loja = await _lojaService.GetLojaById(lojaId);
+        var produto = await _lojaService.GetProdutoById(produtoId);
+
         await _lojaService.SoftDeleteProdutodaLojaAsync(lojaId, produtoId);
+
+        
         TempData["SuccessMessage"] = "Utilizador eliminado com sucesso.";
+        await _lojaService.AddDeletePrecoLog(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, loja.Nome, produto.Nome);
+
         return RedirectToAction(nameof(Index));
     }
 }

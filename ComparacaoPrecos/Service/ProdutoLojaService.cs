@@ -1,15 +1,18 @@
 using ComparacaoPrecos.Service.Interfaces;
 using ComparacaoPrecos.Repository.Interfaces;
+using ComparacaoPrecos.Migrations;
 
 namespace ComparacaoPrecos.Service;
 
 public class ProdutoLojaService : IProdutoLojaService
 {
     private readonly IProdutoLojaRepository _produtoLojaRepository;
+    private readonly ILogsRepository _logsRepository;
 
-    public ProdutoLojaService(IProdutoLojaRepository produtoLojaRepository)
+    public ProdutoLojaService(IProdutoLojaRepository produtoLojaRepository, ILogsRepository logsRepository)
     {
         _produtoLojaRepository = produtoLojaRepository;
+        _logsRepository = logsRepository;
     }
 
     // Buscar todos os produtos que não estão deletados

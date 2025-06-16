@@ -15,6 +15,8 @@ builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProdutoLojaRepository, ProdutoLojaRepository>();
 builder.Services.AddScoped<ILojaRepository, LojaRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ILogsRepository, LogsRepository>();
+
 
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();

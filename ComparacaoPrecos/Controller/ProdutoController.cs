@@ -118,6 +118,11 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     public async Task<IActionResult> Create(ProdutoViewModel model)
     {
         await _produtoService.CriarProdutoAsync(model.Produto);
+        TempData["SuccessMessage"] = "Produto criado com sucesso.";
+        if (User.Identity?.Name != null)
+        {
+            await _produtoService.AddLogProduto(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Criar", model.Produto.Nome);
+        }
         return RedirectToAction("Index");
     }
 
@@ -148,7 +153,7 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
     [HttpPost("add_preco/{id}")]
     public async Task<IActionResult> AddPreco(ProdutoViewModel model, int id)
     {
-
+        
         if (User.Identity?.Name == null)
         {
             return RedirectToAction("Login", "Account");
@@ -167,6 +172,24 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
             });
         }
 
+        string tipo;
+
+        if (Request.Form.ContainsKey("confirmar"))
+        {
+            if (precoExistente.preco == model.InfoPorLoja[0].Preco)
+            {
+                tipo = "Atualizar";
+            }
+            else
+            {
+                tipo = "Editar";
+            }
+        }
+        else
+        {
+            tipo = "Criar";
+        }
+
         var produtoLoja = new Produto_Loja
         {
             ProdutoID = id,
@@ -176,13 +199,24 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
             Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
         };
 
+        var loja = await _lojaService.GetLojaById(lojaId);
+        var produto = await _produtoService.GetProdutoById(id);
+
         await _produtoService.AddProdutoLoja(produtoLoja);
+
+        TempData["SuccessMessage"] = "Preço adicionado com sucesso.";
+        
+        if (User.Identity?.Name != null)
+        {
+            await _produtoService.AddLogPreco(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, tipo, loja.Nome, produto.Nome, model.InfoPorLoja[0].Preco);
+        }
+        
         return Json(new { redirectUrl = Url.Action("Index") });
     }
 
     [HttpPost("delete/{id}")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(ProdutoViewModel model, int id)
     {
         if (User.Identity == null || id == 0)
         {
@@ -195,9 +229,14 @@ public class ProdutoController : Microsoft.AspNetCore.Mvc.Controller
             TempData["ErrorMessage"] = "Apenas utilizadores com o papel de Admin podem eliminar produtos.";
             return RedirectToAction(nameof(Index));
         }
+        
+        var produto = await _produtoService.GetProdutoById(id);
 
         await _produtoService.SoftDeleteProdutoAsync(id);
-        TempData["SuccessMessage"] = "Utilizador eliminado com sucesso.";
+        TempData["SuccessMessage"] = "Produto eliminado com sucesso.";
+
+        await _produtoService.AddLogProduto(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, "Deletar", produto.Nome);
+
         return RedirectToAction(nameof(Index));
     }
 }

@@ -1,9 +1,7 @@
-namespace ComparacaoPrecos.Service.Interfaces
+namespace ComparacaoPrecos.Service.Interfaces;
+public interface IProdutoLojaService
 {
-    public interface IProdutoLojaService
-    {
-        Task<IEnumerable<Produto_Loja>> GetAllProdutosLojas();
-        Task<IEnumerable<Produto_Loja>> GetProdutoLojaByProduto(int id);
-        Task<IEnumerable<Produto_Loja>> GetProdutoLojaByLoja(int lojaId);
-    }
+    Task<IEnumerable<Produto_Loja>> GetAllProdutosLojas();
+    Task<IEnumerable<Produto_Loja>> GetProdutoLojaByProduto(int id);
+    Task<IEnumerable<Produto_Loja>> GetProdutoLojaByLoja(int lojaId);
 }

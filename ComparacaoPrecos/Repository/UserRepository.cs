@@ -45,7 +45,7 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(u => u.UserName == username);
 
         if (user == null)
-            return false;
+            throw new InvalidOperationException("User not found.");
 
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
@@ -56,7 +56,7 @@ public class UserRepository : IUserRepository
     {
         var user = await _userManager.FindByNameAsync(userViewModel.Username);
 
-        if (user == null) return false;
+        if (user == null) throw new InvalidOperationException("User not found.");
 
         var currentRoles = await _userManager.GetRolesAsync(user);
 
@@ -65,14 +65,25 @@ public class UserRepository : IUserRepository
             var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
             if (!removeResult.Succeeded)
             {
-                return false;
+                throw new InvalidOperationException("Failed to remove user roles.");
             }
             var addResult = await _userManager.AddToRoleAsync(user, userViewModel.Role);
             if (!addResult.Succeeded)
             {
-                return false;
+                throw new InvalidOperationException("Failed to add user to role.");
             }
         }
-        return true; 
+        return true;
+    }
+
+    public async Task<string> GetUserIdByUsername(string username)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.UserName == username);
+
+        if (user == null)
+            throw new InvalidOperationException("User not found.");
+
+        return user.Id;
     }
 }

@@ -10,11 +10,15 @@ public class LojaService : ILojaService
 {
     private readonly ILojaRepository _lojaRepository;
     private readonly IProdutoLojaRepository _produtoLojaRepository;
+    private readonly ILogsRepository _logsRepository;
+    private readonly IProdutoRepository _produtoRepository;
 
-    public LojaService(ILojaRepository lojaRepository, IProdutoLojaRepository produtoLojaRepository)
+    public LojaService(ILojaRepository lojaRepository, IProdutoLojaRepository produtoLojaRepository, ILogsRepository logsRepository, IProdutoRepository produtoRepository)
     {
         _lojaRepository = lojaRepository;
         _produtoLojaRepository = produtoLojaRepository;
+        _logsRepository = logsRepository;
+        _produtoRepository = produtoRepository;
     }
 
     public async Task<IEnumerable<Produto_Loja>> GetProdutoLojaByLoja(int lojaId)
@@ -80,9 +84,20 @@ public class LojaService : ILojaService
             return false;
         }
     }
-    
+
     public async Task<bool> SoftDeleteProdutodaLojaAsync(int lojaId, int produtoId)
     {
         return await _produtoLojaRepository.SoftDeleteProdutoLojaAsync(lojaId, produtoId);
+    }
+
+    public async Task<Produto> GetProdutoById(int id)
+    {
+        return await _produtoRepository.GetProdutoById(id);
+    }
+
+    public async Task AddDeletePrecoLog(string userId, string nomeLoja, string nomeProduto)
+    {
+        string mensagem = "Removeu o Produto <" + nomeProduto + "> do catálogo da loja <" + nomeLoja + ">";
+        await _logsRepository.AddLog(userId, mensagem);
     }
 }

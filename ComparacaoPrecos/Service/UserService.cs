@@ -8,9 +8,11 @@ namespace ComparacaoPrecos.Service;
 public class UserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly ILogsRepository _logsRepository;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, ILogsRepository logsRepository)
     {
+        _logsRepository = logsRepository;
         _userRepository = userRepository;
     }
 
@@ -26,5 +28,11 @@ public class UserService
     public async Task<bool> UpdateUser(UserViewModel userViewModel)
     {
         return await _userRepository.UpdateUserAsync(userViewModel);
+    }
+
+    public async Task<List<Logs>> GetUserLogs(string username)
+    {
+        var userId = await _userRepository.GetUserIdByUsername(username);
+        return await _logsRepository.GetUserLogs(userId);
     }
 }

@@ -11,5 +11,7 @@ namespace ComparacaoPrecos.Service.Interfaces
         Task<List<ProdutoViewModel>> GetProdutosDaLoja(int id);
         Task<bool> UpdateLojaAsync(Loja loja);
         Task<bool> SoftDeleteProdutodaLojaAsync(int lojaId, int produtoId);
+        Task<Produto> GetProdutoById(int id);
+        Task AddDeletePrecoLog(string userId, string nomeLoja, string nomeProduto);
     }
 }
