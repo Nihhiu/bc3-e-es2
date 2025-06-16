@@ -37,7 +37,27 @@ public class UserRepository : IUserRepository
 
         return usersWithRoles;
     }
+    public async Task<UserViewModel?> GetUserByUsername(string username)
+    {
+        var user = await _context.Users
+            .Where(u => u.UserName == username)
+            .Select(u => new UserViewModel
+            {
+                Username = u.UserName,
+                Role = _context.UserRoles
+                    .Where(ur => ur.UserId == u.Id)
+                    .Join(
+                        _context.Roles,
+                        userRole => userRole.RoleId,
+                        role => role.Id,
+                        (userRole, role) => role.Name
+                    )
+                    .FirstOrDefault() ?? string.Empty
+            })
+            .FirstOrDefaultAsync();
 
+        return user;
+    }
     public async Task<bool> DeleteUserAsync(string username)
     {
         // Busca o usuário pelo username (campo não-chave)

@@ -36,7 +36,7 @@
         <tbody>
             @foreach (var user in Model)
             {
-                <tr class="user-row position-relative">
+                <tr class="user-row position-relative" data-url="@Url.Action("Detalhes", "User", new { username = user.Username })">
                     <td class="delete-cell">
                         <form asp-action="Delete" asp-route-username="@user.Username" method="post" onsubmit="return confirm('Eliminar utilizador @user.Username?');">
                             @Html.AntiForgeryToken()
@@ -85,3 +85,20 @@
 
 
 </style>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.user-row').forEach(function (row) {
+                row.addEventListener('click', function (e) {
+                    if (e.target.closest('.delete-cell')) return;
+
+                    const url = this.dataset.url;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    </script>
+}

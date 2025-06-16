@@ -120,4 +120,23 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         TempData["SuccessMessage"] = "Utilizador eliminado com sucesso.";
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet("logs/{username}")]
+    public async Task<IActionResult> Detalhes(string username)
+    {
+        if(User.IsInRole("Admin") == false)
+        {
+            TempData["ErrorMessage"] = "Apenas utilizadores com o papel de Admin podem ver os detalhes dos utilizadores.";
+            return RedirectToAction(nameof(Index));
+        }
+        var user = await _userService.GetUserByUsername(username);
+        var logs = await _userService.GetUserLogs(username);
+        if (user == null)
+        {
+            TempData["ErrorMessage"] = "Utilizador não encontrado.";
+            return RedirectToAction(nameof(Index));
+        }
+        ViewData["Logs"] = logs;
+        return View(user);
+    }
 }
