@@ -22,7 +22,7 @@
                 <h4 class="mb-0 fw-semibold">Lojas disponíveis</h4>
 
                 <div class="d-flex gap-2">
-                    @* Botão “Adicionar loja” visível a utilizadores autenticados *@
+                    
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         <a asp-action="AddPreco"
@@ -33,7 +33,6 @@
                         </a>
                     }
 
-                    @* Botão “Eliminar produto” visível apenas a Admin *@
                     @if (User.IsInRole("Admin"))
                     {
                         <form asp-action="Delete"
@@ -44,7 +43,7 @@
                             @Html.AntiForgeryToken()
                             <button type="submit"
                                     class="btn btn-sm btn-danger rounded-pill px-3">
-                                <i class="bi bi-trash me-1"></i>
+                                <i class="bi bi-trash me-1"></i> Eliminar
                             </button>
                         </form>
                     }
